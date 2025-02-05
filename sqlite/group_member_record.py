@@ -118,16 +118,15 @@ def clear_member_records(db_path: str = DEFAULT_DB_PATH):
     conn.commit()
     conn.close()
 
-def is_member_in_group(group_id: int, user_id: int, db_path: str = DEFAULT_DB_PATH) -> bool:
-    """检查指定用户是否在群成员中
+def is_member_in_group(user_id: int, db_path: str = DEFAULT_DB_PATH) -> bool:
+    """检查指定用户是否在任何一个群中
     
     Args:
-        group_id: 群号
         user_id: QQ号
         db_path: 数据库路径
         
     Returns:
-        bool: 用户是否在群中
+        bool: 用户是否在任何群中
     """
     _ensure_table_exists(db_path)
     conn = sqlite3.connect(db_path)
@@ -135,8 +134,8 @@ def is_member_in_group(group_id: int, user_id: int, db_path: str = DEFAULT_DB_PA
     
     cursor.execute('''
     SELECT 1 FROM group_member_record 
-    WHERE group_id = ? AND user_id = ?
-    ''', (group_id, user_id))
+    WHERE user_id = ?
+    ''', (user_id,))
     
     exists = cursor.fetchone() is not None
     conn.close()

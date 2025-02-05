@@ -1,8 +1,8 @@
 from typing import Dict, Any, Optional
 from enum import Enum
-from app import logger
+from extensions import logger
 from sqlite.group_member_record import add_single_member_record, delete_member_record
-from ..sqlite.group_quit_record import add_quit_record
+from sqlite.group_quit_record import add_quit_record
 
 class GroupEventType(Enum):
     DECREASE = 'group_decrease'

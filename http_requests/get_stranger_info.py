@@ -1,5 +1,5 @@
 import requests
-from app import config, logger
+from extensions import config, logger
 
 def get_stranger_info(user_id: int, no_cache: bool = False) -> dict:
     """

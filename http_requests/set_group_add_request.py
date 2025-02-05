@@ -1,6 +1,6 @@
 import requests
 from typing import Optional
-from app import config, logger
+from extensions import config, logger
 
 def set_group_add_request(
     flag: str,

@@ -1,8 +1,8 @@
 from enum import Enum
 from typing import Dict, Any, Optional
-from app import config, logger
 from .notice import handle_group_decrease, handle_group_increase
 from .request import handle_group_request
+from extensions import config, logger
 
 class PostType(Enum):
     NOTICE = "notice"
@@ -15,7 +15,9 @@ class NoticeType(Enum):
 
 def validate_group(group_id: Optional[int]) -> bool:
     """验证群组ID是否合法"""
-    return bool(group_id and str(group_id) in config.get('groups', {}))
+    # logger.debug(f'验证群组ID: {group_id}')
+    # logger.debug(f'配置群组ID: {config.get("group_ids", {})}')
+    return bool(group_id in config.get('group_ids', {}))
 
 def handle_event(data: Dict[str, Any]) -> None:
     """
@@ -26,21 +28,24 @@ def handle_event(data: Dict[str, Any]) -> None:
     """
     try:
         group_id = data.get('group_id')
+        
         if not validate_group(group_id):
-            logger.debug(f'收到未授权群组的事件: {group_id}')
+            logger.debug(f'机器人不在群组 {group_id} 中')
             return
+        
+        logger.debug(f'收到来自机器人 {data.get("self_id")} 的事件: {data}')
 
         post_type = data.get('post_type')
         if not post_type:
-            logger.warning('收到无效事件类型')
+            logger.debug('收到无效事件类型')
             return
 
         if post_type == PostType.NOTICE.value:
             handle_notice_event(data)
         elif post_type == PostType.REQUEST.value:
             handle_request_event(data)
-        else:
-            logger.debug(f'未处理的事件类型: {post_type}')
+        # else:
+            # logger.debug(f'未处理的事件类型: {post_type}')
 
     except Exception as e:
         logger.error(f'处理事件时发生错误: {str(e)}')

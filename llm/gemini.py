@@ -4,6 +4,7 @@ import asyncio
 import json
 from tenacity import retry, stop_after_attempt, wait_exponential
 from dataclasses import dataclass
+from extensions import logger, config
 
 @dataclass
 class GeminiConfig:
@@ -22,21 +23,43 @@ class GeminiAPI:
         self.model = None
         if app:
             self.init_app(app)
+        elif config:
+            self.setup_gemini()
+        else:
+            # 如果没有提供 app 或 config，尝试从全局配置初始化
+            api_key = config.get('gemini_api_key')
+            if not api_key:
+                logger.error("Gemini API key not found in global config")
+                raise GeminiAPIError("Gemini API key not found in global config")
+            self.config = GeminiConfig(api_key=api_key)
+            self.setup_gemini()
 
     def init_app(self, app) -> None:
-        api_key = app.config.get('gemini_api_key')
-        if not api_key:
-            raise GeminiAPIError("gemini_api_key not found in app config")
-        self.config = GeminiConfig(api_key=api_key)
-        self.setup_gemini()
+        try:
+            api_key = config.get('gemini_api_key')
+            if not api_key:
+                logger.error("gemini_api_key not found in config")
+                raise GeminiAPIError("gemini_api_key not found in config")
+            self.config = GeminiConfig(api_key=api_key)
+            self.setup_gemini()
+        except Exception as e:
+            logger.error(f"Failed to initialize GeminiAPI: {str(e)}")
+            raise GeminiAPIError(f"Failed to initialize GeminiAPI: {str(e)}")
 
     @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
     def setup_gemini(self) -> None:
         try:
+            if not self.config:
+                raise GeminiAPIError("GeminiConfig not initialized")
+            if not self.config.api_key:
+                raise GeminiAPIError("API key not properly initialized")
+                
             genai.configure(api_key=self.config.api_key)
             self.model = genai.GenerativeModel(model_name=self.config.model_name)
+            logger.info("Gemini API initialized successfully")
         except Exception as e:
-            raise GeminiAPIError(f"Failed to initialize Gemini API: {str(e)}")
+            logger.error(f"Failed to setup Gemini API: {str(e)}")
+            raise GeminiAPIError(f"Failed to setup Gemini API: {str(e)}")
 
     def _validate_response(self, response: str) -> bool:
         """验证响应是否有效"""
@@ -46,6 +69,7 @@ class GeminiAPI:
                    system_prompt: str = "") -> str:
         """异步聊天方法"""
         if not self.model:
+            logger.error("Gemini model not initialized")  # 添加日志
             raise GeminiAPIError("Gemini model not initialized")
         
         try:
@@ -57,10 +81,13 @@ class GeminiAPI:
             response = await asyncio.to_thread(chat.send_message, prompt)
             
             if not self._validate_response(response.text):
+                logger.error("Invalid response received")  # 添加日志
                 raise GeminiAPIError("Invalid response received")
-                
+            
+            logger.debug(f"Chat response received: {response.text[:100]}...")  # 添加日志
             return response.text
         except Exception as e:
+            logger.error(f"Chat error: {str(e)}")  # 添加日志
             raise GeminiAPIError(f"Chat error: {str(e)}")
 
     @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
@@ -78,6 +105,7 @@ class GeminiAPI:
 
         try:
             generation_config = {
+                "temperature": 1,
                 "response_schema": schema,
                 "response_mime_type": "application/json"
             }
@@ -105,13 +133,17 @@ class GeminiAPI:
         return asyncio.run(self.achat_json(prompt, schema, history, system_prompt))
 
 def main():
-    api = GeminiAPI()
-    
-    prompt = "Tell me a short joke"
-    api.setup_gemini("AIzaSyCjnvdnSQkBCP2aeo5PfK2V7yU0muGHFr4")
-    response = api.chat(prompt)
-    print("Prompt:", prompt)
-    print("Response:", response)
+    # 修改示例用法
+    if 'gemini_api_key' in config:
+        gemini_config = GeminiConfig(api_key=config['gemini_api_key'])
+        api = GeminiAPI(config=gemini_config)
+        
+        prompt = "Tell me a short joke"
+        response = api.chat(prompt)
+        logger.info(f"Prompt: {prompt}")
+        logger.info(f"Response: {response}")
+    else:
+        logger.error("gemini_api_key not found in config")
 
 if __name__ == "__main__":
     main()

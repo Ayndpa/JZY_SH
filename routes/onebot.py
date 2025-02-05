@@ -1,6 +1,6 @@
 import threading
 from flask import Blueprint, request, jsonify
-from app import config, logger
+from extensions import app, config, logger
 from events import onebot
 
 onebot_bp = Blueprint('onebot', __name__)
@@ -34,15 +34,12 @@ def handle_onebot_event():
         }), 400
 
     # 检查机器人ID是否已配置
-    if str(self_id) not in config.get('bot_ids', []):
+    if int(self_id) not in config.get('bot_accounts', []):
         logger.debug(f'机器人ID {self_id} 未配置')
         return jsonify({
             'status': 'failed', 
             'message': f'机器人ID {self_id} 未配置'
         }), 403
-
-    # 记录接收到的事件
-    logger.info(f'收到来自机器人 {self_id} 的事件: {data}')
 
     # 创建新线程处理事件
     threading.Thread(

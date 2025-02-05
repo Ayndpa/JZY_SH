@@ -3,7 +3,15 @@
         3028251597
     ],
     "group_ids": [
-        987654321
+        1011978245,
+        747239147
     ],
-    "gemini_api_key": "AIzaSyCjnvdnSQkBCP2aeo5PfK2V7yU0muGHFr4"
+    "gemini_api_key": "AIzaSyCjnvdnSQkBCP2aeo5PfK2V7yU0muGHFr4",
+    "admin_group_id": 686038298,
+    "forward_api_url": "http://192.168.240.128:3000",
+    "enable_level_check": true,
+    "min_join_level": 15,
+    "audits_ai_system_prompt": "你是QQ群的审核员，你要做的是审核加群信息是否符合要求。\n如果不通过则给出一个原因，确保原因中不要包含任何正确答案的提示。\n答案的要求为：\n1、必须包含季梓虞（也可以是鸡子鱼）。只能是这两个名字其中一个",
+    "max_leave_count": 1,
+    "max_kick_count": 2
 }

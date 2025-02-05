@@ -1,6 +1,6 @@
 import requests
 from typing import List
-from app import config, logger
+from extensions import config, logger
 
 def get_group_member_list(group_id: int) -> List[dict]:
     """
@@ -33,7 +33,8 @@ def get_group_member_list(group_id: int) -> List[dict]:
         api_url = f"{config['forward_api_url']}/get_group_member_list"
         
         params = {
-            "group_id": group_id
+            "group_id": group_id,
+            "no_cache": True
         }
         
         response = requests.get(api_url, params=params)

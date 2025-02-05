@@ -1,5 +1,6 @@
 import time
 import asyncio
+import json
 from functools import lru_cache
 from typing import Callable, Any
 from collections import deque
@@ -20,12 +21,25 @@ class RequestPool:
             self.last_request_time = 0.0
             self.request_queue = deque()
             self.cache_size = cache_size
+            self._cache = {}
             self.initialized = True
 
-    @lru_cache(maxsize=100)
+    @staticmethod
+    def _get_cache_key(func, *args, **kwargs) -> str:
+        """生成可哈希的缓存键"""
+        cache_data = {
+            'func_name': func.__name__,
+            'args': str(args),
+            'kwargs': str(sorted(kwargs.items()))
+        }
+        return json.dumps(cache_data, sort_keys=True)
+
     async def _cached_execute(self, func: Callable, *args, **kwargs) -> Any:
-        """缓存包装的执行函数"""
-        return await self._execute(func, *args, **kwargs)
+        """使用字符串作为缓存键"""
+        cache_key = self._get_cache_key(func, *args, **kwargs)
+        if cache_key not in self._cache:
+            self._cache[cache_key] = await self._execute(func, *args, **kwargs)
+        return self._cache[cache_key]
 
     async def _execute(self, func: Callable, *args, **kwargs) -> Any:
         async with self._lock:

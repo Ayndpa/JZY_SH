@@ -1,3 +1,698 @@
-2025-02-04 22:32:42,369 - flask_app - INFO - Starting Flask application...
-2025-02-04 22:33:54,307 - flask_app - INFO - Starting Flask application...
-2025-02-04 22:34:02,096 - flask_app - INFO - Starting Flask application...
+2025-02-05 16:44:16,098 - flask_app - INFO - Config loaded successfully
+2025-02-05 16:44:16,467 - flask_app - INFO - Config loaded successfully
+2025-02-05 16:44:16,467 - flask_app - INFO - Config loaded successfully
+2025-02-05 16:44:35,045 - flask_app - INFO - Config loaded successfully
+2025-02-05 16:44:35,436 - flask_app - INFO - Config loaded successfully
+2025-02-05 16:44:35,436 - flask_app - INFO - Config loaded successfully
+2025-02-05 16:45:01,149 - flask_app - INFO - Config loaded successfully
+2025-02-05 16:45:01,523 - flask_app - INFO - Config loaded successfully
+2025-02-05 16:45:01,523 - flask_app - INFO - Config loaded successfully
+2025-02-05 16:45:14,629 - flask_app - INFO - Created default config file
+2025-02-05 16:45:15,001 - flask_app - INFO - Config loaded successfully
+2025-02-05 16:45:15,001 - flask_app - INFO - Config loaded successfully
+2025-02-05 16:45:17,038 - flask_app - ERROR - 获取群成员列表失败: HTTPConnectionPool(host='127.0.0.1', port=5700): Max retries exceeded with url: /get_group_member_list?group_id=987654321 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000019DFCE1E890>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。'))
+2025-02-05 16:45:17,038 - flask_app - ERROR - 获取群成员列表失败: HTTPConnectionPool(host='127.0.0.1', port=5700): Max retries exceeded with url: /get_group_member_list?group_id=987654321 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000019DFCE1E890>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。'))
+2025-02-05 16:46:04,020 - flask_app - INFO - Config loaded successfully
+2025-02-05 16:46:04,390 - flask_app - INFO - Config loaded successfully
+2025-02-05 16:46:04,390 - flask_app - INFO - Config loaded successfully
+2025-02-05 16:47:24,287 - flask_app - INFO - Config loaded successfully
+2025-02-05 16:47:24,660 - flask_app - INFO - Config loaded successfully
+2025-02-05 16:47:24,660 - flask_app - INFO - Config loaded successfully
+2025-02-05 16:47:48,611 - flask_app - INFO - Config loaded successfully
+2025-02-05 16:47:48,980 - flask_app - INFO - Config loaded successfully
+2025-02-05 16:47:48,980 - flask_app - INFO - Config loaded successfully
+2025-02-05 16:49:16,063 - flask_app - INFO - Config loaded successfully
+2025-02-05 16:49:16,436 - flask_app - INFO - Config loaded successfully
+2025-02-05 16:49:16,436 - flask_app - INFO - Config loaded successfully
+2025-02-05 16:49:16,459 - flask_app - INFO - Starting Flask application...
+2025-02-05 16:49:16,459 - flask_app - INFO - Starting Flask application...
+2025-02-05 16:55:36,181 - flask_app - INFO - Config loaded successfully
+2025-02-05 16:56:01,899 - flask_app - INFO - Config loaded successfully
+2025-02-05 16:56:33,162 - flask_app - INFO - Config loaded successfully
+2025-02-05 16:56:53,129 - flask_app - INFO - Config loaded successfully
+2025-02-05 16:57:31,514 - flask_app - INFO - Config loaded successfully
+2025-02-05 16:58:31,080 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:01:48,206 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:02:23,267 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:03:18,637 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:03:38,678 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:04:32,978 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:05:17,478 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:06:16,221 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:06:30,134 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:06:42,052 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:07:20,297 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:07:27,112 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:07:34,004 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:08:08,511 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:09:18,490 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:10:04,499 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:10:48,372 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:10:49,246 - flask_app - INFO - Starting Flask application...
+2025-02-05 17:11:58,550 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:11:59,411 - flask_app - INFO - Starting Flask application...
+2025-02-05 17:14:04,110 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:14:04,991 - flask_app - INFO - Starting Flask application...
+2025-02-05 17:14:23,033 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:14:23,897 - flask_app - INFO - Starting Flask application...
+2025-02-05 17:14:54,695 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:14:55,548 - flask_app - INFO - Starting Flask application...
+2025-02-05 17:15:13,526 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:15:14,395 - flask_app - INFO - Starting Flask application...
+2025-02-05 17:15:42,112 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:15:42,963 - flask_app - INFO - Starting Flask application...
+2025-02-05 17:15:46,445 - flask_app - INFO - 收到来自机器人 3028251597 的事件: {'self_id': 3028251597, 'user_id': 3079498044, 'time': 1738746945, 'message_id': 836203885, 'message_seq': 7149, 'message_type': 'group', 'sender': {'user_id': 3079498044, 'nickname': 'Ayndpa', 'card': '', 'role': 'owner', 'title': ''}, 'raw_message': '1', 'font': 14, 'sub_type': 'normal', 'message': [{'type': 'text', 'data': {'text': '1'}}], 'message_format': 'array', 'post_type': 'message', 'group_id': 904171229}
+2025-02-05 17:15:48,555 - flask_app - INFO - 收到来自机器人 3028251597 的事件: {'self_id': 3028251597, 'user_id': 695170755, 'time': 1738746947, 'message_id': 432064181, 'message_seq': 597094, 'message_type': 'group', 'sender': {'user_id': 695170755, 'nickname': '每天要睡9小时', 'card': '', 'role': 'member', 'title': ''}, 'raw_message': '[CQ:reply,id=1711289974][CQ:at,qq=3160554135,name=小太阳] 你这个鼠标指针有点意思啊', 'font': 14, 'sub_type': 'normal', 'message': [{'type': 'reply', 'data': {'id': '1711289974'}}, {'type': 'at', 'data': {'qq': '3160554135', 'name': '小太阳'}}, {'type': 'text', 'data': {'text': ' 你这个鼠标指针有点意思啊'}}], 'message_format': 'array', 'post_type': 'message', 'group_id': 747239147}
+2025-02-05 17:15:49,383 - flask_app - INFO - 收到来自机器人 3028251597 的事件: {'self_id': 3028251597, 'user_id': 1195711909, 'time': 1738746948, 'message_id': 877059632, 'message_seq': 597095, 'message_type': 'group', 'sender': {'user_id': 1195711909, 'nickname': '观后无感', 'card': '群主邀请了“NTR绿帽王”加入群聊', 'role': 'member', 'title': 'NTR仙尊'}, 'raw_message': '我好了', 'font': 14, 'sub_type': 'normal', 'message': [{'type': 'text', 'data': {'text': '我好了'}}], 'message_format': 'array', 'post_type': 'message', 'group_id': 747239147}
+2025-02-05 17:15:50,421 - flask_app - INFO - 收到来自机器人 3028251597 的事件: {'self_id': 3028251597, 'user_id': 3160554135, 'time': 1738746949, 'message_id': 233556337, 'message_seq': 597096, 'message_type': 'group', 'sender': {'user_id': 3160554135, 'nickname': '小太阳', 'card': '', 'role': 'member', 'title': ''}, 'raw_message': '[CQ:image,file=E81ACB077261141A01597782DEF5EDCC.jpg,subType=1,url=https://multimedia.nt.qq.com.cn/download?appid=1407&amp;fileid=EhQKVfMu52OFf-6KdzcnrqSQZQj98hijuicg_woo3PCDkpmsiwMyBHByb2RQgL2jAVoQccrGYxft0FYJ2aSFpziZmw&amp;spec=0&amp;rkey=CAISKKSBekjVG1fMhslt-OiDZro3AhdVbY-lQS604FHY6wWT9sacrzzkm7k,file_size=646435]', 'font': 14, 'sub_type': 'normal', 'message': [{'type': 'image', 'data': {'file': 'E81ACB077261141A01597782DEF5EDCC.jpg', 'subType': 1, 'url': 'https://multimedia.nt.qq.com.cn/download?appid=1407&fileid=EhQKVfMu52OFf-6KdzcnrqSQZQj98hijuicg_woo3PCDkpmsiwMyBHByb2RQgL2jAVoQccrGYxft0FYJ2aSFpziZmw&spec=0&rkey=CAISKKSBekjVG1fMhslt-OiDZro3AhdVbY-lQS604FHY6wWT9sacrzzkm7k', 'file_size': '646435'}}], 'message_format': 'array', 'post_type': 'message', 'group_id': 747239147}
+2025-02-05 17:15:51,087 - flask_app - INFO - 收到来自机器人 3028251597 的事件: {'self_id': 3028251597, 'user_id': 2975926410, 'time': 1738746950, 'message_id': 1981635742, 'message_seq': 107443, 'message_type': 'group', 'sender': {'user_id': 2975926410, 'nickname': '浮生', 'card': '夜之城圆脸', 'role': 'member', 'title': '非人工智能'}, 'raw_message': '[CQ:reply,id=87257116][CQ:at,qq=1114931494,name=帝皇（核动力马桶盖）] 那么为什么公司合并后叫极氪呢', 'font': 14, 'sub_type': 'normal', 'message': [{'type': 'reply', 'data': {'id': '87257116'}}, {'type': 'at', 'data': {'qq': '1114931494', 'name': '帝皇（核动力马桶盖）'}}, {'type': 'text', 'data': {'text': ' '}}, {'type': 'text', 'data': {'text': '那么为什么公司合并后叫极氪呢'}}], 'message_format': 'array', 'post_type': 'message', 'group_id': 637655384}
+2025-02-05 17:15:51,127 - flask_app - INFO - 收到来自机器人 3028251597 的事件: {'self_id': 3028251597, 'user_id': 1195711909, 'time': 1738746950, 'message_id': 1315909, 'message_seq': 597097, 'message_type': 'group', 'sender': {'user_id': 1195711909, 'nickname': '观后无感', 'card': '群主邀请了“NTR绿帽王”加入群聊', 'role': 'member', 'title': 'NTR仙尊'}, 'raw_message': '谢谢兄弟', 'font': 14, 'sub_type': 'normal', 'message': [{'type': 'text', 'data': {'text': '谢谢兄弟'}}], 'message_format': 'array', 'post_type': 'message', 'group_id': 747239147}
+2025-02-05 17:15:54,054 - flask_app - INFO - 收到来自机器人 3028251597 的事件: {'self_id': 3028251597, 'user_id': 2975926410, 'time': 1738746953, 'message_id': 2101312687, 'message_seq': 107444, 'message_type': 'group', 'sender': {'user_id': 2975926410, 'nickname': '浮生', 'card': '夜之城圆脸', 'role': 'member', 'title': '非人工智能'}, 'raw_message': '[CQ:image,file=492F41DA7FF0E1FE4B9265DFAD76FFB4.png,subType=1,url=https://multimedia.nt.qq.com.cn/download?appid=1407&amp;fileid=EhT8O_h7KU1wwjLj48WaWDuI6RmWURiFkgYg_wooz-7ek5msiwMyBHByb2RQgL2jAVoQmbETCsqutJxIxCxsccv2nA&amp;spec=0&amp;rkey=CAISKKSBekjVG1fMhslt-OiDZro3AhdVbY-lQS604FHY6wWT9sacrzzkm7k,file_size=100613]', 'font': 14, 'sub_type': 'normal', 'message': [{'type': 'image', 'data': {'file': '492F41DA7FF0E1FE4B9265DFAD76FFB4.png', 'subType': 1, 'url': 'https://multimedia.nt.qq.com.cn/download?appid=1407&fileid=EhT8O_h7KU1wwjLj48WaWDuI6RmWURiFkgYg_wooz-7ek5msiwMyBHByb2RQgL2jAVoQmbETCsqutJxIxCxsccv2nA&spec=0&rkey=CAISKKSBekjVG1fMhslt-OiDZro3AhdVbY-lQS604FHY6wWT9sacrzzkm7k', 'file_size': '100613'}}], 'message_format': 'array', 'post_type': 'message', 'group_id': 637655384}
+2025-02-05 17:16:00,098 - flask_app - INFO - 收到来自机器人 3028251597 的事件: {'self_id': 3028251597, 'user_id': 1015930927, 'time': 1738746959, 'message_id': 1413961415, 'message_seq': 597098, 'message_type': 'group', 'sender': {'user_id': 1015930927, 'nickname': '༺࿈҉流☬年࿈༻', 'card': '', 'role': 'member', 'title': ''}, 'raw_message': '改了cbbe 3ba那改了', 'font': 14, 'sub_type': 'normal', 'message': [{'type': 'text', 'data': {'text': '改了cbbe 3ba那改了'}}], 'message_format': 'array', 'post_type': 'message', 'group_id': 747239147}
+2025-02-05 17:16:10,546 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:16:11,418 - flask_app - INFO - Starting Flask application...
+2025-02-05 17:16:12,489 - flask_app - INFO - 收到来自机器人 3028251597 的事件: {'self_id': 3028251597, 'user_id': 3079498044, 'time': 1738746971, 'message_id': 737530188, 'message_seq': 7150, 'message_type': 'group', 'sender': {'user_id': 3079498044, 'nickname': 'Ayndpa', 'card': '', 'role': 'owner', 'title': ''}, 'raw_message': '1', 'font': 14, 'sub_type': 'normal', 'message': [{'type': 'text', 'data': {'text': '1'}}], 'message_format': 'array', 'post_type': 'message', 'group_id': 904171229}
+2025-02-05 17:16:17,910 - flask_app - INFO - 收到来自机器人 3028251597 的事件: {'self_id': 3028251597, 'user_id': 3160554135, 'time': 1738746977, 'message_id': 1613048468, 'message_seq': 597099, 'message_type': 'group', 'sender': {'user_id': 3160554135, 'nickname': '小太阳', 'card': '', 'role': 'member', 'title': ''}, 'raw_message': '[CQ:reply,id=432064181][CQ:at,qq=695170755,name=每天要睡9小时] 自甘doro的指针', 'font': 14, 'sub_type': 'normal', 'message': [{'type': 'reply', 'data': {'id': '432064181'}}, {'type': 'at', 'data': {'qq': '695170755', 'name': '每天要睡9小时'}}, {'type': 'text', 'data': {'text': ' 自甘doro的指针'}}], 'message_format': 'array', 'post_type': 'message', 'group_id': 747239147}
+2025-02-05 17:16:23,219 - flask_app - INFO - 收到来自机器人 3028251597 的事件: {'self_id': 3028251597, 'user_id': 3214838849, 'time': 1738746982, 'message_id': 688762533, 'message_seq': 230057, 'message_type': 'group', 'sender': {'user_id': 3214838849, 'nickname': '还去个damn的倒悬山', 'card': '你上课的时候能不能不要总是积极发言啊', 'role': 'admin', 'title': '🦌管之神'}, 'raw_message': '这分享的不太靠谱', 'font': 14, 'sub_type': 'normal', 'message': [{'type': 'text', 'data': {'text': '这分享的不太靠谱'}}], 'message_format': 'array', 'post_type': 'message', 'group_id': 686038298}
+2025-02-05 17:16:30,607 - flask_app - INFO - 收到来自机器人 3028251597 的事件: {'self_id': 3028251597, 'user_id': 3214838849, 'time': 1738746989, 'message_id': 10036439, 'message_seq': 230058, 'message_type': 'group', 'sender': {'user_id': 3214838849, 'nickname': '还去个damn的倒悬山', 'card': '你上课的时候能不能不要总是积极发言啊', 'role': 'admin', 'title': '🦌管之神'}, 'raw_message': '干脆自己做美化吧', 'font': 14, 'sub_type': 'normal', 'message': [{'type': 'text', 'data': {'text': '干脆自己做美化吧'}}], 'message_format': 'array', 'post_type': 'message', 'group_id': 686038298}
+2025-02-05 17:16:38,083 - flask_app - INFO - 收到来自机器人 3028251597 的事件: {'self_id': 3028251597, 'user_id': 3214838849, 'time': 1738746997, 'message_id': 1303679462, 'message_seq': 230059, 'message_type': 'group', 'sender': {'user_id': 3214838849, 'nickname': '还去个damn的倒悬山', 'card': '你上课的时候能不能不要总是积极发言啊', 'role': 'admin', 'title': '🦌管之神'}, 'raw_message': '这个任务可以保留', 'font': 14, 'sub_type': 'normal', 'message': [{'type': 'text', 'data': {'text': '这个任务可以保留'}}], 'message_format': 'array', 'post_type': 'message', 'group_id': 686038298}
+2025-02-05 17:16:40,121 - flask_app - INFO - 收到来自机器人 3028251597 的事件: {'self_id': 3028251597, 'user_id': 2161379519, 'time': 1738746999, 'message_id': 1600653648, 'message_seq': 230060, 'message_type': 'group', 'sender': {'user_id': 2161379519, 'nickname': '面包🍞龙', 'card': '', 'role': 'admin', 'title': ''}, 'raw_message': '我也在做美化', 'font': 14, 'sub_type': 'normal', 'message': [{'type': 'text', 'data': {'text': '我也在做美化'}}], 'message_format': 'array', 'post_type': 'message', 'group_id': 686038298}
+2025-02-05 17:16:42,916 - flask_app - INFO - 收到来自机器人 3028251597 的事件: {'self_id': 3028251597, 'user_id': 2161379519, 'time': 1738747002, 'message_id': 146481508, 'message_seq': 230061, 'message_type': 'group', 'sender': {'user_id': 2161379519, 'nickname': '面包🍞龙', 'card': '', 'role': 'admin', 'title': ''}, 'raw_message': '[CQ:image,file=A210E1493A828B62F511DEF358E05B0E.jpg,subType=1,url=https://multimedia.nt.qq.com.cn/download?appid=1407&amp;fileid=EhTjaOQ9L2P42AtCJIz-ncP4TuKy6RjTgCsg_woo4fCTq5msiwMyBHByb2RQgL2jAVoQMJ2iwszeGfXctcEhcF4HMw&amp;spec=0&amp;rkey=CAISKKSBekjVG1fMhslt-OiDZro3AhdVbY-lQS604FHY6wWT9sacrzzkm7k,file_size=704595]', 'font': 14, 'sub_type': 'normal', 'message': [{'type': 'image', 'data': {'file': 'A210E1493A828B62F511DEF358E05B0E.jpg', 'subType': 1, 'url': 'https://multimedia.nt.qq.com.cn/download?appid=1407&fileid=EhTjaOQ9L2P42AtCJIz-ncP4TuKy6RjTgCsg_woo4fCTq5msiwMyBHByb2RQgL2jAVoQMJ2iwszeGfXctcEhcF4HMw&spec=0&rkey=CAISKKSBekjVG1fMhslt-OiDZro3AhdVbY-lQS604FHY6wWT9sacrzzkm7k', 'file_size': '704595'}}], 'message_format': 'array', 'post_type': 'message', 'group_id': 686038298}
+2025-02-05 17:16:57,712 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:16:58,597 - flask_app - INFO - Starting Flask application...
+2025-02-05 17:16:59,058 - flask_app - INFO - 收到来自机器人 3028251597 的事件: {'self_id': 3028251597, 'user_id': 1814939044, 'time': 1738747016, 'message_id': 771519838, 'message_seq': 597100, 'message_type': 'group', 'sender': {'user_id': 1814939044, 'nickname': '晑萫港薹荠', 'card': '', 'role': 'member', 'title': ''}, 'raw_message': '没换身型只改物理都不用管。', 'font': 14, 'sub_type': 'normal', 'message': [{'type': 'text', 'data': {'text': '没换身型只改物理都不用管。'}}], 'message_format': 'array', 'post_type': 'message', 'group_id': 747239147}
+2025-02-05 17:16:59,388 - flask_app - INFO - 收到来自机器人 3028251597 的事件: {'self_id': 3028251597, 'user_id': 3079498044, 'time': 1738747018, 'message_id': 2009230295, 'message_seq': 7151, 'message_type': 'group', 'sender': {'user_id': 3079498044, 'nickname': 'Ayndpa', 'card': '', 'role': 'owner', 'title': ''}, 'raw_message': '1', 'font': 14, 'sub_type': 'normal', 'message': [{'type': 'text', 'data': {'text': '1'}}], 'message_format': 'array', 'post_type': 'message', 'group_id': 904171229}
+2025-02-05 17:17:07,437 - flask_app - INFO - 收到来自机器人 3028251597 的事件: {'self_id': 3028251597, 'user_id': 929932637, 'time': 1738747026, 'message_id': 1647646518, 'message_seq': 597101, 'message_type': 'group', 'sender': {'user_id': 929932637, 'nickname': 'O(∩_∩)O哈哈~', 'card': '大英警察进小学', 'role': 'member', 'title': '搬屎大王'}, 'raw_message': 'doro指针', 'font': 14, 'sub_type': 'normal', 'message': [{'type': 'text', 'data': {'text': 'doro指针'}}], 'message_format': 'array', 'post_type': 'message', 'group_id': 747239147}
+2025-02-05 17:17:10,247 - flask_app - INFO - 收到来自机器人 3028251597 的事件: {'self_id': 3028251597, 'user_id': 929932637, 'time': 1738747029, 'message_id': 1663795807, 'message_seq': 597102, 'message_type': 'group', 'sender': {'user_id': 929932637, 'nickname': 'O(∩_∩)O哈哈~', 'card': '大英警察进小学', 'role': 'member', 'title': '搬屎大王'}, 'raw_message': '怎么弄的', 'font': 14, 'sub_type': 'normal', 'message': [{'type': 'text', 'data': {'text': '怎么弄的'}}], 'message_format': 'array', 'post_type': 'message', 'group_id': 747239147}
+2025-02-05 17:17:18,854 - flask_app - INFO - 收到来自机器人 3028251597 的事件: {'self_id': 3028251597, 'user_id': 929932637, 'time': 1738747038, 'message_id': 27612874, 'message_seq': 597103, 'message_type': 'group', 'sender': {'user_id': 929932637, 'nickname': 'O(∩_∩)O哈哈~', 'card': '大英警察进小学', 'role': 'member', 'title': '搬屎大王'}, 'raw_message': '[CQ:image,file=E000CA4CA084D280970A761EBE7908D3.jpg,subType=1,url=https://multimedia.nt.qq.com.cn/download?appid=1407&amp;fileid=EhQDm3SpH4mmcrHESdmAIVmx9ywDEhiBSiD_CijU4Ki8mayLAzIEcHJvZFCAvaMBWhAcB3Cz5PeFBtf9RZ40iIG1&amp;spec=0&amp;rkey=CAISKKSBekjVG1fMhslt-OiDZro3AhdVbY-lQS604FHY6wWT9sacrzzkm7k,file_size=9473]', 'font': 14, 'sub_type': 'normal', 'message': [{'type': 'image', 'data': {'file': 'E000CA4CA084D280970A761EBE7908D3.jpg', 'subType': 1, 'url': 'https://multimedia.nt.qq.com.cn/download?appid=1407&fileid=EhQDm3SpH4mmcrHESdmAIVmx9ywDEhiBSiD_CijU4Ki8mayLAzIEcHJvZFCAvaMBWhAcB3Cz5PeFBtf9RZ40iIG1&spec=0&rkey=CAISKKSBekjVG1fMhslt-OiDZro3AhdVbY-lQS604FHY6wWT9sacrzzkm7k', 'file_size': '9473'}}], 'message_format': 'array', 'post_type': 'message', 'group_id': 747239147}
+2025-02-05 17:17:21,783 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:17:22,658 - flask_app - INFO - Starting Flask application...
+2025-02-05 17:17:23,212 - flask_app - INFO - 收到来自机器人 3028251597 的事件: {'self_id': 3028251597, 'user_id': 3079498044, 'time': 1738747042, 'message_id': 1041548154, 'message_seq': 7152, 'message_type': 'group', 'sender': {'user_id': 3079498044, 'nickname': 'Ayndpa', 'card': '', 'role': 'owner', 'title': ''}, 'raw_message': '1', 'font': 14, 'sub_type': 'normal', 'message': [{'type': 'text', 'data': {'text': '1'}}], 'message_format': 'array', 'post_type': 'message', 'group_id': 904171229}
+2025-02-05 17:17:29,114 - flask_app - INFO - 收到来自机器人 3028251597 的事件: {'self_id': 3028251597, 'user_id': 2410917276, 'time': 1738747048, 'message_id': 1430156427, 'message_seq': 597104, 'message_type': 'group', 'sender': {'user_id': 2410917276, 'nickname': '骆小嘉', 'card': '', 'role': 'member', 'title': ''}, 'raw_message': '[CQ:image,file=1BEF62F852D8D0D96FADBE414EDD39FE.jpg,subType=0,url=https://multimedia.nt.qq.com.cn/download?appid=1407&amp;fileid=EhRs253ICmGws5vMMPiSh75OfSg3oxi9n14g_woo2fyrwJmsiwMyBHByb2RQgL2jAVoQxvP-yk6wvCGGsc5vubPj0A&amp;spec=0&amp;rkey=CAISKKSBekjVG1fMhslt-OiDZro3AhdVbY-lQS604FHY6wWT9sacrzzkm7k,file_size=1544125]', 'font': 14, 'sub_type': 'normal', 'message': [{'type': 'image', 'data': {'file': '1BEF62F852D8D0D96FADBE414EDD39FE.jpg', 'subType': 0, 'url': 'https://multimedia.nt.qq.com.cn/download?appid=1407&fileid=EhRs253ICmGws5vMMPiSh75OfSg3oxi9n14g_woo2fyrwJmsiwMyBHByb2RQgL2jAVoQxvP-yk6wvCGGsc5vubPj0A&spec=0&rkey=CAISKKSBekjVG1fMhslt-OiDZro3AhdVbY-lQS604FHY6wWT9sacrzzkm7k', 'file_size': '1544125'}}], 'message_format': 'array', 'post_type': 'message', 'group_id': 747239147}
+2025-02-05 17:17:39,249 - flask_app - INFO - 收到来自机器人 3028251597 的事件: {'self_id': 3028251597, 'user_id': 2410917276, 'time': 1738747058, 'message_id': 2014638142, 'message_seq': 597105, 'message_type': 'group', 'sender': {'user_id': 2410917276, 'nickname': '骆小嘉', 'card': '', 'role': 'member', 'title': ''}, 'raw_message': '请问一下这个怎么解决啊', 'font': 14, 'sub_type': 'normal', 'message': [{'type': 'text', 'data': {'text': '请问一下这个怎么解决啊'}}], 'message_format': 'array', 'post_type': 'message', 'group_id': 747239147}
+2025-02-05 17:17:40,226 - flask_app - INFO - 收到来自机器人 3028251597 的事件: {'self_id': 3028251597, 'user_id': 390605987, 'time': 1738747059, 'message_id': 1585187775, 'message_seq': 597106, 'message_type': 'group', 'sender': {'user_id': 390605987, 'nickname': '屠龙草叉', 'card': '', 'role': 'member', 'title': ''}, 'raw_message': '鼠标指针替换也挺多的', 'font': 14, 'sub_type': 'normal', 'message': [{'type': 'text', 'data': {'text': '鼠标指针替换也挺多的'}}], 'message_format': 'array', 'post_type': 'message', 'group_id': 747239147}
+2025-02-05 17:17:43,190 - flask_app - INFO - 收到来自机器人 3028251597 的事件: {'self_id': 3028251597, 'user_id': 2410917276, 'time': 1738747062, 'message_id': 1192551227, 'message_seq': 597107, 'message_type': 'group', 'sender': {'user_id': 2410917276, 'nickname': '骆小嘉', 'card': '', 'role': 'member', 'title': ''}, 'raw_message': '各位大佬', 'font': 14, 'sub_type': 'normal', 'message': [{'type': 'text', 'data': {'text': '各位大佬'}}], 'message_format': 'array', 'post_type': 'message', 'group_id': 747239147}
+2025-02-05 17:18:12,057 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:18:12,952 - flask_app - INFO - Starting Flask application...
+2025-02-05 17:18:56,627 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:19:12,211 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:19:27,558 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:19:28,408 - flask_app - INFO - Starting Flask application...
+2025-02-05 17:20:03,921 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:20:04,780 - flask_app - INFO - Starting Flask application...
+2025-02-05 17:20:47,618 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:20:48,507 - flask_app - INFO - Starting Flask application...
+2025-02-05 17:21:04,803 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:21:05,693 - flask_app - INFO - Starting Flask application...
+2025-02-05 17:21:23,841 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:21:24,709 - flask_app - INFO - Starting Flask application...
+2025-02-05 17:21:56,930 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:21:57,794 - flask_app - INFO - Starting Flask application...
+2025-02-05 17:22:13,676 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:22:14,544 - flask_app - INFO - Starting Flask application...
+2025-02-05 17:23:43,766 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:23:44,650 - flask_app - INFO - Starting Flask application...
+2025-02-05 17:25:44,788 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:25:45,674 - flask_app - INFO - Starting Flask application...
+2025-02-05 17:26:02,272 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:26:03,158 - flask_app - INFO - Starting Flask application...
+2025-02-05 17:26:39,623 - flask_app - INFO - User 2089847853 left group 904171229
+2025-02-05 17:28:15,951 - flask_app - INFO - Join request | Group: 904171229 | User: 2161379519 | Comment: 我是奶龙
+2025-02-05 17:28:16,295 - flask_app - INFO - Rejected join request | Group: 904171229 | User: 2161379519 | Reason: 等级过低
+2025-02-05 17:28:30,296 - flask_app - INFO - Join request | Group: 904171229 | User: 1497597414 | Comment: 1
+2025-02-05 17:28:30,672 - flask_app - INFO - Rejected join request | Group: 904171229 | User: 1497597414 | Reason: 等级过低
+2025-02-05 17:29:29,600 - flask_app - INFO - User 2302179125 left group 904171229
+2025-02-05 17:29:32,915 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:29:33,806 - flask_app - INFO - Starting Flask application...
+2025-02-05 17:29:45,044 - flask_app - INFO - Join request | Group: 904171229 | User: 1497597414 | Comment: 2
+2025-02-05 17:29:45,423 - flask_app - INFO - Rejected join request | Group: 904171229 | User: 1497597414 | Reason: 等级过低
+2025-02-05 17:29:53,822 - flask_app - INFO - Join request | Group: 904171229 | User: 2161379519 | Comment: 
+2025-02-05 17:29:54,157 - flask_app - INFO - Rejected join request | Group: 904171229 | User: 2161379519 | Reason: 等级过低
+2025-02-05 17:31:06,520 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:31:07,401 - flask_app - INFO - Starting Flask application...
+2025-02-05 17:31:27,881 - flask_app - INFO - Join request | Group: 904171229 | User: 1497597414 | Comment: 
+2025-02-05 17:31:36,067 - flask_app - ERROR - Error in process_request: RetryError[<Future at 0x18e83e83a50 state=finished raised TypeError>]
+Traceback (most recent call last):
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\site-packages\tenacity\__init__.py", line 478, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+TypeError: GeminiAPI.setup_gemini() takes 1 positional argument but 2 were given
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\AuroraProjects\Python\JZY_SH\events\request.py", line 20, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "c:\AuroraProjects\Python\JZY_SH\events\request.py", line 96, in process_request
+    audit_svc = AuditService()
+                ^^^^^^^^^^^^^^
+  File "c:\AuroraProjects\Python\JZY_SH\llm\audit.py", line 11, in __init__
+    self.gemini_api.setup_gemini(config['gemini_api_key'])
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\site-packages\tenacity\__init__.py", line 336, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\site-packages\tenacity\__init__.py", line 475, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\site-packages\tenacity\__init__.py", line 376, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\site-packages\tenacity\__init__.py", line 419, in exc_check
+    raise retry_exc from fut.exception()
+tenacity.RetryError: RetryError[<Future at 0x18e83e83a50 state=finished raised TypeError>]
+2025-02-05 17:32:32,918 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:32:33,812 - flask_app - INFO - Starting Flask application...
+2025-02-05 17:33:44,719 - flask_app - INFO - Join request | Group: 904171229 | User: 2161379519 | Comment: 
+2025-02-05 17:33:52,897 - flask_app - ERROR - Error in process_request: RetryError[<Future at 0x191ce920cd0 state=finished raised GeminiAPIError>]
+Traceback (most recent call last):
+  File "c:\AuroraProjects\Python\JZY_SH\llm\gemini.py", line 36, in setup_gemini
+    genai.configure(api_key=self.config.api_key)
+                            ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'api_key'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\site-packages\tenacity\__init__.py", line 478, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "c:\AuroraProjects\Python\JZY_SH\llm\gemini.py", line 39, in setup_gemini
+    raise GeminiAPIError(f"Failed to initialize Gemini API: {str(e)}")
+llm.gemini.GeminiAPIError: Failed to initialize Gemini API: 'NoneType' object has no attribute 'api_key'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\AuroraProjects\Python\JZY_SH\events\request.py", line 20, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "c:\AuroraProjects\Python\JZY_SH\events\request.py", line 96, in process_request
+    audit_svc = AuditService()
+                ^^^^^^^^^^^^^^
+  File "c:\AuroraProjects\Python\JZY_SH\llm\audit.py", line 11, in __init__
+    self.gemini_api.setup_gemini()
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\site-packages\tenacity\__init__.py", line 336, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\site-packages\tenacity\__init__.py", line 475, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\site-packages\tenacity\__init__.py", line 376, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\site-packages\tenacity\__init__.py", line 419, in exc_check
+    raise retry_exc from fut.exception()
+tenacity.RetryError: RetryError[<Future at 0x191ce920cd0 state=finished raised GeminiAPIError>]
+2025-02-05 17:33:54,116 - flask_app - INFO - Join request | Group: 904171229 | User: 1497597414 | Comment: 
+2025-02-05 17:33:57,150 - flask_app - INFO - Join request | Group: 904171229 | User: 2161379519 | Comment: 
+2025-02-05 17:34:02,283 - flask_app - ERROR - Error in process_request: RetryError[<Future at 0x191ce920dd0 state=finished raised GeminiAPIError>]
+Traceback (most recent call last):
+  File "c:\AuroraProjects\Python\JZY_SH\llm\gemini.py", line 36, in setup_gemini
+    genai.configure(api_key=self.config.api_key)
+                            ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'api_key'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\site-packages\tenacity\__init__.py", line 478, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "c:\AuroraProjects\Python\JZY_SH\llm\gemini.py", line 39, in setup_gemini
+    raise GeminiAPIError(f"Failed to initialize Gemini API: {str(e)}")
+llm.gemini.GeminiAPIError: Failed to initialize Gemini API: 'NoneType' object has no attribute 'api_key'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\AuroraProjects\Python\JZY_SH\events\request.py", line 20, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "c:\AuroraProjects\Python\JZY_SH\events\request.py", line 96, in process_request
+    audit_svc = AuditService()
+                ^^^^^^^^^^^^^^
+  File "c:\AuroraProjects\Python\JZY_SH\llm\audit.py", line 11, in __init__
+    self.gemini_api.setup_gemini()
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\site-packages\tenacity\__init__.py", line 336, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\site-packages\tenacity\__init__.py", line 475, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\site-packages\tenacity\__init__.py", line 376, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\site-packages\tenacity\__init__.py", line 419, in exc_check
+    raise retry_exc from fut.exception()
+tenacity.RetryError: RetryError[<Future at 0x191ce920dd0 state=finished raised GeminiAPIError>]
+2025-02-05 17:34:05,326 - flask_app - ERROR - Error in process_request: RetryError[<Future at 0x191ce920b10 state=finished raised GeminiAPIError>]
+Traceback (most recent call last):
+  File "c:\AuroraProjects\Python\JZY_SH\llm\gemini.py", line 36, in setup_gemini
+    genai.configure(api_key=self.config.api_key)
+                            ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'api_key'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\site-packages\tenacity\__init__.py", line 478, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "c:\AuroraProjects\Python\JZY_SH\llm\gemini.py", line 39, in setup_gemini
+    raise GeminiAPIError(f"Failed to initialize Gemini API: {str(e)}")
+llm.gemini.GeminiAPIError: Failed to initialize Gemini API: 'NoneType' object has no attribute 'api_key'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\AuroraProjects\Python\JZY_SH\events\request.py", line 20, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "c:\AuroraProjects\Python\JZY_SH\events\request.py", line 96, in process_request
+    audit_svc = AuditService()
+                ^^^^^^^^^^^^^^
+  File "c:\AuroraProjects\Python\JZY_SH\llm\audit.py", line 11, in __init__
+    self.gemini_api.setup_gemini()
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\site-packages\tenacity\__init__.py", line 336, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\site-packages\tenacity\__init__.py", line 475, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\site-packages\tenacity\__init__.py", line 376, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\site-packages\tenacity\__init__.py", line 419, in exc_check
+    raise retry_exc from fut.exception()
+tenacity.RetryError: RetryError[<Future at 0x191ce920b10 state=finished raised GeminiAPIError>]
+2025-02-05 17:34:52,409 - flask_app - INFO - Join request | Group: 904171229 | User: 1497597414 | Comment: 
+2025-02-05 17:35:00,584 - flask_app - ERROR - Error in process_request: RetryError[<Future at 0x191ce6d0390 state=finished raised GeminiAPIError>]
+Traceback (most recent call last):
+  File "c:\AuroraProjects\Python\JZY_SH\llm\gemini.py", line 36, in setup_gemini
+    genai.configure(api_key=self.config.api_key)
+                            ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'api_key'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\site-packages\tenacity\__init__.py", line 478, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "c:\AuroraProjects\Python\JZY_SH\llm\gemini.py", line 39, in setup_gemini
+    raise GeminiAPIError(f"Failed to initialize Gemini API: {str(e)}")
+llm.gemini.GeminiAPIError: Failed to initialize Gemini API: 'NoneType' object has no attribute 'api_key'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\AuroraProjects\Python\JZY_SH\events\request.py", line 20, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "c:\AuroraProjects\Python\JZY_SH\events\request.py", line 96, in process_request
+    audit_svc = AuditService()
+                ^^^^^^^^^^^^^^
+  File "c:\AuroraProjects\Python\JZY_SH\llm\audit.py", line 11, in __init__
+    self.gemini_api.setup_gemini()
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\site-packages\tenacity\__init__.py", line 336, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\site-packages\tenacity\__init__.py", line 475, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\site-packages\tenacity\__init__.py", line 376, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\site-packages\tenacity\__init__.py", line 419, in exc_check
+    raise retry_exc from fut.exception()
+tenacity.RetryError: RetryError[<Future at 0x191ce6d0390 state=finished raised GeminiAPIError>]
+2025-02-05 17:35:42,489 - flask_app - INFO - Join request | Group: 904171229 | User: 2161379519 | Comment: 
+2025-02-05 17:37:20,506 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:37:21,386 - flask_app - INFO - Starting Flask application...
+2025-02-05 17:38:15,062 - flask_app - INFO - Join request | Group: 904171229 | User: 2161379519 | Comment: 
+2025-02-05 17:38:15,192 - flask_app - ERROR - Failed to initialize Gemini API: 'NoneType' object has no attribute 'api_key'
+2025-02-05 17:38:19,192 - flask_app - ERROR - Failed to initialize Gemini API: 'NoneType' object has no attribute 'api_key'
+2025-02-05 17:38:23,193 - flask_app - ERROR - Failed to initialize Gemini API: 'NoneType' object has no attribute 'api_key'
+2025-02-05 17:38:23,193 - flask_app - ERROR - Error in process_request: RetryError[<Future at 0x2b3286e8590 state=finished raised GeminiAPIError>]
+Traceback (most recent call last):
+  File "c:\AuroraProjects\Python\JZY_SH\llm\gemini.py", line 38, in setup_gemini
+    genai.configure(api_key=self.config.api_key)
+                            ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'api_key'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\site-packages\tenacity\__init__.py", line 478, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "c:\AuroraProjects\Python\JZY_SH\llm\gemini.py", line 43, in setup_gemini
+    raise GeminiAPIError(f"Failed to initialize Gemini API: {str(e)}")
+llm.gemini.GeminiAPIError: Failed to initialize Gemini API: 'NoneType' object has no attribute 'api_key'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\AuroraProjects\Python\JZY_SH\events\request.py", line 20, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "c:\AuroraProjects\Python\JZY_SH\events\request.py", line 96, in process_request
+    audit_svc = AuditService()
+                ^^^^^^^^^^^^^^
+  File "c:\AuroraProjects\Python\JZY_SH\llm\audit.py", line 11, in __init__
+    self.gemini_api.setup_gemini()
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\site-packages\tenacity\__init__.py", line 336, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\site-packages\tenacity\__init__.py", line 475, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\site-packages\tenacity\__init__.py", line 376, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\site-packages\tenacity\__init__.py", line 419, in exc_check
+    raise retry_exc from fut.exception()
+tenacity.RetryError: RetryError[<Future at 0x2b3286e8590 state=finished raised GeminiAPIError>]
+2025-02-05 17:39:36,663 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:39:37,554 - flask_app - INFO - Starting Flask application...
+2025-02-05 17:42:27,853 - flask_app - INFO - User 3079498044 left group 904171229
+2025-02-05 17:42:42,672 - flask_app - INFO - Join request | Group: 904171229 | User: 3079498044 | Comment: 
+2025-02-05 17:42:50,830 - flask_app - ERROR - Error in process_request: RetryError[<Future at 0x27b466c1d90 state=finished raised GeminiAPIError>]
+Traceback (most recent call last):
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\site-packages\tenacity\__init__.py", line 478, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "c:\AuroraProjects\Python\JZY_SH\llm\gemini.py", line 40, in setup_gemini
+    raise GeminiAPIError("GeminiConfig or api_key not properly initialized")
+llm.gemini.GeminiAPIError: GeminiConfig or api_key not properly initialized
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\AuroraProjects\Python\JZY_SH\events\request.py", line 20, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "c:\AuroraProjects\Python\JZY_SH\events\request.py", line 96, in process_request
+    audit_svc = AuditService()
+                ^^^^^^^^^^^^^^
+  File "c:\AuroraProjects\Python\JZY_SH\llm\audit.py", line 11, in __init__
+    self.gemini_api.setup_gemini()
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\site-packages\tenacity\__init__.py", line 336, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\site-packages\tenacity\__init__.py", line 475, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\site-packages\tenacity\__init__.py", line 376, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\site-packages\tenacity\__init__.py", line 419, in exc_check
+    raise retry_exc from fut.exception()
+tenacity.RetryError: RetryError[<Future at 0x27b466c1d90 state=finished raised GeminiAPIError>]
+2025-02-05 17:45:50,902 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:45:50,903 - flask_app - INFO - Extensions initialized successfully
+2025-02-05 17:45:51,818 - flask_app - INFO - Starting Flask application...
+2025-02-05 17:45:56,554 - flask_app - INFO - Join request | Group: 904171229 | User: 3079498044 | Comment: 
+2025-02-05 17:45:56,741 - flask_app - INFO - Gemini API initialized successfully
+2025-02-05 17:45:56,742 - flask_app - ERROR - Error during join request audit: unhashable type: 'dict'
+2025-02-05 17:45:56,742 - flask_app - ERROR - Error in process_request: unhashable type: 'dict'
+Traceback (most recent call last):
+  File "c:\AuroraProjects\Python\JZY_SH\events\request.py", line 20, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "c:\AuroraProjects\Python\JZY_SH\events\request.py", line 97, in process_request
+    result = audit_svc.audit_join_request(data['comment'])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\AuroraProjects\Python\JZY_SH\llm\audit.py", line 50, in audit_join_request
+    return self._cached_audit(message)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\AuroraProjects\Python\JZY_SH\llm\audit.py", line 38, in _cached_audit
+    return sync_execute_request(
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "c:\AuroraProjects\Python\JZY_SH\llm\pool.py", line 64, in sync_execute_request
+    return asyncio.run(execute_request(func, *args, **kwargs))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\asyncio\runners.py", line 190, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\asyncio\base_events.py", line 654, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "c:\AuroraProjects\Python\JZY_SH\llm\pool.py", line 60, in execute_request
+    return await global_request_pool.execute(func, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\AuroraProjects\Python\JZY_SH\llm\pool.py", line 52, in execute
+    return await self._cached_execute(func, *args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: unhashable type: 'dict'
+2025-02-05 17:47:26,558 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:47:26,558 - flask_app - INFO - Extensions initialized successfully
+2025-02-05 17:47:27,451 - flask_app - INFO - Starting Flask application...
+2025-02-05 17:47:30,225 - flask_app - INFO - Join request | Group: 904171229 | User: 3079498044 | Comment: 
+2025-02-05 17:47:30,374 - flask_app - INFO - Gemini API initialized successfully
+2025-02-05 17:47:30,379 - flask_app - ERROR - Error during join request audit: Error executing request: JSON chat error: Invalid input: 'content' argument must not be empty. Please provide a non-empty value.
+2025-02-05 17:47:30,379 - flask_app - ERROR - Error in process_request: Error executing request: JSON chat error: Invalid input: 'content' argument must not be empty. Please provide a non-empty value.
+Traceback (most recent call last):
+  File "c:\AuroraProjects\Python\JZY_SH\llm\gemini.py", line 117, in achat_json
+    response = await asyncio.to_thread(chat.send_message, prompt)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\asyncio\threads.py", line 25, in to_thread
+    return await loop.run_in_executor(None, func_call)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\concurrent\futures\thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\site-packages\google\generativeai\generative_models.py", line 564, in send_message
+    content = content_types.to_content(content)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\site-packages\google\generativeai\types\content_types.py", line 286, in to_content
+    raise ValueError(
+ValueError: Invalid input: 'content' argument must not be empty. Please provide a non-empty value.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\AuroraProjects\Python\JZY_SH\llm\pool.py", line 56, in _execute
+    result = await asyncio.to_thread(func, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\asyncio\threads.py", line 25, in to_thread
+    return await loop.run_in_executor(None, func_call)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\concurrent\futures\thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\AuroraProjects\Python\JZY_SH\llm\gemini.py", line 132, in chat_json
+    return asyncio.run(self.achat_json(prompt, schema, history, system_prompt))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\asyncio\runners.py", line 190, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\asyncio\base_events.py", line 654, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "c:\AuroraProjects\Python\JZY_SH\llm\gemini.py", line 126, in achat_json
+    raise GeminiAPIError(f"JSON chat error: {str(e)}")
+llm.gemini.GeminiAPIError: JSON chat error: Invalid input: 'content' argument must not be empty. Please provide a non-empty value.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\AuroraProjects\Python\JZY_SH\events\request.py", line 20, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "c:\AuroraProjects\Python\JZY_SH\events\request.py", line 97, in process_request
+    result = audit_svc.audit_join_request(data['comment'])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\AuroraProjects\Python\JZY_SH\llm\audit.py", line 71, in audit_join_request
+    return self._cached_audit(message)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\AuroraProjects\Python\JZY_SH\llm\audit.py", line 64, in _cached_audit
+    return self._cached_audit_impl(cache_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\AuroraProjects\Python\JZY_SH\llm\audit.py", line 50, in _cached_audit_impl
+    return sync_execute_request(
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "c:\AuroraProjects\Python\JZY_SH\llm\pool.py", line 78, in sync_execute_request
+    return asyncio.run(execute_request(func, *args, **kwargs))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\asyncio\runners.py", line 190, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\AuroraProjects\Python\JZY_SH\.conda\Lib\asyncio\base_events.py", line 654, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "c:\AuroraProjects\Python\JZY_SH\llm\pool.py", line 74, in execute_request
+    return await global_request_pool.execute(func, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\AuroraProjects\Python\JZY_SH\llm\pool.py", line 66, in execute
+    return await self._cached_execute(func, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\AuroraProjects\Python\JZY_SH\llm\pool.py", line 41, in _cached_execute
+    self._cache[cache_key] = await self._execute(func, *args, **kwargs)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\AuroraProjects\Python\JZY_SH\llm\pool.py", line 60, in _execute
+    raise Exception(f"Error executing request: {str(e)}")
+Exception: Error executing request: JSON chat error: Invalid input: 'content' argument must not be empty. Please provide a non-empty value.
+2025-02-05 17:49:11,987 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:49:11,988 - flask_app - INFO - Extensions initialized successfully
+2025-02-05 17:49:12,895 - flask_app - INFO - Starting Flask application...
+2025-02-05 17:49:14,608 - flask_app - INFO - Join request | Group: 904171229 | User: 3079498044 | Comment: 
+2025-02-05 17:49:52,165 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:49:52,166 - flask_app - INFO - Extensions initialized successfully
+2025-02-05 17:49:53,048 - flask_app - INFO - Starting Flask application...
+2025-02-05 17:50:08,695 - flask_app - INFO - Join request | Group: 904171229 | User: 3079498044 | Comment: 
+2025-02-05 17:50:38,765 - flask_app - INFO - Join request | Group: 904171229 | User: 3079498044 | Comment: 123
+2025-02-05 17:50:38,902 - flask_app - INFO - Gemini API initialized successfully
+2025-02-05 17:50:40,065 - flask_app - INFO - Rejected join request | Group: 904171229 | User: 3079498044 | Reason: 信息不包含鸡子鱼整合
+2025-02-05 17:51:34,246 - flask_app - INFO - Join request | Group: 904171229 | User: 3079498044 | Comment: 鸡子鱼整合
+2025-02-05 17:51:34,403 - flask_app - INFO - Gemini API initialized successfully
+2025-02-05 17:51:35,632 - flask_app - INFO - User 3079498044 joined group 904171229 (approved)
+2025-02-05 17:51:35,734 - flask_app - INFO - Approved join request | Group: 904171229 | User: 3079498044
+2025-02-05 17:52:06,330 - flask_app - INFO - Join request | Group: 904171229 | User: 2161379519 | Comment: 
+2025-02-05 17:52:48,513 - flask_app - INFO - User 3079498044 left group 904171229
+2025-02-05 17:53:06,150 - flask_app - INFO - Join request | Group: 904171229 | User: 3079498044 | Comment: 问题：本群的密码是？
+答案：
+2025-02-05 17:53:06,351 - flask_app - INFO - Gemini API initialized successfully
+2025-02-05 17:53:08,134 - flask_app - INFO - Rejected join request | Group: 904171229 | User: 3079498044 | Reason: 答案中未包含鸡子鱼整合相关信息
+2025-02-05 17:54:18,439 - flask_app - INFO - Join request | Group: 904171229 | User: 3079498044 | Comment: 问题：本群的密码是？
+答案：鸡子鱼整合
+2025-02-05 17:54:18,580 - flask_app - INFO - Gemini API initialized successfully
+2025-02-05 17:54:19,710 - flask_app - INFO - User 3079498044 joined group 904171229 (approved)
+2025-02-05 17:54:19,764 - flask_app - INFO - Approved join request | Group: 904171229 | User: 3079498044
+2025-02-05 17:54:26,788 - flask_app - INFO - Join request | Group: 904171229 | User: 2161379519 | Comment: 
+2025-02-05 17:55:05,060 - flask_app - INFO - User 2161379519 was invited to group 904171229 by 3079498044
+2025-02-05 17:56:54,663 - flask_app - INFO - Config loaded successfully
+2025-02-05 17:56:54,663 - flask_app - INFO - Extensions initialized successfully
+2025-02-05 17:56:55,554 - flask_app - INFO - Starting Flask application...
+2025-02-05 17:57:39,813 - flask_app - INFO - Join request | Group: 904171229 | User: 2038863499 | Comment: 问题：本群的密码是？
+答案：测试
+2025-02-05 17:57:39,990 - flask_app - INFO - Gemini API initialized successfully
+2025-02-05 17:57:41,162 - flask_app - INFO - Rejected join request | Group: 904171229 | User: 2038863499 | Reason: 答案未包含鸡子鱼整合。
+2025-02-05 18:00:22,202 - flask_app - INFO - Join request | Group: 904171229 | User: 2089847853 | Comment: 问题：本群的密码是？
+答案：鸡子鱼整合
+2025-02-05 18:00:22,357 - flask_app - INFO - Gemini API initialized successfully
+2025-02-05 18:00:23,351 - flask_app - INFO - User 2089847853 joined group 904171229 (approved)
+2025-02-05 18:00:23,374 - flask_app - INFO - Approved join request | Group: 904171229 | User: 2089847853
+2025-02-05 18:11:10,643 - flask_app - INFO - Config loaded successfully
+2025-02-05 18:11:10,643 - flask_app - INFO - Extensions initialized successfully
+2025-02-05 18:11:11,541 - flask_app - INFO - Starting Flask application...
+2025-02-05 18:11:17,406 - flask_app - INFO - User 3079498044 left group 904171229
+2025-02-05 18:11:24,262 - flask_app - INFO - Join request | Group: 904171229 | User: 3079498044 | Comment: 问题：本群的密码是？
+答案：
+2025-02-05 18:11:24,482 - flask_app - INFO - Gemini API initialized successfully
+2025-02-05 18:11:25,841 - flask_app - INFO - Rejected join request | Group: 904171229 | User: 3079498044 | Reason: 答案中缺少必要信息，请补充包含群内指定up主和视频内容相关的关键词。
+2025-02-05 18:12:01,564 - flask_app - INFO - Join request | Group: 904171229 | User: 3079498044 | Comment: 问题：本群的密码是？
+答案：整合3.0
+2025-02-05 18:12:01,807 - flask_app - INFO - Gemini API initialized successfully
+2025-02-05 18:12:02,732 - flask_app - INFO - User 3079498044 joined group 904171229 (approved)
+2025-02-05 18:12:02,844 - flask_app - INFO - Approved join request | Group: 904171229 | User: 3079498044
+2025-02-05 18:12:24,028 - flask_app - INFO - Config loaded successfully
+2025-02-05 18:12:24,029 - flask_app - INFO - Extensions initialized successfully
+2025-02-05 18:12:24,922 - flask_app - INFO - Starting Flask application...
+2025-02-05 18:32:16,749 - flask_app - INFO - Config loaded successfully
+2025-02-05 18:32:16,749 - flask_app - INFO - Extensions initialized successfully
+2025-02-05 18:32:17,737 - flask_app - INFO - Starting Flask application...
+2025-02-05 18:32:21,483 - flask_app - INFO - User 3079498044 left group 904171229
+2025-02-05 18:32:35,034 - flask_app - INFO - Join request | Group: 904171229 | User: 3079498044 | Comment: 问题：本群的密码是？
+答案：鸡子鱼
+2025-02-05 18:32:35,380 - flask_app - ERROR - Error in check_other_groups: check_other_groups() takes 1 positional argument but 2 were given
+Traceback (most recent call last):
+  File "c:\AuroraProjects\Python\JZY_SH\events\request.py", line 23, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+TypeError: check_other_groups() takes 1 positional argument but 2 were given
+2025-02-05 18:32:35,567 - flask_app - INFO - Rejected join request | Group: 904171229 | User: 3079498044 | Reason: 已在其他群
+2025-02-05 18:33:02,155 - flask_app - INFO - Config loaded successfully
+2025-02-05 18:33:02,156 - flask_app - INFO - Extensions initialized successfully
+2025-02-05 18:33:03,041 - flask_app - INFO - Starting Flask application...
+2025-02-05 18:33:10,295 - flask_app - INFO - Join request | Group: 904171229 | User: 3079498044 | Comment: 问题：本群的密码是？
+答案：鸡子鱼
+2025-02-05 18:33:10,532 - flask_app - ERROR - Error in check_other_groups: check_other_groups() takes 1 positional argument but 2 were given
+Traceback (most recent call last):
+  File "c:\AuroraProjects\Python\JZY_SH\events\request.py", line 23, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+TypeError: check_other_groups() takes 1 positional argument but 2 were given
+2025-02-05 18:33:10,749 - flask_app - INFO - Rejected join request | Group: 904171229 | User: 3079498044 | Reason: 已在其他群
+2025-02-05 18:33:18,176 - flask_app - INFO - Config loaded successfully
+2025-02-05 18:33:18,177 - flask_app - INFO - Extensions initialized successfully
+2025-02-05 18:33:19,059 - flask_app - INFO - Starting Flask application...
+2025-02-05 18:33:22,314 - flask_app - INFO - Join request | Group: 904171229 | User: 3079498044 | Comment: 问题：本群的密码是？
+答案：
+2025-02-05 18:33:22,767 - flask_app - INFO - Rejected join request | Group: 904171229 | User: 3079498044 | Reason: 主动退群次数过多
+2025-02-05 18:33:43,533 - flask_app - INFO - Join request | Group: 904171229 | User: 3079498044 | Comment: 问题：本群的密码是？
+答案：鸡子鱼
+2025-02-05 18:33:43,709 - flask_app - INFO - Gemini API initialized successfully
+2025-02-05 18:33:44,730 - flask_app - INFO - User 3079498044 joined group 904171229 (approved)
+2025-02-05 18:33:44,787 - flask_app - INFO - Approved join request | Group: 904171229 | User: 3079498044
+2025-02-05 18:34:56,691 - flask_app - INFO - Join request | Group: 904171229 | User: 3079498044 | Comment: 问题：本群的密码是？
+答案：鸡子鱼
+2025-02-05 18:34:57,046 - flask_app - INFO - Rejected join request | Group: 904171229 | User: 3079498044 | Reason: 已在其他群
+2025-02-05 18:35:20,565 - flask_app - INFO - Join request | Group: 904171229 | User: 3079498044 | Comment: 问题：本群的密码是？
+答案：鸡子鱼
+2025-02-05 18:35:20,731 - flask_app - INFO - Gemini API initialized successfully
+2025-02-05 18:35:20,894 - flask_app - INFO - User 3079498044 joined group 904171229 (approved)
+2025-02-05 18:35:21,021 - flask_app - INFO - Approved join request | Group: 904171229 | User: 3079498044
+2025-02-05 18:36:55,526 - flask_app - INFO - Join request | Group: 904171229 | User: 2010840997 | Comment: 问题：本群的密码是？
+答案：鸡子鱼
+2025-02-05 18:36:55,671 - flask_app - INFO - Gemini API initialized successfully
+2025-02-05 18:36:55,889 - flask_app - INFO - User 2010840997 joined group 904171229 (approved)
+2025-02-05 18:36:55,916 - flask_app - INFO - Approved join request | Group: 904171229 | User: 2010840997
+2025-02-05 18:37:26,428 - flask_app - INFO - User 3079498044 was kicked from group 904171229 by 2010840997
+2025-02-05 18:37:41,408 - flask_app - INFO - Join request | Group: 904171229 | User: 3079498044 | Comment: 问题：本群的密码是？
+答案：鸡子鱼
+2025-02-05 18:37:41,586 - flask_app - INFO - Gemini API initialized successfully
+2025-02-05 18:37:41,743 - flask_app - INFO - User 3079498044 joined group 904171229 (approved)
+2025-02-05 18:37:41,830 - flask_app - INFO - Approved join request | Group: 904171229 | User: 3079498044
+2025-02-05 18:37:50,766 - flask_app - INFO - User 3079498044 was kicked from group 904171229 by 2010840997
+2025-02-05 18:37:57,669 - flask_app - INFO - Join request | Group: 904171229 | User: 3079498044 | Comment: 问题：本群的密码是？
+答案：鸡子鱼
+2025-02-05 18:37:58,169 - flask_app - INFO - Rejected join request | Group: 904171229 | User: 3079498044 | Reason: 被踢次数过多
+2025-02-05 18:38:42,156 - flask_app - INFO - User 2010840997 left group 904171229
+2025-02-05 18:38:42,744 - flask_app - INFO - Join request | Group: 904171229 | User: 3079498044 | Comment: 问题：本群的密码是？
+答案：鸡子鱼
+2025-02-05 18:38:42,885 - flask_app - INFO - Gemini API initialized successfully
+2025-02-05 18:38:43,030 - flask_app - INFO - User 3079498044 joined group 904171229 (approved)
+2025-02-05 18:38:43,144 - flask_app - INFO - Approved join request | Group: 904171229 | User: 3079498044
+2025-02-05 18:38:46,914 - flask_app - INFO - User 3079498044 left group 904171229
+2025-02-05 18:38:53,259 - flask_app - INFO - Join request | Group: 904171229 | User: 2010840997 | Comment: 问题：本群的密码是？
+答案：鸡子鱼
+2025-02-05 18:38:53,612 - flask_app - INFO - Rejected join request | Group: 904171229 | User: 2010840997 | Reason: 主动退群次数过多
+2025-02-05 18:38:55,997 - flask_app - INFO - Join request | Group: 904171229 | User: 3079498044 | Comment: 问题：本群的密码是？
+答案：鸡子鱼
+2025-02-05 18:38:56,385 - flask_app - INFO - Rejected join request | Group: 904171229 | User: 3079498044 | Reason: 主动退群次数过多
+2025-02-05 18:39:55,659 - flask_app - INFO - Join request | Group: 904171229 | User: 3079498044 | Comment: 问题：本群的密码是？
+答案：1
+2025-02-05 18:39:56,025 - flask_app - INFO - Rejected join request | Group: 904171229 | User: 3079498044 | Reason: 已在其他群
+2025-02-05 18:41:02,592 - flask_app - INFO - Config loaded successfully
+2025-02-05 18:41:02,593 - flask_app - INFO - Extensions initialized successfully
+2025-02-05 18:41:03,639 - flask_app - INFO - Starting Flask application...
+2025-02-05 18:44:30,915 - flask_app - INFO - Config loaded successfully
+2025-02-05 18:44:30,915 - flask_app - INFO - Extensions initialized successfully
+2025-02-05 18:44:32,220 - flask_app - INFO - Starting Flask application...
+2025-02-05 18:50:47,309 - flask_app - INFO - Join request | Group: 1011978245 | User: 3952567836 | Comment: 问题：整合名称是什么
+答案：鸡子鱼
+2025-02-05 18:50:47,664 - flask_app - INFO - Rejected join request | Group: 1011978245 | User: 3952567836 | Reason: 等级过低
+2025-02-05 18:56:30,433 - flask_app - INFO - Join request | Group: 1011978245 | User: 1421215032 | Comment: 问题：整合名称是什么
+答案：小季季3.0
+2025-02-05 18:56:30,753 - flask_app - INFO - Rejected join request | Group: 1011978245 | User: 1421215032 | Reason: 已在其他群
+2025-02-05 18:57:36,171 - flask_app - INFO - Join request | Group: 1011978245 | User: 1791484989 | Comment: 问题：整合名称是什么
+答案：季梓虞
+2025-02-05 18:57:36,509 - flask_app - INFO - Rejected join request | Group: 1011978245 | User: 1791484989 | Reason: 已在其他群
+2025-02-05 19:10:54,883 - flask_app - INFO - User 153644408 left group 1011978245
+2025-02-05 19:11:36,088 - flask_app - INFO - Join request | Group: 1011978245 | User: 3206868008 | Comment: 问题：整合名称是什么
+答案：季梓虞整合3.0
+2025-02-05 19:11:36,500 - flask_app - INFO - Rejected join request | Group: 1011978245 | User: 3206868008 | Reason: 已在其他群
+2025-02-05 19:23:53,513 - flask_app - INFO - Join request | Group: 1011978245 | User: 1419218594 | Comment: 问题：整合名称是什么
+答案：季梓虞整合
+2025-02-05 19:23:53,866 - flask_app - INFO - Rejected join request | Group: 1011978245 | User: 1419218594 | Reason: 等级过低

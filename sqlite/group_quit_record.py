@@ -63,7 +63,6 @@ def add_quit_record(qq_id: int, group_id: int,
     conn.close()
 
 def get_quit_records(qq_id: Optional[int] = None, 
-                     group_id: Optional[int] = None,
                      db_path: str = DEFAULT_DB_PATH) -> list:
     """查询退群记录"""
     _ensure_table_exists(db_path)
@@ -76,9 +75,6 @@ def get_quit_records(qq_id: Optional[int] = None,
     if qq_id is not None:
         query += " AND qq_id = ?"
         params.append(qq_id)
-    if group_id is not None:
-        query += " AND group_id = ?"
-        params.append(group_id)
     
     cursor.execute(query, params)
     records = cursor.fetchall()
