@@ -139,7 +139,7 @@ def check_level_requirements(user_id: int) -> bool:
     
     logger.debug(f"User info: {user_info}")
 
-    return user_info.get('data', {}).get('level', 0) >= min_level
+    return user_info.get('data', {}).get('qqLevel', 0) >= min_level
 
 @handle_error
 def process_request(data: RequestData) -> None:
