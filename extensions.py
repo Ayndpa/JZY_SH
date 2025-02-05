@@ -16,10 +16,9 @@ if not os.path.exists('logs'):
     os.makedirs('logs')
 
 # 按天切割日志文件
-file_handler = TimedRotatingFileHandler(
+file_handler = logging.handlers.RotatingFileHandler(
     'logs/app.log',
-    when='midnight',
-    interval=1,
+    maxBytes=10*1024*1024,  # 10MB max size
     backupCount=30,
     encoding='utf-8'
 )
