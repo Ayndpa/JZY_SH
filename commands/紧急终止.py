@@ -40,5 +40,6 @@ def execute(args: Optional[list], group_id: int, user_id: int):
     ]
     send_group_msg(group_id, message)
     
-    # Terminate the process
-    sys.exit(0)
+    # Force terminate the process
+    import os
+    os._exit(0)
