@@ -1117,3 +1117,5 @@ TypeError: check_other_groups() takes 1 positional argument but 2 were given
 2025-02-06 13:50:55,986 - flask_app - INFO - 收到来自群 686038298 用户 3079498044 的消息: [{'type': 'text', 'data': {'text': '这里应该抛出异常'}}]
 2025-02-06 13:51:02,040 - flask_app - INFO - 收到来自群 686038298 用户 3079498044 的消息: [{'type': 'text', 'data': {'text': '不然返回False就直接不通过了'}}]
 2025-02-06 13:51:31,613 - flask_app - INFO - 收到来自群 686038298 用户 3079498044 的消息: [{'type': 'text', 'data': {'text': '好了'}}]
+2025-02-06 13:51:41,376 - flask_app - INFO - 收到来自群 686038298 用户 3079498044 的消息: [{'type': 'text', 'data': {'text': '提交'}}]
+2025-02-06 13:51:46,415 - flask_app - INFO - 收到来自群 686038298 用户 3079498044 的消息: [{'type': 'text', 'data': {'text': '等会到服务器拉一下'}}]
