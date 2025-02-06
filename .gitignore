@@ -1,3 +1,4 @@
 /.conda
 /logs
 **/__pycache__/
+*.db

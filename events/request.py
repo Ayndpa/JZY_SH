@@ -1,4 +1,4 @@
-from typing import Dict, Any, Optional, TypedDict
+from typing import Dict, Any, Optional, TypedDict, Tuple
 from functools import wraps
 from extensions import logger, config
 from http_requests.send_group_msg import send_group_msg
@@ -25,6 +25,11 @@ def handle_error(func):
             logger.error(f"Error in {func.__name__}: {str(e)}", exc_info=True)
     return wrapper
 
+class LevelCheckResult(Enum):
+    PASS = "pass"
+    FAIL = "fail"
+    ERROR = "error"
+
 @handle_error
 def handle_group_request(data: Dict[str, Any]) -> None:
     request_data = RequestData(
@@ -48,8 +53,12 @@ def handle_group_request(data: Dict[str, Any]) -> None:
         _notify_admin(request_data, NotifyReason.EMPTY_COMMENT)
         return
 
-    if not check_level_requirements(request_data['user_id']):
+    level_check = check_level_requirements(request_data['user_id'])
+    if level_check == LevelCheckResult.FAIL:
         _reject_request(request_data, "等级过低")
+        return
+    elif level_check == LevelCheckResult.ERROR:
+        _notify_admin(request_data, NotifyReason.LEVEL_CHECK_FAILED)
         return
     
     if not check_other_groups(request_data['user_id']):
@@ -81,7 +90,7 @@ class RejectReason(Enum):
     LEAVE_LIMIT = "主动退群次数过多"
 
 @handle_error
-def check_quit_history(user_id: int) -> tuple[bool, Optional[str]]:
+def check_quit_history(user_id: int) -> tuple[bool, Optional[str]]: 
     """Check if user has previously quit the group"""
     
     quit_records = get_quit_records(user_id)
@@ -147,9 +156,9 @@ def _reject_request(data: RequestData, reason: str) -> None:
     )
 
 @handle_error
-def check_level_requirements(user_id: int) -> bool:
+def check_level_requirements(user_id: int) -> LevelCheckResult:
     if not config.get('enable_level_check', False):
-        return True
+        return LevelCheckResult.PASS
         
     min_level = config.get('min_join_level', 0)
     user_info = get_stranger_info(user_id)
@@ -160,19 +169,9 @@ def check_level_requirements(user_id: int) -> bool:
     level = user_data.get('qqLevel', 0)
     
     if not level:
-        # 构建完整的 RequestData
-        request_data = RequestData(
-            sub_type='add',
-            group_id=config.get('group_id'),
-            user_id=user_id,
-            comment='',
-            flag=''
-        )
-        _notify_admin(request_data, NotifyReason.LEVEL_CHECK_FAILED)
-        # 当无法获取等级时返回 False 更安全
-        raise ValueError("无法获取用户等级信息")
+        return LevelCheckResult.ERROR
 
-    return level >= min_level
+    return LevelCheckResult.PASS if level >= min_level else LevelCheckResult.FAIL
 
 @handle_error
 def process_request(data: RequestData) -> None:
