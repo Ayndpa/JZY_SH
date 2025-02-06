@@ -45,7 +45,7 @@ def handle_group_request(data: Dict[str, Any]) -> None:
         return
 
     if not request_data['comment']:
-        _notify_admin(request_data)
+        _notify_admin(request_data, NotifyReason.EMPTY_COMMENT)
         return
 
     if not check_level_requirements(request_data['user_id']):
@@ -113,14 +113,31 @@ def _log_request(data: RequestData) -> None:
             f"User: {data['user_id']}"
         )
 
-def _notify_admin(data: RequestData) -> None:
+class NotifyReason(Enum):
+    EMPTY_COMMENT = "加群留言为空"
+    LEVEL_CHECK_FAILED = "无法获取等级信息"
+    CUSTOM_REASON = "自定义原因"
+
+def _notify_admin(data: RequestData, reason_type: NotifyReason, custom_msg: str = "") -> None:
     admin_group = config.get('admin_group_id')
-    msg = (
-        f"加群留言为空，需要人工审核\n"
+    
+    base_info = (
+        f"需要人工审核\n"
+        f"原因: {reason_type.value}\n"
         f"群号: {data['group_id']}\n"
         f"用户: {data['user_id']}"
     )
-    send_group_msg(admin_group, msg)
+    
+    if custom_msg:
+        base_info += f"\n附加信息: {custom_msg}"
+        
+    if reason_type == NotifyReason.EMPTY_COMMENT:
+        base_info += "\n说明: 用户未填写加群申请信息"
+    elif reason_type == NotifyReason.LEVEL_CHECK_FAILED:
+        base_info += "\n说明: 无法通过 API 获取用户等级信息"
+    
+    send_group_msg(admin_group, base_info)
+    logger.info(f"Admin notification sent: {base_info}")
 
 def _reject_request(data: RequestData, reason: str) -> None:
     set_group_add_request(data['flag'], data['sub_type'], approve=False, reason=reason)
@@ -139,7 +156,23 @@ def check_level_requirements(user_id: int) -> bool:
     
     logger.debug(f"User info: {user_info}")
 
-    return user_info.get('data', {}).get('qqLevel', 100) >= min_level
+    user_data = user_info.get('data', {})
+    level = user_data.get('qqLevel', 0)
+    
+    if not level:
+        # 构建完整的 RequestData
+        request_data = RequestData(
+            sub_type='add',
+            group_id=config.get('group_id'),
+            user_id=user_id,
+            comment='',
+            flag=''
+        )
+        _notify_admin(request_data, NotifyReason.LEVEL_CHECK_FAILED)
+        # 当无法获取等级时返回 False 更安全
+        raise ValueError("无法获取用户等级信息")
+
+    return level >= min_level
 
 @handle_error
 def process_request(data: RequestData) -> None:

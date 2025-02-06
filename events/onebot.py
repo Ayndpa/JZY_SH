@@ -2,6 +2,7 @@ from enum import Enum
 from typing import Dict, Any, Optional
 from .notice import handle_group_decrease, handle_group_increase
 from .request import handle_group_request
+from .message import handle_message
 from extensions import config, logger
 
 class PostType(Enum):
@@ -44,8 +45,10 @@ def handle_event(data: Dict[str, Any]) -> None:
             handle_notice_event(data)
         elif post_type == PostType.REQUEST.value:
             handle_request_event(data)
-        # else:
-            # logger.debug(f'未处理的事件类型: {post_type}')
+        elif post_type == PostType.MESSAGE.value:
+            handle_message(data)
+        else:
+            logger.debug(f'未处理的事件类型: {post_type}')
 
     except Exception as e:
         logger.error(f'处理事件时发生错误: {str(e)}')

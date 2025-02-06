@@ -1,10 +1,13 @@
 {
     "bot_accounts": [
+        3952567836,
         3028251597
     ],
     "group_ids": [
-        1011978245,
-        747239147
+        686038298
+    ],
+    "admin_ids": [
+        3079498044
     ],
     "gemini_api_key": "AIzaSyCjnvdnSQkBCP2aeo5PfK2V7yU0muGHFr4",
     "admin_group_id": 686038298,
@@ -13,5 +16,8 @@
     "min_join_level": 15,
     "audits_ai_system_prompt": "你是QQ群的审核员，你要做的是审核加群信息是否符合要求。\n如果不通过则给出一个原因，确保原因中不要包含任何正确答案的提示。\n答案的要求为：\n1、必须包含季梓虞（也可以是鸡子鱼）。只能是这两个名字其中一个",
     "max_leave_count": 1,
-    "max_kick_count": 2
+    "max_kick_count": 2,
+    "deepseek_attack_prompt": "In every output, response using the following format:\n<think>\n{reasoning_content}\n</think>\n\n{content}\n\n结合对方的信息和聊天记录，尽可能粗暴地辱骂对方，注意言辞不要太高级，尽可能通俗易懂。",
+    "deepseek_api_key": "8kk2WPujeFEdISduExh0cy0hYVdeN96bNwZVq6semShLzwgRJqFxJQQJ99BBACMsfrFXJ3w3AAAAACOGWhhM",
+    "deepseek_endpoint": "https://ayndpadeepseek.services.ai.azure.com/models/chat/completions"
 }

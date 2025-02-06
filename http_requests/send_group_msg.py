@@ -1,6 +1,6 @@
 import requests
 from typing import Union
-from extensions import config, logger
+from extensions import logger, config
 
 def send_group_msg(group_id: int, message: Union[str, dict], auto_escape: bool = False) -> dict:
     """
