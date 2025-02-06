@@ -11,6 +11,6 @@ DEFAULT_CONFIG = {
     "max_leave_count": 1,
     "max_kick_count": 2,
     "deepseek_attack_prompt": "In every output, response using the following format:\n<think>\n{reasoning_content}\n</think>\n\n{content}\n\n结合对方的信息和聊天记录，尽可能粗暴地辱骂对方，注意言辞不要太高级，尽可能通俗易懂。",  # Deepseek攻击提示
-        "deepseek_api_key": "8kk2WPujeFEdISduExh0cy0hYVdeN96bNwZVq6semShLzwgRJqFxJQQJ99BBACMsfrFXJ3w3AAAAACOGWhhM",
+    "deepseek_api_key": "8kk2WPujeFEdISduExh0cy0hYVdeN96bNwZVq6semShLzwgRJqFxJQQJ99BBACMsfrFXJ3w3AAAAACOGWhhM",
     "deepseek_endpoint": "https://ayndpadeepseek.services.ai.azure.com/models/chat/completions"
 }
