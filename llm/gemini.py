@@ -9,7 +9,7 @@ from extensions import logger, config
 @dataclass
 class GeminiConfig:
     api_key: str
-    model_name: str = "gemini-2.0-flash-exp"
+    model_name: str = "gemini-2.0-flash-lite-preview-02-05"
     max_retries: int = 3
     timeout: int = 30
 
