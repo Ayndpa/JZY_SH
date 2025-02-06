@@ -18,7 +18,7 @@ def validate_group(group_id: Optional[int]) -> bool:
     """验证群组ID是否合法"""
     # logger.debug(f'验证群组ID: {group_id}')
     # logger.debug(f'配置群组ID: {config.get("group_ids", {})}')
-    return bool(group_id in config.get('group_ids', {}))
+    return bool(group_id in config.get('group_ids', {}) or group_id == config.get('admin_group_id'))
 
 def handle_event(data: Dict[str, Any]) -> None:
     """
