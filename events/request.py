@@ -5,9 +5,9 @@ from http_requests.send_group_msg import send_group_msg
 from http_requests.set_group_add_request import set_group_add_request
 from llm.audit import AuditService
 from http_requests.get_stranger_info import get_stranger_info
-from sqlite.group_member_record import get_latest_member_records
 from sqlite.group_quit_record import get_quit_records
 from enum import Enum
+from http_requests.get_group_member_info import get_group_member_info
 
 class RequestData(TypedDict):
     sub_type: str
@@ -76,13 +76,14 @@ def handle_group_request(data: Dict[str, Any]) -> None:
 def check_other_groups(user_id: int) -> bool:
     """Check if user is in other groups"""
     try:
-        group_records = get_latest_member_records()
-        for members in group_records.values():
-            if user_id in members:
+        group_ids = [g['group_id'] for g in config.get('managed_groups', [])]
+        for group_id in group_ids:
+            response = get_group_member_info(group_id, user_id)
+            if response.get('status') == 'ok' and response.get('retcode') == 0:
                 return False
         return True
     except Exception as e:
-        logger.error(f"Error checking group history: {e}")
+        logger.error(f"Error checking group membership: {e}")
         return True
     
 class RejectReason(Enum):

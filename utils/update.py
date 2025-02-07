@@ -21,7 +21,7 @@ def check_member_changes():
     # 记录退群者信息
     for group_id, members in quit_members.items():
         for member in members:
-            add_quit_record(member, group_id, 'leave')
+            add_quit_record(member, group_id, 'kick')
 
     # 重新构建group_member记录
     clear_member_records()
