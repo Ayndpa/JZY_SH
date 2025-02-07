@@ -52,6 +52,9 @@ def execute(args: Optional[list], group_id: int, user_id: int):
     if group_id not in ongoing_attacks:
         ongoing_attacks[group_id] = set()
 
+    message = None
+    should_attack = False
+
     if target in ongoing_attacks[group_id]:
         # 如果目标已在列表中，则移除
         ongoing_attacks[group_id].remove(target)
@@ -66,10 +69,14 @@ def execute(args: Optional[list], group_id: int, user_id: int):
             {"type": "at", "data": {"qq": str(user_id)}},
             {"type": "text", "data": {"text": f" 已开启持续攻击模式"}}
         ]
-        # 执行首次攻击
-        attack_execute(args, group_id, user_id)
+        should_attack = True
 
+    # 先发送状态消息
     send_group_msg(group_id, message)
+    
+    # 如果是新增目标，才执行首次攻击
+    if should_attack:
+        attack_execute(args, group_id, user_id)
 
 # 注册消息信号处理器
 message_signal = signal('message')
