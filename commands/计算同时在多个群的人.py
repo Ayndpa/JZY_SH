@@ -43,15 +43,21 @@ def execute(args: Optional[list], group_id: int, user_id: int):
     
     # 获取所有群的成员列表
     for gid in group_ids:
-        members = get_group_member_list(gid)
+        response = get_group_member_list(gid)
+        if isinstance(response, dict) and 'data' in response:
+            members = response['data']
+        else:
+            members = response
         members_by_group[gid] = members
         
         # 记录每个用户在哪些群出现
         for member in members:
-            user_id = member['user_id']
-            if user_id not in user_groups:
-                user_groups[user_id] = []
-            user_groups[user_id].append(gid)
+            if isinstance(member, dict):
+                user_id = member.get('user_id')
+                if user_id:
+                    if user_id not in user_groups:
+                        user_groups[user_id] = []
+                    user_groups[user_id].append(gid)
     
     # 找出在多个群的用户
     multi_group_users = {uid: groups for uid, groups in user_groups.items() if len(groups) > 1}
@@ -64,8 +70,12 @@ def execute(args: Optional[list], group_id: int, user_id: int):
         for uid, groups in multi_group_users.items():
             # 获取用户昵称（使用第一个群中的信息）
             first_group = groups[0]
-            user_info = next((m for m in members_by_group[first_group] if m['user_id'] == uid), None)
-            nickname = user_info['card'] if user_info and user_info['card'] else user_info['nickname']
+            user_info = next((m for m in members_by_group[first_group] if isinstance(m, dict) and m.get('user_id') == uid), None)
+            nickname = ""
+            if user_info:
+                nickname = user_info.get('card') or user_info.get('nickname') or str(uid)
+            else:
+                nickname = str(uid)
             
             text += f"用户 {nickname} ({uid}) 在群: {', '.join(map(str, groups))}\n"
         
