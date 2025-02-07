@@ -3,11 +3,11 @@ from functools import wraps
 from extensions import logger, config
 from http_requests.send_group_msg import send_group_msg
 from http_requests.set_group_add_request import set_group_add_request
-from llm.audit import AuditService
 from http_requests.get_stranger_info import get_stranger_info
 from sqlite.group_quit_record import get_quit_records
 from enum import Enum
 from http_requests.get_group_member_info import get_group_member_info
+from audits.join_audit import JoinRequestAuditor
 
 class RequestData(TypedDict):
     sub_type: str
@@ -176,15 +176,14 @@ def check_level_requirements(user_id: int) -> LevelCheckResult:
 
 @handle_error
 def process_request(data: RequestData) -> None:
-    audit_svc = AuditService()
-    result = audit_svc.audit_join_request(data['comment'])
+    auditor = JoinRequestAuditor()
+    result = auditor.audit(data['comment'])
     
-    if result.get("agreed", False):
+    if result.agreed:
         set_group_add_request(data['flag'], data['sub_type'], approve=True)
         logger.info(
             f"Approved join request | Group: {data['group_id']} | "
             f"User: {data['user_id']}"
         )
     else:
-        reason = result.get("reason", "未通过审核")
-        _reject_request(data, reason)
+        _reject_request(data, result.reason)
