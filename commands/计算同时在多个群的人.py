@@ -66,7 +66,7 @@ def execute(args: Optional[list], group_id: int, user_id: int):
     if not multi_group_users:
         message = [{"type": "text", "data": {"text": "没有找到同时在多个群的成员"}}]
     else:
-        text = "在多个群的成员：\n"
+        text = "在多个群的成员（共 {} 人）:\n".format(len(multi_group_users))
         for uid, groups in multi_group_users.items():
             # 获取用户昵称（使用第一个群中的信息）
             first_group = groups[0]
