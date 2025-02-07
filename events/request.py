@@ -61,7 +61,7 @@ def handle_group_request(data: Dict[str, Any]) -> None:
         _notify_admin(request_data, NotifyReason.LEVEL_CHECK_FAILED)
         return
     
-    if not check_other_groups(request_data['user_id']):
+    if check_other_groups(request_data['user_id']):
         _reject_request(request_data, "已在其他群")
         return
     
@@ -76,15 +76,15 @@ def handle_group_request(data: Dict[str, Any]) -> None:
 def check_other_groups(user_id: int) -> bool:
     """Check if user is in other groups"""
     try:
-        group_ids = [g['group_id'] for g in config.get('managed_groups', [])]
+        group_ids = config.get('group_ids', [])
         for group_id in group_ids:
             response = get_group_member_info(group_id, user_id)
             if response.get('status') == 'ok' and response.get('retcode') == 0:
-                return False
-        return True
+                return True
+        return False
     except Exception as e:
         logger.error(f"Error checking group membership: {e}")
-        return True
+        return False
     
 class RejectReason(Enum):
     KICK_LIMIT = "被踢次数过多"
