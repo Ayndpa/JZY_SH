@@ -9,7 +9,7 @@ def execute(args: Optional[list], group_id: int, user_id: int):
     计算同时在多个群的成员
     
     Args:
-        args: 命令参数
+        args: 命令参数，可选的第一个参数为最少群数
         group_id: 群组ID
         user_id: 执行命令的用户ID
     """
@@ -32,6 +32,28 @@ def execute(args: Optional[list], group_id: int, user_id: int):
         ]
         send_group_msg(group_id, message)
         return
+
+    # 解析最少群数参数
+    min_groups = None
+    if args and len(args) > 0:
+        try:
+            min_groups = int(args[0])
+            if min_groups < 2:
+                message = [
+                    {"type": "at", "data": {"qq": str(user_id)}},
+                    {"type": "text", "data": {"text": " 最少群数必须大于等于2"}}
+                ]
+                send_group_msg(group_id, message)
+                return
+        except ValueError:
+            message = [
+                {"type": "at", "data": {"qq": str(user_id)}},
+                {"type": "text", "data": {"text": " 参数格式错误，请输入有效的数字"}}
+            ]
+            send_group_msg(group_id, message)
+            return
+    else:
+        min_groups = 2
 
     # 获取配置中的所有群
     group_ids = config['group_ids']
@@ -60,13 +82,18 @@ def execute(args: Optional[list], group_id: int, user_id: int):
                     user_groups[user_id].append(gid)
     
     # 找出在多个群的用户
-    multi_group_users = {uid: groups for uid, groups in user_groups.items() if len(groups) > 1}
+    if min_groups:
+        multi_group_users = {uid: groups for uid, groups in user_groups.items() if len(groups) >= min_groups}
+    else:
+        multi_group_users = {uid: groups for uid, groups in user_groups.items() if len(groups) > 1}
     
     # 生成消息
     if not multi_group_users:
-        message = [{"type": "text", "data": {"text": "没有找到同时在多个群的成员"}}]
+        min_groups_text = f"至少{min_groups}个" if min_groups else "多个"
+        message = [{"type": "text", "data": {"text": f"没有找到同时在{min_groups_text}群的成员"}}]
     else:
-        text = "在多个群的成员（共 {} 人）:\n".format(len(multi_group_users))
+        min_groups_text = f"至少{min_groups}个" if min_groups else "多个"
+        text = f"在{min_groups_text}群的成员（共 {len(multi_group_users)} 人）:\n"
         for uid, groups in multi_group_users.items():
             # 获取用户昵称（使用第一个群中的信息）
             first_group = groups[0]
