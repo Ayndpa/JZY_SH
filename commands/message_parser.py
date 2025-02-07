@@ -28,7 +28,7 @@ def parse_command(message: str, group_id: int, user_id: int):
             command = message[1].get('data', {}).get('text', '').strip().lower()
             args = message[2:] if len(message) > 2 else None
             # Check if there's a colon in the command
-            if ':' in command:
+            if '：' in command:
                 command, args = command.split('：', 1)
                 command = command.strip().lower()
                 args = args.strip()
