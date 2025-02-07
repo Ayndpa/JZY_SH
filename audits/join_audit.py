@@ -28,5 +28,5 @@ class JoinRequestAuditor:
         
         return AuditResult(
             agreed=False,
-            reason="加群信息中需要包含指定关键词"
+            reason="答案不正确"
         )
