@@ -115,44 +115,48 @@ def execute(args: Optional[list], group_id: int, user_id: int):
         send_group_msg(group_id, message)
         return
 
-    # 将用户分片
-    chunked_users = chunk_members(multi_group_users)
+    # 准备转发消息
+    messages = []
     min_groups_text = f"至少{min_groups}个" if min_groups else "多个"
     
-    for chunk_index, user_chunk in enumerate(chunked_users):
-        messages = []
+    # 添加总览消息
+    overview = f"在{min_groups_text}群的成员统计结果（共 {len(multi_group_users)} 人）"
+    messages.append({
+        "type": "node",
+        "data": {
+            "name": "群成员统计",
+            "uin": str(config.get('bot_id', '0')),
+            "content": [{"type": "text", "data": {"text": overview}}]
+        }
+    })
+
+    # 将用户列表分片处理
+    user_items = list(multi_group_users.items())
+    for i in range(0, len(user_items), 50):
+        chunk = user_items[i:i+50]
+        chunk_text = f"第 {i//50 + 1} 页 (用户 {i+1} - {min(i+50, len(user_items))})\n"
         
-        # 添加标题消息
-        title = f"在{min_groups_text}群的成员（第{chunk_index + 1}/{len(chunked_users)}批，共 {len(multi_group_users)} 人）"
+        # 处理这一批的用户
+        for uid, groups in chunk:
+            first_group = groups[0]
+            user_info = next((m for m in members_by_group[first_group] if isinstance(m, dict) and m.get('user_id') == uid), None)
+            nickname = user_info.get('card') or user_info.get('nickname') or str(uid) if user_info else str(uid)
+            chunk_text += f"用户 {nickname} ({uid}) 在群: {', '.join(map(str, groups))}\n"
+        
+        # 添加这一批用户的消息节点
         messages.append({
             "type": "node",
             "data": {
                 "name": "群成员统计",
                 "uin": str(config.get('bot_id', '0')),
-                "content": [{"type": "text", "data": {"text": title}}]
+                "content": [{"type": "text", "data": {"text": chunk_text}}]
             }
         })
-        
-        # 为每个用户生成消息节点
-        for uid, groups in user_chunk.items():
-            first_group = groups[0]
-            user_info = next((m for m in members_by_group[first_group] if isinstance(m, dict) and m.get('user_id') == uid), None)
-            nickname = user_info.get('card') or user_info.get('nickname') or str(uid) if user_info else str(uid)
-            
-            text = f"用户 {nickname} ({uid}) 在群: {', '.join(map(str, groups))}"
-            messages.append({
-                "type": "node",
-                "data": {
-                    "name": "群成员统计",
-                    "uin": str(config.get('bot_id', '0')),
-                    "content": [{"type": "text", "data": {"text": text}}]
-                }
-            })
-        
-        # 发送转发消息
-        send_group_forward_msg(
-            group_id=group_id,
-            messages=messages,
-            prompt=f"群成员统计结果 ({chunk_index + 1}/{len(chunked_users)})",
-            summary="查看详细统计结果"
-        )
+
+    # 发送完整的转发消息
+    send_group_forward_msg(
+        group_id=group_id,
+        messages=messages,
+        prompt=f"群成员统计结果",
+        summary=f"共 {len(multi_group_users)} 人，点击查看详细信息"
+    )
