@@ -80,15 +80,9 @@ def execute(args: Optional[list], group_id: int, user_id: int):
     # 发送攻击结果消息
     message = [
         {
-            "type": "at",
-            "data": {
-                "qq": str(user_id)
-            }
-        },
-        {
             "type": "text",
             "data": {
-                "text": f" 对 {target_name} 发动了攻击！"
+                "text": f"{target_data.get('card') or target_data.get('nickname')} 对 {target_name} 发动了攻击！"
             }
         }
     ]
