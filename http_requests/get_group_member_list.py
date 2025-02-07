@@ -37,7 +37,10 @@ def get_group_member_list(group_id: int) -> List[dict]:
             "no_cache": True
         }
         
-        response = requests.get(api_url, params=params)
+        headers = {
+            "Authorization": f"Bearer {config['forward_api_token']}"
+        }
+        response = requests.get(api_url, params=params, headers=headers)
         response.raise_for_status()
         return response.json()
         

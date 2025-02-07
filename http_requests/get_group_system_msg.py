@@ -22,7 +22,8 @@ def get_group_system_msg(group_id: int) -> Dict:
         }
         
         # 发送GET请求
-        response = requests.get(api_url, params=data)
+        headers = {'Authorization': f"Bearer {config['forward_api_token']}"}
+        response = requests.get(api_url, params=data, headers=headers)
         
         # 检查响应状态
         response.raise_for_status()

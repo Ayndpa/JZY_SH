@@ -36,7 +36,8 @@ def set_group_add_request(
             data["reason"] = reason
             
         # 发送POST请求
-        response = requests.post(api_url, json=data)
+        headers = {'Authorization': 'Bearer ' + config['forward_api_token']}
+        response = requests.post(api_url, json=data, headers=headers)
         
         # 检查响应状态
         response.raise_for_status()

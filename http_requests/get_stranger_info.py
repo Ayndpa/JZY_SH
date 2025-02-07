@@ -30,7 +30,10 @@ def get_stranger_info(user_id: int, no_cache: bool = False) -> dict:
         }
         
         # 发送GET请求
-        response = requests.get(api_url, params=params)
+        headers = {
+            'Authorization': f'Bearer {config["forward_api_token"]}'
+        }
+        response = requests.get(api_url, params=params, headers=headers)
         
         # 检查响应状态
         response.raise_for_status()
