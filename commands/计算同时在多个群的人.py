@@ -1,8 +1,29 @@
-from typing import Optional
+from typing import Optional, List, Dict
 from http_requests.send_group_msg import send_group_msg
+from http_requests.send_group_forward_msg import send_group_forward_msg
 from http_requests.get_group_member_list import get_group_member_list
 from http_requests.get_group_member_info import get_group_member_info
 from extensions import config
+
+def chunk_members(members: dict, chunk_size: int = 50) -> List[Dict]:
+    """将成员信息分片"""
+    result = []
+    current_chunk = []
+    count = 0
+    
+    for uid, groups in members.items():
+        current_chunk.append((uid, groups))
+        count += 1
+        
+        if count >= chunk_size:
+            result.append(dict(current_chunk))
+            current_chunk = []
+            count = 0
+            
+    if current_chunk:
+        result.append(dict(current_chunk))
+        
+    return result
 
 def execute(args: Optional[list], group_id: int, user_id: int):
     """
@@ -91,22 +112,47 @@ def execute(args: Optional[list], group_id: int, user_id: int):
     if not multi_group_users:
         min_groups_text = f"至少{min_groups}个" if min_groups else "多个"
         message = [{"type": "text", "data": {"text": f"没有找到同时在{min_groups_text}群的成员"}}]
-    else:
-        min_groups_text = f"至少{min_groups}个" if min_groups else "多个"
-        text = f"在{min_groups_text}群的成员（共 {len(multi_group_users)} 人）:\n"
-        for uid, groups in multi_group_users.items():
-            # 获取用户昵称（使用第一个群中的信息）
+        send_group_msg(group_id, message)
+        return
+
+    # 将用户分片
+    chunked_users = chunk_members(multi_group_users)
+    min_groups_text = f"至少{min_groups}个" if min_groups else "多个"
+    
+    for chunk_index, user_chunk in enumerate(chunked_users):
+        messages = []
+        
+        # 添加标题消息
+        title = f"在{min_groups_text}群的成员（第{chunk_index + 1}/{len(chunked_users)}批，共 {len(multi_group_users)} 人）"
+        messages.append({
+            "type": "node",
+            "data": {
+                "name": "群成员统计",
+                "uin": str(config.get('bot_id', '0')),
+                "content": [{"type": "text", "data": {"text": title}}]
+            }
+        })
+        
+        # 为每个用户生成消息节点
+        for uid, groups in user_chunk.items():
             first_group = groups[0]
             user_info = next((m for m in members_by_group[first_group] if isinstance(m, dict) and m.get('user_id') == uid), None)
-            nickname = ""
-            if user_info:
-                nickname = user_info.get('card') or user_info.get('nickname') or str(uid)
-            else:
-                nickname = str(uid)
+            nickname = user_info.get('card') or user_info.get('nickname') or str(uid) if user_info else str(uid)
             
-            text += f"用户 {nickname} ({uid}) 在群: {', '.join(map(str, groups))}\n"
+            text = f"用户 {nickname} ({uid}) 在群: {', '.join(map(str, groups))}"
+            messages.append({
+                "type": "node",
+                "data": {
+                    "name": "群成员统计",
+                    "uin": str(config.get('bot_id', '0')),
+                    "content": [{"type": "text", "data": {"text": text}}]
+                }
+            })
         
-        message = [{"type": "text", "data": {"text": text}}]
-    
-    # 发送消息
-    send_group_msg(group_id, message)
+        # 发送转发消息
+        send_group_forward_msg(
+            group_id=group_id,
+            messages=messages,
+            prompt=f"群成员统计结果 ({chunk_index + 1}/{len(chunked_users)})",
+            summary="查看详细统计结果"
+        )
