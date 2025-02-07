@@ -11,8 +11,8 @@ app.register_blueprint(test_bp)
 app.register_blueprint(onebot_bp)
 
 def init_app():
-    from utils.update import check_member_changes
-    check_member_changes()
+    from utils.update import do_check
+    do_check()
     logger.info('Starting Flask application...')
     logger.debug(f'Current time: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}')
 
