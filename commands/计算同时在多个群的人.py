@@ -1,6 +1,7 @@
 from typing import Optional
 from http_requests.send_group_msg import send_group_msg
 from http_requests.get_group_member_list import get_group_member_list
+from http_requests.get_group_member_info import get_group_member_info
 from extensions import config
 
 def execute(args: Optional[list], group_id: int, user_id: int):
