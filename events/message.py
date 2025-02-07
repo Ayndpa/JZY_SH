@@ -1,6 +1,7 @@
 from typing import Dict, Any
 from extensions import logger
 from commands.message_parser import parse_command, process_command
+from blinker import signal
 
 def handle_message(data: Dict[str, Any]) -> None:
     """
@@ -30,5 +31,9 @@ def handle_group_message(data: Dict[str, Any]) -> None:
     user_id = data.get('user_id')
     
     logger.debug(f'收到来自群 {group_id} 用户 {user_id} 的消息: {message}')
+    
+    # 发送消息信号
+    message_signal = signal('message')
+    message_signal.send('message', group_id=group_id, user_id=user_id, message=message)
     
     parse_command(message, group_id, user_id)
