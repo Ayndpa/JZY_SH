@@ -112,11 +112,10 @@ def execute(args: Optional[list], group_id: int, user_id: int):
         send_group_msg(group_id, message)
         return
 
-    # 按加群时间排序（倒序）
+    # 按最后发言时间排序（升序，最久没发言的在前）
     members = sorted(
         members_response.get("data", []),
-        key=lambda x: x.get("join_time", 0),
-        reverse=True
+        key=lambda x: x.get("last_sent_time", 0)
     )
 
     # 筛选要清理的成员（排除管理员和群主）
