@@ -73,14 +73,14 @@ class DeepseekAPI:
         
         async for line in response_iterator:
             if line == b"[DONE]":
-                if buffer:  # 输出最后可能剩余的内容
+                if buffer and buffer.strip():  # 确保最后的buffer不是空的
                     yield buffer
                 break
                 
             try:
                 json_response = json.loads(line.decode('utf-8'))
                 content = json_response['choices'][0]['delta'].get('content', '')
-                if not content:
+                if not content or not content.strip():  # 忽略空内容
                     continue
                     
                 buffer += content
@@ -88,7 +88,7 @@ class DeepseekAPI:
                 if not thinking_done and "</think>" in buffer:
                     thinking_part = buffer[:buffer.find("</think>") + 8]
                     remaining = buffer[buffer.find("</think>") + 8:]
-                    buffer = remaining.lstrip()
+                    buffer = remaining.lstrip()  # 移除开头的空白字符
                     thinking_done = True
                     logger.info(f"Thinking process: {thinking_part}")
                     continue
@@ -99,9 +99,10 @@ class DeepseekAPI:
                         for end in ["。", "!", "？", "!", "?", "."]:
                             pos = buffer.find(end)
                             if pos != -1:
-                                sentence = buffer[:pos + 1]
+                                sentence = buffer[:pos + 1].strip()  # 确保句子两端没有空白字符
+                                if sentence:  # 只有在句子非空时才yield
+                                    yield sentence
                                 buffer = buffer[pos + 1:].lstrip()
-                                yield sentence
                                 break
                         
             except json.JSONDecodeError as e:
