@@ -66,26 +66,50 @@ class DeepseekAPI:
         """验证响应是否有效"""
         return bool(response and 'choices' in response and len(response['choices']) > 0)
 
-    async def _process_stream(self, response_text: str) -> AsyncGenerator[str, None]:
-        """处理流式响应文本"""
+    async def _process_stream(self, response_iterator) -> AsyncGenerator[str, None]:
+        """处理流式响应"""
         buffer = ""
-        # 检查是否已经输出了思考部分
         thinking_done = False
         
-        for char in response_text:
-            buffer += char
-            
-            if not thinking_done and "</think>" in buffer:
-                thinking_part = buffer[:buffer.find("</think>") + 8]
-                remaining = buffer[buffer.find("</think>") + 8:]
-                buffer = remaining.lstrip()
-                thinking_done = True
-                logger.info(f"Thinking process: {thinking_part}")
-                continue
+        async for line in response_iterator:
+            if line == b"[DONE]":
+                if buffer:  # 输出最后可能剩余的内容
+                    yield buffer
+                break
                 
-            if thinking_done and buffer.endswith(("。", "!", "？", "!", "?", ".")):
-                yield buffer
-                buffer = ""
+            try:
+                json_response = json.loads(line.decode('utf-8'))
+                content = json_response['choices'][0]['delta'].get('content', '')
+                if not content:
+                    continue
+                    
+                buffer += content
+                
+                if not thinking_done and "</think>" in buffer:
+                    thinking_part = buffer[:buffer.find("</think>") + 8]
+                    remaining = buffer[buffer.find("</think>") + 8:]
+                    buffer = remaining.lstrip()
+                    thinking_done = True
+                    logger.info(f"Thinking process: {thinking_part}")
+                    continue
+                    
+                if thinking_done:
+                    # 检查是否有完整的句子
+                    while any(buffer.find(end) != -1 for end in ["。", "!", "？", "!", "?", "."]):
+                        for end in ["。", "!", "？", "!", "?", "."]:
+                            pos = buffer.find(end)
+                            if pos != -1:
+                                sentence = buffer[:pos + 1]
+                                buffer = buffer[pos + 1:].lstrip()
+                                yield sentence
+                                break
+                        
+            except json.JSONDecodeError as e:
+                logger.error(f"Error decoding JSON: {e}")
+                continue
+            except Exception as e:
+                logger.error(f"Error processing stream: {e}")
+                continue
 
     @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
     async def achat(self, prompt: str, history: Optional[List[Dict[str, Any]]] = None) -> Union[str, AsyncGenerator[str, None]]:
@@ -124,25 +148,26 @@ class DeepseekAPI:
                     raise DeepseekAPIError("Invalid response received")
                 return response_json['choices'][0]['message']['content']
             else:
-                # 对于流式响应，我们直接返回生成器
-                response = await asyncio.to_thread(
-                    requests.post,
-                    f"{self.config.endpoint}?api-version={self.config.api_version}",
-                    headers=self.headers,
-                    json=data,
-                    timeout=self.config.timeout,
-                    stream=True
-                )
-                response.raise_for_status()
-                full_response = ""
-                for line in response.iter_lines():
-                    if line:
-                        json_response = json.loads(line.decode('utf-8'))
-                        if 'choices' in json_response and len(json_response['choices']) > 0:
-                            content = json_response['choices'][0].get('delta', {}).get('content', '')
-                            full_response += content
+                # 创建异步迭代器来处理流式响应
+                async def stream_response():
+                    response = await asyncio.to_thread(
+                        requests.post,
+                        f"{self.config.endpoint}?api-version={self.config.api_version}",
+                        headers=self.headers,
+                        json=data,
+                        timeout=self.config.timeout,
+                        stream=True
+                    )
+                    response.raise_for_status()
+                    
+                    for line in response.iter_lines():
+                        if line:
+                            if line == b"[DONE]":
+                                yield line
+                                break
+                            yield line
                 
-                return self._process_stream(full_response)
+                return self._process_stream(stream_response())
                 
         except Exception as e:
             logger.error(f"Chat error: {str(e)}")
@@ -151,21 +176,3 @@ class DeepseekAPI:
     def chat(self, prompt: str, history: Optional[List[Dict[str, Any]]] = None) -> Union[str, AsyncGenerator[str, None]]:
         """同步聊天方法"""
         return asyncio.run(self.achat(prompt, history))
-
-def main():
-    if 'deepseek_api_key' in config and 'deepseek_endpoint' in config:
-        deepseek_config = DeepseekConfig(
-            api_key=config['deepseek_api_key'],
-            endpoint=config['deepseek_endpoint']
-        )
-        api = DeepseekAPI(config=deepseek_config)
-        
-        prompt = "Tell me a short joke"
-        response = api.chat(prompt)
-        logger.info(f"Prompt: {prompt}")
-        logger.info(f"Response: {response}")
-    else:
-        logger.error("Deepseek API configuration not found in config")
-
-if __name__ == "__main__":
-    main()
