@@ -70,7 +70,7 @@ class DeepseekAPI:
         """处理流式响应"""
         buffer = ""
         thinking_done = False
-        last_sentence = ""  # 添加这行来跟踪最后一句话
+        last_sentence = ""  # 跟踪最后一句话
         
         async for line in response_iterator:
             if not line:
@@ -81,8 +81,11 @@ class DeepseekAPI:
                 
                 # 处理结束信号
                 if line_str.strip() == "data: [DONE]":
-                    if buffer and buffer.strip():
-                        yield buffer.strip()
+                    # 只处理有意义的剩余内容
+                    if buffer and buffer.strip() and buffer.strip() != last_sentence:
+                        final_sentence = buffer.strip()
+                        if any(final_sentence.endswith(end) for end in ["。", "!", "？", "!", "?", "."]):
+                            yield final_sentence
                     break
                 
                 # 处理SSE格式的数据
@@ -90,7 +93,7 @@ class DeepseekAPI:
                     continue
                     
                 # 提取JSON数据部分
-                json_str = line_str[6:].strip()  # 移除 "data: " 前缀
+                json_str = line_str[6:].strip()
                 if not json_str:
                     continue
                 
@@ -124,10 +127,11 @@ class DeepseekAPI:
                         while end in buffer:
                             pos = buffer.find(end)
                             if pos != -1:
-                                sentence = buffer[:pos + 1].strip()
-                                if sentence and sentence != last_sentence:  # 检查是否与上一句相同
-                                    yield sentence
-                                    last_sentence = sentence  # 更新最后一句的记录
+                                current_sentence = buffer[:pos + 1].strip()
+                                # 只有当句子不为空且与上一句不同时才输出
+                                if current_sentence and current_sentence != last_sentence:
+                                    last_sentence = current_sentence
+                                    yield current_sentence
                                 buffer = buffer[pos + 1:].lstrip()
                             else:
                                 break
@@ -135,19 +139,13 @@ class DeepseekAPI:
             except json.JSONDecodeError:
                 # 特殊处理 [DONE] 信号
                 if line.decode('utf-8').strip() == "data: [DONE]":
-                    if buffer and buffer.strip():
-                        yield buffer.strip()
                     break
                 continue
             except Exception as e:
                 logger.error(f"Error processing stream: {str(e)}")
                 continue
 
-        # 处理剩余的buffer
-        if buffer and buffer.strip() and thinking_done:
-            final_sentence = buffer.strip()
-            if final_sentence != last_sentence:  # 确保最后一句不重复
-                yield final_sentence
+        # 移除对剩余buffer的额外处理，因为已经在[DONE]信号处理中完成
 
     @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
     async def achat(self, prompt: str, history: Optional[List[Dict[str, Any]]] = None) -> Union[str, AsyncGenerator[str, None]]:
