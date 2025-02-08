@@ -72,15 +72,32 @@ class DeepseekAPI:
         thinking_done = False
         
         async for line in response_iterator:
+            if not line or line.isspace():  # 跳过空行
+                continue
+                
             if line == b"[DONE]":
-                if buffer and buffer.strip():  # 确保最后的buffer不是空的
+                if buffer and buffer.strip():
                     yield buffer
                 break
                 
             try:
-                json_response = json.loads(line.decode('utf-8'))
+                # 尝试解码和解析JSON之前先检查内容
+                decoded_line = line.decode('utf-8').strip()
+                if not decoded_line:  # 跳过空字符串
+                    continue
+                    
+                json_response = json.loads(decoded_line)
+                if not isinstance(json_response, dict):  # 验证JSON格式
+                    continue
+                    
+                # 验证响应结构
+                if ('choices' not in json_response or 
+                    not json_response['choices'] or 
+                    'delta' not in json_response['choices'][0]):
+                    continue
+                    
                 content = json_response['choices'][0]['delta'].get('content', '')
-                if not content or not content.strip():  # 忽略空内容
+                if not content or not content.strip():
                     continue
                     
                 buffer += content
@@ -88,28 +105,27 @@ class DeepseekAPI:
                 if not thinking_done and "</think>" in buffer:
                     thinking_part = buffer[:buffer.find("</think>") + 8]
                     remaining = buffer[buffer.find("</think>") + 8:]
-                    buffer = remaining.lstrip()  # 移除开头的空白字符
+                    buffer = remaining.lstrip()
                     thinking_done = True
                     logger.info(f"Thinking process: {thinking_part}")
                     continue
                     
                 if thinking_done:
-                    # 检查是否有完整的句子
                     while any(buffer.find(end) != -1 for end in ["。", "!", "？", "!", "?", "."]):
                         for end in ["。", "!", "？", "!", "?", "."]:
                             pos = buffer.find(end)
                             if pos != -1:
-                                sentence = buffer[:pos + 1].strip()  # 确保句子两端没有空白字符
-                                if sentence:  # 只有在句子非空时才yield
+                                sentence = buffer[:pos + 1].strip()
+                                if sentence:
                                     yield sentence
                                 buffer = buffer[pos + 1:].lstrip()
                                 break
                         
             except json.JSONDecodeError as e:
-                logger.error(f"Error decoding JSON: {e}")
+                logger.debug(f"Skipped invalid JSON line: {line}")  # 使用debug级别，避免日志过多
                 continue
             except Exception as e:
-                logger.error(f"Error processing stream: {e}")
+                logger.error(f"Error processing stream: {str(e)}")
                 continue
 
     @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
@@ -162,10 +178,7 @@ class DeepseekAPI:
                     response.raise_for_status()
                     
                     for line in response.iter_lines():
-                        if line:
-                            if line == b"[DONE]":
-                                yield line
-                                break
+                        if line and not line.isspace():  # 只yield非空行
                             yield line
                 
                 return self._process_stream(stream_response())
