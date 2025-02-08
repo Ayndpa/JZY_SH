@@ -5,25 +5,30 @@ from extensions import config, logger
 from llm.deepseek import DeepseekAPI, DeepseekConfig
 from http_requests.get_group_member_info import get_group_member_info
 from http_requests.get_group_msg_history import get_user_messages_in_group
+import random
 
 async def process_attack(api, prompt, group_id, target):
     """处理攻击响应"""
     response_gen = await api.achat(prompt)
     async for sentence in response_gen:
-        follow_message = [
-            {
-                "type": "at",
-                "data": {
-                    "qq": target
-                }
-            },
-            {
-                "type": "text",
-                "data": {
-                    "text": sentence
-                }
-            }
-        ]
+        # Randomly decide @ position (0: no @, 1: start, 2: end) with bias towards no @
+        at_position = random.choices([0, 1, 2], weights=[0.7, 0.15, 0.15])[0]
+        
+        if at_position == 0:
+            follow_message = [
+            {"type": "text", "data": {"text": sentence}}
+            ]
+        elif at_position == 1:
+            follow_message = [
+            {"type": "at", "data": {"qq": target}},
+            {"type": "text", "data": {"text": sentence}}
+            ]
+        else:  # at_position == 2
+            follow_message = [
+            {"type": "text", "data": {"text": sentence}},
+            {"type": "at", "data": {"qq": target}}
+            ]
+
         send_group_msg(group_id, follow_message)
         # 添加短暂延迟，避免消息发送过快
         await asyncio.sleep(0.5)
