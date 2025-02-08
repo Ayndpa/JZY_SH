@@ -70,14 +70,14 @@ class DeepseekAPI:
         }
         logger.info("Deepseek API initialized successfully")
 
-    async def _process_stream(self, response_iterator) -> AsyncGenerator[str, None]:
+    async def _process_stream(self, response) -> AsyncGenerator[str, None]:
         """优化的流式响应处理"""
         buffer = ""
         thinking_done = False
         last_sentence = ""
         
         try:
-            async for line in response_iterator:
+            for line in response:
                 if not line:
                     continue
                     
@@ -114,6 +114,7 @@ class DeepseekAPI:
                             if sentence and sentence != last_sentence:
                                 last_sentence = sentence
                                 yield sentence
+                                await asyncio.sleep(0)  # 让出控制权
                                 
                 except json.JSONDecodeError:
                     continue
@@ -205,16 +206,23 @@ class DeepseekAPI:
 
     async def _handle_stream_chat(self, data: Dict[str, Any]) -> AsyncGenerator[str, None]:
         """处理流式聊天请求"""
-        response = await asyncio.to_thread(
-            requests.post,
-            f"{self.config.endpoint}?api-version={self.config.api_version}",
-            headers=self.headers,
-            json=data,
-            timeout=self.config.timeout,
-            stream=True
-        )
-        response.raise_for_status()
-        return self._process_stream(response.iter_lines())
+        try:
+            response = await asyncio.to_thread(
+                requests.post,
+                f"{self.config.endpoint}?api-version={self.config.api_version}",
+                headers=self.headers,
+                json=data,
+                timeout=self.config.timeout,
+                stream=True
+            )
+            response.raise_for_status()
+            
+            async for chunk in self._process_stream(response.iter_lines()):
+                yield chunk
+                
+        except Exception as e:
+            logger.error(f"Stream chat error: {str(e)}")
+            raise DeepseekAPIError(f"Stream chat error: {str(e)}")
 
     def chat(self, prompt: str, history: Optional[List[Dict[str, Any]]] = None) -> Union[str, AsyncGenerator[str, None]]:
         """同步聊天方法的包装器"""
