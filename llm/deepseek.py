@@ -1,10 +1,11 @@
 import requests
 import json
 import asyncio
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, Union, AsyncGenerator
 from dataclasses import dataclass
 from tenacity import retry, stop_after_attempt, wait_exponential
 from extensions import logger, config
+import re
 
 @dataclass
 class DeepseekConfig:
@@ -16,6 +17,7 @@ class DeepseekConfig:
     temperature: float = 0.6
     max_retries: int = 3
     timeout: int = 180
+    stream: bool = False
 
 class DeepseekAPIError(Exception):
     """自定义Deepseek API异常类"""
@@ -64,9 +66,30 @@ class DeepseekAPI:
         """验证响应是否有效"""
         return bool(response and 'choices' in response and len(response['choices']) > 0)
 
+    async def _process_stream(self, response_text: str) -> AsyncGenerator[str, None]:
+        """处理流式响应文本"""
+        buffer = ""
+        # 检查是否已经输出了思考部分
+        thinking_done = False
+        
+        for char in response_text:
+            buffer += char
+            
+            if not thinking_done and "</think>" in buffer:
+                thinking_part = buffer[:buffer.find("</think>") + 8]
+                remaining = buffer[buffer.find("</think>") + 8:]
+                buffer = remaining.lstrip()
+                thinking_done = True
+                logger.info(f"Thinking process: {thinking_part}")
+                continue
+                
+            if thinking_done and buffer.endswith(("。", "!", "？", "!", "?", ".")):
+                yield buffer
+                buffer = ""
+
     @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
-    async def achat(self, prompt: str, history: Optional[List[Dict[str, Any]]] = None) -> str:
-        """异步聊天方法"""
+    async def achat(self, prompt: str, history: Optional[List[Dict[str, Any]]] = None) -> Union[str, AsyncGenerator[str, None]]:
+        """异步聊天方法，支持流式输出"""
         try:
             messages = [{
                 "role": "system",
@@ -81,30 +104,51 @@ class DeepseekAPI:
                 "messages": messages,
                 "max_tokens": self.config.max_tokens,
                 "temperature": self.config.temperature,
+                "stream": self.config.stream
             }
 
-            async def make_request():
+            if not self.config.stream:
+                async def make_request():
+                    response = await asyncio.to_thread(
+                        requests.post,
+                        f"{self.config.endpoint}?api-version={self.config.api_version}",
+                        headers=self.headers,
+                        json=data,
+                        timeout=self.config.timeout
+                    )
+                    response.raise_for_status()
+                    return response.json()
+
+                response_json = await make_request()
+                if not self._validate_response(response_json):
+                    raise DeepseekAPIError("Invalid response received")
+                return response_json['choices'][0]['message']['content']
+            else:
+                # 对于流式响应，我们直接返回生成器
                 response = await asyncio.to_thread(
                     requests.post,
                     f"{self.config.endpoint}?api-version={self.config.api_version}",
                     headers=self.headers,
                     json=data,
-                    timeout=self.config.timeout
+                    timeout=self.config.timeout,
+                    stream=True
                 )
                 response.raise_for_status()
-                return response.json()
-
-            response_json = await make_request()
-            
-            if not self._validate_response(response_json):
-                raise DeepseekAPIError("Invalid response received")
-            
-            return response_json['choices'][0]['message']['content']
+                full_response = ""
+                for line in response.iter_lines():
+                    if line:
+                        json_response = json.loads(line.decode('utf-8'))
+                        if 'choices' in json_response and len(json_response['choices']) > 0:
+                            content = json_response['choices'][0].get('delta', {}).get('content', '')
+                            full_response += content
+                
+                return self._process_stream(full_response)
+                
         except Exception as e:
             logger.error(f"Chat error: {str(e)}")
             raise DeepseekAPIError(f"Chat error: {str(e)}")
 
-    def chat(self, prompt: str, history: Optional[List[Dict[str, Any]]] = None) -> str:
+    def chat(self, prompt: str, history: Optional[List[Dict[str, Any]]] = None) -> Union[str, AsyncGenerator[str, None]]:
         """同步聊天方法"""
         return asyncio.run(self.achat(prompt, history))
 

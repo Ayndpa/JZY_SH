@@ -1,9 +1,32 @@
+import asyncio
 from typing import Optional
 from http_requests.send_group_msg import send_group_msg
 from extensions import config, logger
 from llm.deepseek import DeepseekAPI, DeepseekConfig
 from http_requests.get_group_member_info import get_group_member_info
 from http_requests.get_group_msg_history import get_user_messages_in_group
+
+async def process_attack(api, prompt, group_id, target):
+    """处理攻击响应"""
+    response_gen = await api.achat(prompt)
+    async for sentence in response_gen:
+        follow_message = [
+            {
+                "type": "at",
+                "data": {
+                    "qq": target
+                }
+            },
+            {
+                "type": "text",
+                "data": {
+                    "text": sentence
+                }
+            }
+        ]
+        send_group_msg(group_id, follow_message)
+        # 添加短暂延迟，避免消息发送过快
+        await asyncio.sleep(0.5)
 
 def execute(args: Optional[list], group_id: int, user_id: int):
     """
@@ -88,16 +111,17 @@ def execute(args: Optional[list], group_id: int, user_id: int):
     ]
     send_group_msg(group_id, message)
 
-    # 调用DeepseekAPI生成攻击描述
+    # 修改DeepseekAPI初始化，启用流式输出
     deepseek_config = DeepseekConfig(
         api_key=config['deepseek_api_key'],
-        endpoint=config['deepseek_endpoint']
+        endpoint=config['deepseek_endpoint'],
+        stream=True  # 启用流式输出
     )
     api = DeepseekAPI(config=deepseek_config)
 
     prompt = config.get("deepseek_attack_prompt", "In every output, response using the following format:\n<think>\n{reasoning_content}\n</think>\n\n{content}\n\n结合对方的信息和聊天记录，尽可能粗暴地辱骂对方，注意言辞不要太高级，尽可能通俗易懂。")
     # Include target user info in prompt
-    prompt = prompt + f"\n```目标用户信息：{target_data}```"
+    prompt = prompt + f"\n```目标用户信息（注意，只做参考，重点攻击最近发言）：{target_data}```"
 
     # Get target's recent messages
     recent_msgs = get_user_messages_in_group(group_id, int(target), target_count=20, max_search=100)
@@ -111,29 +135,5 @@ def execute(args: Optional[list], group_id: int, user_id: int):
     if len(args) > 1:
         prompt = prompt + f"\n\n注意：{args[1]}"
 
-    attack_desc = api.chat(prompt)
-    # Split by <think> and </think> to extract thinking process and response
-    logger.debug(f"DeepSeek response: {attack_desc}")
-    if "<think>" in attack_desc:
-        parts = attack_desc.split("</think>")
-        if len(parts) > 1:
-            thinking = parts[0].split("<think>")[1].strip()
-            logger.info(f"DeepSeek 思考过程: {thinking}")
-            attack_desc = parts[1].strip()
-
-    # 发送攻击描述
-    follow_message = [
-        {
-            "type": "at",
-            "data": {
-                "qq": target
-            }
-        },
-        {
-            "type": "text",
-            "data": {
-                "text": attack_desc
-            }
-        }
-    ]
-    send_group_msg(group_id, follow_message)
+    # 替换原有的直接调用为异步处理
+    asyncio.run(process_attack(api, prompt, group_id, target))
