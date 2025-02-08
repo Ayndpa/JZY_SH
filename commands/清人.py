@@ -4,7 +4,7 @@ from http_requests.send_group_msg import send_group_msg
 from extensions import logger, config
 from http_requests.get_group_member_info import get_group_member_info
 from http_requests.get_group_member_list import get_group_member_list
-from http_requests import set_group_kick
+from http_requests.set_group_kick import set_group_kick  # 修改导入语句
 from sqlite.group_quit_record import add_quit_record
 
 class PendingKicks:
@@ -81,7 +81,7 @@ def execute(args: Optional[list], group_id: int, user_id: int):
         return
 
     # 处理确认清理的情况
-    if args and args == "确认清理":
+    if args and args[0] == "确认清理":
         to_kick = pending_kicks.get(group_id, user_id)
         if not to_kick:
             message = [
@@ -96,12 +96,13 @@ def execute(args: Optional[list], group_id: int, user_id: int):
         failed = 0
         for target_id in to_kick:
             try:
+                # 正确调用set_group_kick函数
                 result = set_group_kick(group_id, target_id)
                 if result.get("status") == "ok":
-                    # Add record of successful kick
                     add_quit_record(target_id, group_id, 'kick')
                     success += 1
                 else:
+                    logger.error(f"Failed to kick member {target_id}: {result.get('message', 'Unknown error')}")
                     failed += 1
             except Exception as e:
                 logger.error(f"Failed to kick member {target_id}: {e}")
