@@ -1,3 +1,4 @@
+import time
 from typing import Optional, Dict, List
 from http_requests.send_group_msg import send_group_msg
 from extensions import logger, config
@@ -27,6 +28,27 @@ class PendingKicks:
         self._pending_kicks.pop(key, None)
 
 pending_kicks = PendingKicks()
+
+def calculate_member_weight(member: dict) -> float:
+    """
+    计算成员权重，用于决定清理优先级
+    权重越高越可能被清理
+    """
+    last_sent_time = member.get("last_sent_time", 0)
+    level = member.get("level", "0")
+    
+    try:
+        level_num = int(level)
+    except (ValueError, TypeError):
+        level_num = 0
+        
+    # 计算距离现在的天数
+    import time
+    days_inactive = (time.time() - last_sent_time) / (24 * 3600)
+    
+    # 权重计算：未发言天数 / (等级 + 1)
+    # 等级越高，权重越低；未发言时间越长，权重越高
+    return days_inactive / (level_num + 1)
 
 def execute(args: Optional[list], group_id: int, user_id: int):
     """
@@ -112,16 +134,18 @@ def execute(args: Optional[list], group_id: int, user_id: int):
         send_group_msg(group_id, message)
         return
 
-    # 按最后发言时间排序（升序，最久没发言的在前）
+    # 修改排序逻辑，使用权重排序
     members = sorted(
         members_response.get("data", []),
-        key=lambda x: x.get("last_sent_time", 0)
+        key=lambda x: calculate_member_weight(x),
+        reverse=True  # 权重高的排在前面
     )
 
     # 筛选要清理的成员（排除管理员和群主）
     to_kick = []
     for member in members:
-        if member.get("role") not in ["owner", "admin"] and len(to_kick) < target_count:
+        if (member.get("role") not in ["owner", "admin"] and 
+            len(to_kick) < target_count):
             to_kick.append(member)
 
     if not to_kick:
@@ -132,11 +156,13 @@ def execute(args: Optional[list], group_id: int, user_id: int):
         send_group_msg(group_id, message)
         return
 
-    # 生成确认消息
+    # 修改确认消息，显示等级信息
     confirm_text = f"即将清理以下 {len(to_kick)} 名成员：\n"
     for member in to_kick:
         name = member.get("card") or member.get("nickname") or str(member.get("user_id"))
-        confirm_text += f"{name} ({member.get('user_id')})\n"
+        level = member.get("level", "未知")
+        last_sent = time.strftime("%Y-%m-%d", time.localtime(member.get("last_sent_time", 0)))
+        confirm_text += f"{name} (QQ:{member.get('user_id')}) 等级:{level} 最后发言:{last_sent}\n"
     confirm_text += "\n请回复'确认清理'执行操作"
 
     message = [
