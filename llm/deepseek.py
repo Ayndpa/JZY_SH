@@ -79,13 +79,14 @@ class DeepseekAPI:
         try:
             async def process_lines():
                 for line in response_iterator:
-                    if line:  # 只处理非空行
+                    if line:
                         yield line
                     await asyncio.sleep(0)
                     
             async for line in process_lines():
                 try:
                     line_str = line.decode('utf-8').strip()
+                    logger.debug(f"Received line: {line_str}")
                     
                     if line_str == "data: [DONE]":
                         remaining = buffer.strip()
@@ -100,40 +101,49 @@ class DeepseekAPI:
                     try:
                         json_str = line_str[6:]  # 去掉 "data: " 前缀
                         json_response = json.loads(json_str)
+                        logger.debug(f"Parsed JSON response: {json_response}")
                         
-                        # 验证JSON结构
-                        if not isinstance(json_response, dict):
-                            logger.warning(f"Invalid JSON response format: {json_str}")
+                        # 验证并提取内容
+                        if 'choices' not in json_response:
+                            logger.warning("No choices in response")
                             continue
                             
-                        choices = json_response.get('choices', [])
-                        if not choices:
-                            logger.warning("Empty choices in response")
+                        choices = json_response['choices']
+                        if not choices or not isinstance(choices, list):
+                            logger.warning(f"Invalid choices format: {choices}")
                             continue
                             
-                        delta = choices[0].get('delta', {})
+                        choice = choices[0]
+                        if not isinstance(choice, dict):
+                            logger.warning(f"Invalid choice format: {choice}")
+                            continue
+                            
+                        delta = choice.get('delta')
+                        if not isinstance(delta, dict):
+                            logger.warning(f"Invalid delta format: {delta}")
+                            continue
+                            
                         content = delta.get('content', '')
-                        
-                        if not content:
-                            continue
-                        
-                        buffer += content
-                        
-                        # 处理思考过程
-                        if not thinking_done and "</think>" in buffer:
-                            thinking_part, buffer = self._extract_thinking(buffer)
-                            thinking_done = True
-                            logger.debug(f"Extracted thinking: {thinking_part}")
-                            continue
-                        
-                        # 处理完整句子
-                        if thinking_done:
-                            while any(end in buffer for end in self.config.sentence_endings):
-                                sentence, buffer = self._extract_sentence(buffer)
-                                if sentence and sentence != last_sentence:
-                                    last_sentence = sentence
-                                    yield sentence
-                                    await asyncio.sleep(0)
+                        if content:
+                            logger.debug(f"Extracted content: {content}")
+                            buffer += content
+                            
+                            # 处理思考过程
+                            if not thinking_done and "</think>" in buffer:
+                                thinking_part, buffer = self._extract_thinking(buffer)
+                                thinking_done = True
+                                logger.debug(f"Extracted thinking: {thinking_part}")
+                                continue
+                            
+                            # 处理完整句子
+                            if thinking_done:
+                                while any(end in buffer for end in self.config.sentence_endings):
+                                    sentence, buffer = self._extract_sentence(buffer)
+                                    if sentence and sentence != last_sentence:
+                                        last_sentence = sentence
+                                        logger.debug(f"Yielding sentence: {sentence}")
+                                        yield sentence
+                                        await asyncio.sleep(0)
                                     
                     except json.JSONDecodeError as e:
                         logger.warning(f"JSON decode error: {str(e)} for line: {line_str}")
