@@ -75,19 +75,21 @@ class DeepseekAPI:
             if not line:
                 continue
                 
-            if line == b"[DONE]":
-                if buffer and buffer.strip():
-                    yield buffer
-                break
-                
             try:
+                line_str = line.decode('utf-8')
+                
+                # 处理结束信号
+                if line_str.strip() == "data: [DONE]":
+                    if buffer and buffer.strip():
+                        yield buffer.strip()
+                    break
+                
                 # 处理SSE格式的数据
-                line = line.decode('utf-8')
-                if not line.startswith('data: '):
+                if not line_str.startswith('data: '):
                     continue
                     
                 # 提取JSON数据部分
-                json_str = line[6:].strip()  # 移除 "data: " 前缀
+                json_str = line_str[6:].strip()  # 移除 "data: " 前缀
                 if not json_str:
                     continue
                 
@@ -96,13 +98,16 @@ class DeepseekAPI:
                     continue
                     
                 # 验证响应结构
-                delta = json_response.get('choices', [{}])[0].get('delta', {})
+                choices = json_response.get('choices', [])
+                if not choices:
+                    continue
+                    
+                delta = choices[0].get('delta', {})
                 content = delta.get('content', '')
                 if not content:
                     continue
                 
                 buffer += content
-                logger.debug(f"Received content: {content}")
                 
                 if not thinking_done and "</think>" in buffer:
                     thinking_part = buffer[:buffer.find("</think>") + 8]
@@ -113,22 +118,32 @@ class DeepseekAPI:
                     continue
                     
                 if thinking_done:
-                    while any(buffer.find(end) != -1 for end in ["。", "!", "？", "!", "?", "."]):
-                        for end in ["。", "!", "？", "!", "?", "."]:
+                    # 检查是否有完整的句子
+                    for end in ["。", "!", "？", "!", "?", "."]:
+                        while end in buffer:
                             pos = buffer.find(end)
                             if pos != -1:
                                 sentence = buffer[:pos + 1].strip()
                                 if sentence:
                                     yield sentence
                                 buffer = buffer[pos + 1:].lstrip()
+                            else:
                                 break
 
-            except json.JSONDecodeError as e:
-                logger.debug(f"Invalid JSON in SSE data: {line}")
+            except json.JSONDecodeError:
+                # 特殊处理 [DONE] 信号
+                if line.decode('utf-8').strip() == "data: [DONE]":
+                    if buffer and buffer.strip():
+                        yield buffer.strip()
+                    break
                 continue
             except Exception as e:
                 logger.error(f"Error processing stream: {str(e)}")
                 continue
+
+        # 处理剩余的buffer
+        if buffer and buffer.strip() and thinking_done:
+            yield buffer.strip()
 
     @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
     async def achat(self, prompt: str, history: Optional[List[Dict[str, Any]]] = None) -> Union[str, AsyncGenerator[str, None]]:
