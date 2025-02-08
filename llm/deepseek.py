@@ -68,7 +68,10 @@ class DeepseekAPI:
     async def achat(self, prompt: str, history: Optional[List[Dict[str, Any]]] = None) -> str:
         """异步聊天方法"""
         try:
-            messages = []
+            messages = [{
+                "role": "system",
+                "content": "In every output, response using the following format:\n<think>\n{reasoning_content}\n</think>\n\n{content}"
+            }]
             if history:
                 messages.extend(history)
             messages.append({"role": "user", "content": prompt})

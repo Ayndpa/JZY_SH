@@ -82,7 +82,7 @@ def execute(args: Optional[list], group_id: int, user_id: int):
         {
             "type": "text",
             "data": {
-                "text": f"{target_data.get('card') or target_data.get('nickname')} 对 {target_name} 发动了攻击！"
+                "text": f"{user_info.get('data', {}).get('card') or user_info.get('data', {}).get('nickname') or user_id} 对 {target_name} 发起了攻击！"
             }
         }
     ]
