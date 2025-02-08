@@ -126,7 +126,7 @@ def execute(args: Optional[list], group_id: int, user_id: int):
 
     prompt = config.get("deepseek_attack_prompt", "In every output, response using the following format:\n<think>\n{reasoning_content}\n</think>\n\n{content}\n\n结合对方的信息和聊天记录，尽可能粗暴地辱骂对方，注意言辞不要太高级，尽可能通俗易懂。")
     # Include target user info in prompt
-    prompt = prompt + f"\n```目标用户信息（注意，只做参考，重点攻击最近发言）：{target_data}```"
+    prompt = prompt + f"\n```目标用户信息（不要攻击等级，重点攻击最近发言）：{target_data}```"
 
     # Get target's recent messages
     recent_msgs = get_user_messages_in_group(group_id, int(target), target_count=20, max_search=100)

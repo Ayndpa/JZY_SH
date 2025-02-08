@@ -81,7 +81,7 @@ def execute(args: Optional[list], group_id: int, user_id: int):
         prompt = config.get("gemini_attack_prompt", "生成一段针对性的攻击内容，要求言辞尖锐但不过分，结合目标的信息。")
         
         # Include target user info and recent messages in prompt
-        prompt = prompt + f"\n\n目标用户信息：{target_data}"
+        prompt = prompt + f"\n\目标用户信息（不要攻击等级，重点攻击最近发言）：{target_data}"
         
         # Get target's recent messages
         recent_msgs = get_user_messages_in_group(group_id, int(target), target_count=10, max_search=50)
