@@ -6,6 +6,7 @@ from http_requests.get_group_member_info import get_group_member_info
 from http_requests.get_group_member_list import get_group_member_list
 from http_requests.set_group_kick import set_group_kick  # 修改导入语句
 from sqlite.group_quit_record import add_quit_record
+from utils.reboot_qq import reboot_qq
 
 class PendingKicks:
     _instance = None
@@ -116,9 +117,14 @@ def execute(args: Optional[list], group_id: int, user_id: int):
         # 发送结果消息
         message = [
             {"type": "at", "data": {"qq": str(user_id)}},
-            {"type": "text", "data": {"text": f" 清理完成。成功: {success}, 失败: {failed}"}}
+            {"type": "text", "data": {"text": f" 清理完成。成功: {success}, 失败: {failed}\nQQ将在3秒内重启"}}
         ]
         send_group_msg(group_id, message)
+
+        # 重启QQ
+        time.sleep(3)
+        reboot_qq()
+
         return
 
     # 设置默认清理数量
