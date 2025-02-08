@@ -104,6 +104,8 @@ def execute(args: Optional[list], group_id: int, user_id: int):
                 else:
                     logger.error(f"Failed to kick member {target_id}: {result.get('message', 'Unknown error')}")
                     failed += 1
+                # 添加限速，每两个成员之间暂停0.5秒
+                time.sleep(0.5)
             except Exception as e:
                 logger.error(f"Failed to kick member {target_id}: {e}")
                 failed += 1
