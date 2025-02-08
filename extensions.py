@@ -9,7 +9,7 @@ config = None
 
 # 创建全局 logger
 _logger = logging.getLogger('flask_app')
-_logger.setLevel(logging.DEBUG)
+_logger.setLevel(logging.INFO)
 
 # 创建logs目录(如果不存在)
 if not os.path.exists('logs'):
@@ -26,7 +26,7 @@ file_handler.setLevel(logging.INFO)
 
 # 创建控制台处理器
 console_handler = logging.StreamHandler()
-console_handler.setLevel(logging.DEBUG)
+console_handler.setLevel(logging.INFO)
 
 # 设置日志格式
 formatter = logging.Formatter(
