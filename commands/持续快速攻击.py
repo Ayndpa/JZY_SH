@@ -1,10 +1,8 @@
 from typing import Optional, Set, Dict
 from blinker import signal
 from http_requests.send_group_msg import send_group_msg
-from extensions import config, logger
-from llm.gemini import GeminiAPI, GeminiConfig
+from extensions import config
 from http_requests.get_group_member_info import get_group_member_info
-from http_requests.get_group_msg_history import get_user_messages_in_group
 
 from commands.快速攻击 import execute as quick_attack_execute
 

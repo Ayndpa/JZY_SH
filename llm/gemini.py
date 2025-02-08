@@ -104,7 +104,6 @@ class GeminiAPI:
 
         try:
             generation_config = {
-                "temperature": 1,
                 "response_schema": schema,
                 "response_mime_type": "application/json"
             }

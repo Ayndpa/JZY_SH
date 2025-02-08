@@ -1,11 +1,11 @@
+import logging
 import requests
 import json
 import asyncio
-from typing import List, Dict, Any, Optional, Union, AsyncGenerator
-from dataclasses import dataclass
-from tenacity import retry, stop_after_attempt, wait_exponential
+from typing import List, Dict, Any, Optional, Union, AsyncGenerator, Callable
+from dataclasses import dataclass, field
+from tenacity import retry, stop_after_attempt, wait_exponential, before_log, after_log
 from extensions import logger, config
-import re
 
 @dataclass
 class DeepseekConfig:
@@ -18,194 +18,204 @@ class DeepseekConfig:
     max_retries: int = 3
     timeout: int = 180
     stream: bool = False
+    # 添加新的配置选项
+    retry_callback: Optional[Callable] = field(default=None)
+    sentence_endings: tuple = field(default=("。", "!", "？", "!", "?", "."))
 
 class DeepseekAPIError(Exception):
-    """自定义Deepseek API异常类"""
-    pass
+    """自定义Deepseek API异常类，包含详细的错误信息"""
+    def __init__(self, message: str, status_code: Optional[int] = None, response: Optional[dict] = None):
+        super().__init__(message)
+        self.status_code = status_code
+        self.response = response
 
 class DeepseekAPI:
     def __init__(self, app=None, config: Optional[DeepseekConfig] = None) -> None:
-        self.config = config
+        """初始化DeepseekAPI实例"""
+        self.config = None
+        self.headers = None
         if app:
             self.init_app(app)
         elif config:
-            self.setup_deepseek()
+            self.setup_deepseek(config)
         else:
-            # 如果没有提供 app 或 config，尝试从全局配置初始化
-            api_key = config.get('deepseek_api_key')
-            endpoint = config.get('deepseek_endpoint')
-            if not (api_key and endpoint):
-                logger.error("Deepseek API configuration not found in global config")
-                raise DeepseekAPIError("Deepseek API configuration not found in global config")
-            self.config = DeepseekConfig(api_key=api_key, endpoint=endpoint)
-            self.setup_deepseek()
+            self._init_from_global_config()
+
+    def _init_from_global_config(self) -> None:
+        """从全局配置初始化"""
+        api_key = config.get('deepseek_api_key')
+        endpoint = config.get('deepseek_endpoint')
+        if not (api_key and endpoint):
+            raise DeepseekAPIError("Deepseek API configuration not found in global config")
+        self.setup_deepseek(DeepseekConfig(api_key=api_key, endpoint=endpoint))
 
     def init_app(self, app) -> None:
+        """使用Flask应用初始化API"""
         try:
             api_key = config.get('deepseek_api_key')
             endpoint = config.get('deepseek_endpoint')
             if not (api_key and endpoint):
-                logger.error("Deepseek API configuration not found in config")
                 raise DeepseekAPIError("Deepseek API configuration not found in config")
-            self.config = DeepseekConfig(api_key=api_key, endpoint=endpoint)
-            self.setup_deepseek()
+            self.setup_deepseek(DeepseekConfig(api_key=api_key, endpoint=endpoint))
         except Exception as e:
             logger.error(f"Failed to initialize DeepseekAPI: {str(e)}")
-            raise DeepseekAPIError(f"Failed to initialize DeepseekAPI: {str(e)}")
+            raise
 
-    def setup_deepseek(self) -> None:
-        if not self.config:
-            raise DeepseekAPIError("DeepseekConfig not initialized")
+    def setup_deepseek(self, config: DeepseekConfig) -> None:
+        """设置Deepseek配置"""
+        self.config = config
         self.headers = {
             "api-key": self.config.api_key,
             "Content-Type": "application/json"
         }
         logger.info("Deepseek API initialized successfully")
 
-    def _validate_response(self, response: dict) -> bool:
-        """验证响应是否有效"""
-        return bool(response and 'choices' in response and len(response['choices']) > 0)
-
     async def _process_stream(self, response_iterator) -> AsyncGenerator[str, None]:
-        """处理流式响应"""
+        """优化的流式响应处理"""
         buffer = ""
         thinking_done = False
-        last_sentence = ""  # 跟踪最后一句话
+        last_sentence = ""
         
-        async for line in response_iterator:
-            if not line:
-                continue
+        try:
+            async for line in response_iterator:
+                if not line:
+                    continue
+                    
+                line_str = line.decode('utf-8').strip()
                 
-            try:
-                line_str = line.decode('utf-8')
-                
-                # 处理结束信号
-                if line_str.strip() == "data: [DONE]":
-                    # 只处理有意义的剩余内容
-                    if buffer and buffer.strip() and buffer.strip() != last_sentence:
-                        final_sentence = buffer.strip()
-                        if any(final_sentence.endswith(end) for end in ["。", "!", "？", "!", "?", "."]):
-                            yield final_sentence
+                if line_str == "data: [DONE]":
+                    remaining = buffer.strip()
+                    if remaining and remaining != last_sentence:
+                        yield remaining
                     break
                 
-                # 处理SSE格式的数据
                 if not line_str.startswith('data: '):
                     continue
-                    
-                # 提取JSON数据部分
-                json_str = line_str[6:].strip()
-                if not json_str:
-                    continue
                 
-                json_response = json.loads(json_str)
-                if not isinstance(json_response, dict):
-                    continue
+                try:
+                    json_response = json.loads(line_str[6:])
+                    content = json_response.get('choices', [{}])[0].get('delta', {}).get('content', '')
                     
-                # 验证响应结构
-                choices = json_response.get('choices', [])
-                if not choices:
-                    continue
+                    if not content:
+                        continue
                     
-                delta = choices[0].get('delta', {})
-                content = delta.get('content', '')
-                if not content:
-                    continue
-                
-                buffer += content
-                
-                if not thinking_done and "</think>" in buffer:
-                    thinking_part = buffer[:buffer.find("</think>") + 8]
-                    remaining = buffer[buffer.find("</think>") + 8:]
-                    buffer = remaining.lstrip()
-                    thinking_done = True
-                    logger.info(f"Thinking process: {thinking_part}")
+                    buffer += content
+                    
+                    # 处理思考过程
+                    if not thinking_done and "</think>" in buffer:
+                        thinking_part, buffer = self._extract_thinking(buffer)
+                        thinking_done = True
+                        continue
+                    
+                    # 处理完整句子
+                    if thinking_done:
+                        while any(end in buffer for end in self.config.sentence_endings):
+                            sentence, buffer = self._extract_sentence(buffer)
+                            if sentence and sentence != last_sentence:
+                                last_sentence = sentence
+                                yield sentence
+                                
+                except json.JSONDecodeError:
                     continue
                     
-                if thinking_done:
-                    # 检查是否有完整的句子
-                    for end in ["。", "!", "？", "!", "?", "."]:
-                        while end in buffer:
-                            pos = buffer.find(end)
-                            if pos != -1:
-                                current_sentence = buffer[:pos + 1].strip()
-                                # 只有当句子不为空且与上一句不同时才输出
-                                if current_sentence and current_sentence != last_sentence:
-                                    last_sentence = current_sentence
-                                    yield current_sentence
-                                buffer = buffer[pos + 1:].lstrip()
-                            else:
-                                break
-
-            except json.JSONDecodeError:
-                # 特殊处理 [DONE] 信号
-                if line.decode('utf-8').strip() == "data: [DONE]":
-                    break
-                continue
-            except Exception as e:
-                logger.error(f"Error processing stream: {str(e)}")
-                continue
-
-        # 移除对剩余buffer的额外处理，因为已经在[DONE]信号处理中完成
-
-    @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
-    async def achat(self, prompt: str, history: Optional[List[Dict[str, Any]]] = None) -> Union[str, AsyncGenerator[str, None]]:
-        """异步聊天方法，支持流式输出"""
-        try:
-            messages = [{
-                "role": "system",
-                "content": "In every output, response using the following format:\n<think>\n{reasoning_content}\n</think>\n\n{content}"
-            }]
-            if history:
-                messages.extend(history)
-            messages.append({"role": "user", "content": prompt})
-
-            data = {
-                "model": self.config.model_name,
-                "messages": messages,
-                "max_tokens": self.config.max_tokens,
-                "temperature": self.config.temperature,
-                "stream": self.config.stream
-            }
-
-            if not self.config.stream:
-                async def make_request():
-                    response = await asyncio.to_thread(
-                        requests.post,
-                        f"{self.config.endpoint}?api-version={self.config.api_version}",
-                        headers=self.headers,
-                        json=data,
-                        timeout=self.config.timeout
-                    )
-                    response.raise_for_status()
-                    return response.json()
-
-                response_json = await make_request()
-                if not self._validate_response(response_json):
-                    raise DeepseekAPIError("Invalid response received")
-                return response_json['choices'][0]['message']['content']
-            else:
-                # 创建异步迭代器来处理流式响应
-                async def stream_response():
-                    response = await asyncio.to_thread(
-                        requests.post,
-                        f"{self.config.endpoint}?api-version={self.config.api_version}",
-                        headers=self.headers,
-                        json=data,
-                        timeout=self.config.timeout,
-                        stream=True
-                    )
-                    response.raise_for_status()
-                    
-                    for line in response.iter_lines():
-                        if line:  # 只yield非空行
-                            yield line
-                
-                return self._process_stream(stream_response())
-                
         except Exception as e:
-            logger.error(f"Chat error: {str(e)}")
-            raise DeepseekAPIError(f"Chat error: {str(e)}")
+            logger.error(f"Stream processing error: {str(e)}")
+            raise DeepseekAPIError(f"Stream processing error: {str(e)}")
+
+    def _extract_thinking(self, buffer: str) -> tuple[str, str]:
+        """提取思考过程"""
+        split_pos = buffer.find("</think>") + 8
+        thinking = buffer[:split_pos]
+        remaining = buffer[split_pos:].lstrip()
+        logger.debug(f"Extracted thinking: {thinking}")
+        return thinking, remaining
+
+    def _extract_sentence(self, buffer: str) -> tuple[str, str]:
+        """提取完整句子"""
+        for end in self.config.sentence_endings:
+            pos = buffer.find(end)
+            if pos != -1:
+                sentence = buffer[:pos + len(end)].strip()
+                remaining = buffer[pos + len(end):].lstrip()
+                return sentence, remaining
+        return "", buffer
+
+    @retry(
+        stop=stop_after_attempt(3),
+        wait=wait_exponential(multiplier=1, min=4, max=10),
+        before=before_log(logger, logging.DEBUG),
+        after=after_log(logger, logging.DEBUG)
+    )
+    async def achat(
+        self,
+        prompt: str,
+        history: Optional[List[Dict[str, Any]]] = None
+    ) -> Union[str, AsyncGenerator[str, None]]:
+        """异步聊天方法，支持流式输出"""
+        if not self.config:
+            raise DeepseekAPIError("DeepseekAPI not properly initialized")
+
+        messages = self._prepare_messages(prompt, history)
+        data = self._prepare_request_data(messages)
+
+        try:
+            if not self.config.stream:
+                return await self._handle_regular_chat(data)
+            return await self._handle_stream_chat(data)
+        except requests.exceptions.RequestException as e:
+            raise DeepseekAPIError(f"Request failed: {str(e)}", getattr(e.response, 'status_code', None))
+
+    def _prepare_messages(self, prompt: str, history: Optional[List[Dict[str, Any]]]) -> List[Dict[str, Any]]:
+        """准备消息列表"""
+        messages = [{
+            "role": "system",
+            "content": "In every output, response using the following format:\n<think>\n{reasoning_content}\n</think>\n\n{content}"
+        }]
+        if history:
+            messages.extend(history)
+        messages.append({"role": "user", "content": prompt})
+        return messages
+
+    def _prepare_request_data(self, messages: List[Dict[str, Any]]) -> Dict[str, Any]:
+        """准备请求数据"""
+        return {
+            "model": self.config.model_name,
+            "messages": messages,
+            "max_tokens": self.config.max_tokens,
+            "temperature": self.config.temperature,
+            "stream": self.config.stream
+        }
+
+    async def _handle_regular_chat(self, data: Dict[str, Any]) -> str:
+        """处理普通聊天请求"""
+        response = await asyncio.to_thread(
+            requests.post,
+            f"{self.config.endpoint}?api-version={self.config.api_version}",
+            headers=self.headers,
+            json=data,
+            timeout=self.config.timeout
+        )
+        response.raise_for_status()
+        response_json = response.json()
+        
+        if not response_json.get('choices'):
+            raise DeepseekAPIError("Invalid response format", response.status_code, response_json)
+            
+        return response_json['choices'][0]['message']['content']
+
+    async def _handle_stream_chat(self, data: Dict[str, Any]) -> AsyncGenerator[str, None]:
+        """处理流式聊天请求"""
+        response = await asyncio.to_thread(
+            requests.post,
+            f"{self.config.endpoint}?api-version={self.config.api_version}",
+            headers=self.headers,
+            json=data,
+            timeout=self.config.timeout,
+            stream=True
+        )
+        response.raise_for_status()
+        return self._process_stream(response.iter_lines())
 
     def chat(self, prompt: str, history: Optional[List[Dict[str, Any]]] = None) -> Union[str, AsyncGenerator[str, None]]:
-        """同步聊天方法"""
+        """同步聊天方法的包装器"""
         return asyncio.run(self.achat(prompt, history))

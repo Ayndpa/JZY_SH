@@ -4,7 +4,7 @@ from http_requests.send_group_msg import send_group_msg
 from extensions import config, logger
 from llm.deepseek import DeepseekAPI, DeepseekConfig
 from http_requests.get_group_member_info import get_group_member_info
-from commands.深度攻击 import execute as attack_execute
+from commands.攻击 import execute as attack_execute
 
 # 存储正在被持续攻击的用户
 # 格式: {group_id: set(target_ids)}
