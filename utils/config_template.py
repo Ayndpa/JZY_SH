@@ -21,5 +21,6 @@ DEFAULT_CONFIG = {
     ],
     "max_kick_count": 2,
     "max_leave_count": 1,
-    "min_join_level": 15
+    "min_join_level": 15,
+    "mute_duration": 300
 }

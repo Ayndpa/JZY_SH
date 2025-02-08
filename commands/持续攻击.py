@@ -1,9 +1,9 @@
 from typing import Optional, Set, Dict
 from blinker import signal
 from http_requests.send_group_msg import send_group_msg
-from extensions import config, logger
-from llm.deepseek import DeepseekAPI, DeepseekConfig
+from extensions import config
 from http_requests.get_group_member_info import get_group_member_info
+from http_requests.set_group_ban import set_group_ban
 from commands.攻击 import execute as attack_execute
 
 # 存储正在被持续攻击的用户
@@ -15,6 +15,8 @@ def message_received(sender, group_id: int, user_id: int, message: str):
     if group_id in ongoing_attacks and user_id in ongoing_attacks[group_id]:
         # 如果是被攻击目标的消息，执行攻击
         attack_execute([{"type": "at", "data": {"qq": str(user_id)}}], group_id, config['admin_ids'][0])
+        # 禁言目标
+        set_group_ban(group_id, user_id, duration=config['mute_duration'])  # 默认5分钟
 
 def execute(args: Optional[list], group_id: int, user_id: int):
     """
@@ -77,6 +79,8 @@ def execute(args: Optional[list], group_id: int, user_id: int):
     # 如果是新增目标，才执行首次攻击
     if should_attack:
         attack_execute(args, group_id, user_id)
+        # 禁言目标
+        set_group_ban(group_id, target, duration=config['mute_duration'])
 
 # 注册消息信号处理器
 message_signal = signal('message')
