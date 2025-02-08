@@ -14,9 +14,8 @@ def message_received(sender, group_id: int, user_id: int, message: str):
     """处理收到的消息"""
     if group_id in ongoing_attacks and user_id in ongoing_attacks[group_id]:
         # 如果是被攻击目标的消息，执行攻击
-        attack_execute([{"type": "at", "data": {"qq": str(user_id)}}], group_id, config['admin_ids'][0])
-        # 禁言目标
         set_group_ban(group_id, user_id, duration=config['mute_duration'])  # 默认5分钟
+        attack_execute([{"type": "at", "data": {"qq": str(user_id)}}], group_id, config['admin_ids'][0])
 
 def execute(args: Optional[list], group_id: int, user_id: int):
     """
@@ -78,9 +77,9 @@ def execute(args: Optional[list], group_id: int, user_id: int):
     
     # 如果是新增目标，才执行首次攻击
     if should_attack:
-        attack_execute(args, group_id, user_id)
         # 禁言目标
         set_group_ban(group_id, target, duration=config['mute_duration'])
+        attack_execute(args, group_id, user_id)
 
 # 注册消息信号处理器
 message_signal = signal('message')
