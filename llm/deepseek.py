@@ -70,14 +70,19 @@ class DeepseekAPI:
         }
         logger.info("Deepseek API initialized successfully")
 
-    async def _process_stream(self, response) -> AsyncGenerator[str, None]:
+    async def _process_stream(self, response_iterator) -> AsyncGenerator[str, None]:
         """优化的流式响应处理"""
         buffer = ""
         thinking_done = False
         last_sentence = ""
         
         try:
-            for line in response:
+            async def process_lines():
+                for line in response_iterator:
+                    yield line
+                    await asyncio.sleep(0)  # 让出控制权给事件循环
+                    
+            async for line in process_lines():
                 if not line:
                     continue
                     
@@ -147,6 +152,23 @@ class DeepseekAPI:
         before=before_log(logger, logging.DEBUG),
         after=after_log(logger, logging.DEBUG)
     )
+    async def _make_request(self, data: Dict[str, Any], stream: bool = False) -> Union[requests.Response, str]:
+        """处理API请求"""
+        try:
+            response = await asyncio.to_thread(
+                requests.post,
+                f"{self.config.endpoint}?api-version={self.config.api_version}",
+                headers=self.headers,
+                json=data,
+                timeout=self.config.timeout,
+                stream=stream
+            )
+            response.raise_for_status()
+            return response if stream else response.json()
+        except Exception as e:
+            logger.error(f"API request failed: {str(e)}")
+            raise
+
     async def achat(
         self,
         prompt: str,
@@ -161,10 +183,16 @@ class DeepseekAPI:
 
         try:
             if not self.config.stream:
-                return await self._handle_regular_chat(data)
-            return await self._handle_stream_chat(data)
-        except requests.exceptions.RequestException as e:
-            raise DeepseekAPIError(f"Request failed: {str(e)}", getattr(e.response, 'status_code', None))
+                response_json = await self._make_request(data)
+                if not response_json.get('choices'):
+                    raise DeepseekAPIError("Invalid response format")
+                return response_json['choices'][0]['message']['content']
+            else:
+                response = await self._make_request(data, stream=True)
+                return self._process_stream(response.iter_lines())
+        except Exception as e:
+            logger.error(f"Chat error: {str(e)}")
+            raise DeepseekAPIError(f"Chat error: {str(e)}")
 
     def _prepare_messages(self, prompt: str, history: Optional[List[Dict[str, Any]]]) -> List[Dict[str, Any]]:
         """准备消息列表"""
