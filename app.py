@@ -14,7 +14,6 @@ def init_app():
     from utils.update import do_check
     do_check()
     logger.info('Starting Flask application...')
-    logger.debug(f'Current time: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}')
 
 if __name__ == '__main__':
     init_app()

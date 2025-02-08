@@ -16,8 +16,6 @@ class NoticeType(Enum):
 
 def validate_group(group_id: Optional[int]) -> bool:
     """验证群组ID是否合法"""
-    # logger.debug(f'验证群组ID: {group_id}')
-    # logger.debug(f'配置群组ID: {config.get("group_ids", {})}')
     return bool(group_id in config.get('group_ids', {}) or group_id == config.get('admin_group_id'))
 
 def handle_event(data: Dict[str, Any]) -> None:
@@ -34,8 +32,6 @@ def handle_event(data: Dict[str, Any]) -> None:
             logger.debug(f'机器人不在群组 {group_id} 中')
             return
         
-        logger.debug(f'收到来自机器人 {data.get("self_id")} 的事件: {data}')
-
         post_type = data.get('post_type')
         if not post_type:
             logger.debug('收到无效事件类型')

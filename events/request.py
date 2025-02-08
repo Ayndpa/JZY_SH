@@ -164,8 +164,6 @@ def check_level_requirements(user_id: int) -> LevelCheckResult:
     min_level = config.get('min_join_level', 0)
     user_info = get_stranger_info(user_id)
     
-    logger.debug(f"User info: {user_info}")
-
     user_data = user_info.get('data', {})
     level = user_data.get('qqLevel', 0)
     

@@ -96,7 +96,6 @@ def execute(args: Optional[list], group_id: int, user_id: int):
             prompt = prompt + f"\n\n注意：{args[1]}"
 
         attack_desc = api.chat(prompt)
-        logger.debug(f"Gemini response: {attack_desc}")
 
         # 发送攻击描述
         follow_message = [

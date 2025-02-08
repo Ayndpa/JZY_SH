@@ -84,7 +84,6 @@ class GeminiAPI:
                 logger.error("Invalid response received")  # 添加日志
                 raise GeminiAPIError("Invalid response received")
             
-            logger.debug(f"Chat response received: {response.text[:100]}...")  # 添加日志
             return response.text
         except Exception as e:
             logger.error(f"Chat error: {str(e)}")  # 添加日志

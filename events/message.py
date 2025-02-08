@@ -30,8 +30,6 @@ def handle_group_message(data: Dict[str, Any]) -> None:
     group_id = data.get('group_id')
     user_id = data.get('user_id')
     
-    logger.debug(f'收到来自群 {group_id} 用户 {user_id} 的消息: {message}')
-    
     # 发送消息信号
     message_signal = signal('message')
     message_signal.send('message', group_id=group_id, user_id=user_id, message=message)
