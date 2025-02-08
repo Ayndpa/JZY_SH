@@ -101,7 +101,8 @@ class DeepseekAPI:
                     continue
                     
                 buffer += content
-                
+                logger.debug(f"Received response: {content}")
+
                 if not thinking_done and "</think>" in buffer:
                     thinking_part = buffer[:buffer.find("</think>") + 8]
                     remaining = buffer[buffer.find("</think>") + 8:]
