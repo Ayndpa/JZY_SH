@@ -7,6 +7,7 @@ from http_requests.get_group_member_list import get_group_member_list
 from http_requests.set_group_kick import set_group_kick  # 修改导入语句
 from sqlite.group_quit_record import add_quit_record
 from utils.reboot_qq import reboot_qq
+from sqlite.group_member_record import delete_member_record
 
 class PendingKicks:
     _instance = None
@@ -101,6 +102,8 @@ def execute(args: Optional[list], group_id: int, user_id: int):
                 result = set_group_kick(group_id, target_id)
                 if result.get("status") == "ok":
                     add_quit_record(target_id, group_id, 'kick')
+                    # Delete member record after successful kick
+                    delete_member_record(group_id, target_id)
                     success += 1
                 else:
                     logger.error(f"Failed to kick member {target_id}: {result.get('message', 'Unknown error')}")
