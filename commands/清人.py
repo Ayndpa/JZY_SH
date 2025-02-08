@@ -81,6 +81,7 @@ def execute(args: Optional[list], group_id: int, user_id: int):
         return
 
     # 处理确认清理的情况
+    logger.info(f"args: {args}")
     if args and "确认清理" in args[0]:
         to_kick = pending_kicks.get(group_id, user_id)
         if not to_kick:
