@@ -71,12 +71,12 @@ def execute(args: Optional[list], group_id: int, user_id: int):
         # 执行踢人操作
         success = 0
         failed = 0
-        for target_id in to_kick:
-            result = set_group_kick(group_id, target_id)
-            if result.get("status") == "ok":
-                success += 1
-            else:
-                failed += 1
+        # for target_id in to_kick:
+        #     result = set_group_kick(group_id, target_id)
+        #     if result.get("status") == "ok":
+        #         success += 1
+        #     else:
+        #         failed += 1
 
         # 清理临时存储
         pending_kicks.remove(group_id, user_id)
