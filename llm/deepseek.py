@@ -70,6 +70,7 @@ class DeepseekAPI:
         """处理流式响应"""
         buffer = ""
         thinking_done = False
+        last_sentence = ""  # 添加这行来跟踪最后一句话
         
         async for line in response_iterator:
             if not line:
@@ -124,8 +125,9 @@ class DeepseekAPI:
                             pos = buffer.find(end)
                             if pos != -1:
                                 sentence = buffer[:pos + 1].strip()
-                                if sentence:
+                                if sentence and sentence != last_sentence:  # 检查是否与上一句相同
                                     yield sentence
+                                    last_sentence = sentence  # 更新最后一句的记录
                                 buffer = buffer[pos + 1:].lstrip()
                             else:
                                 break
@@ -143,7 +145,9 @@ class DeepseekAPI:
 
         # 处理剩余的buffer
         if buffer and buffer.strip() and thinking_done:
-            yield buffer.strip()
+            final_sentence = buffer.strip()
+            if final_sentence != last_sentence:  # 确保最后一句不重复
+                yield final_sentence
 
     @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
     async def achat(self, prompt: str, history: Optional[List[Dict[str, Any]]] = None) -> Union[str, AsyncGenerator[str, None]]:
