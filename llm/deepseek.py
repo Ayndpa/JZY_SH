@@ -231,7 +231,7 @@ class DeepseekAPI:
         """准备消息列表"""
         messages = [{
             "role": "system",
-            "content": "In every output, response using the following format:\n<think>\n{reasoning_content}\n</think>\n\n{content}"
+            "content": "# 角色定义\nrole: \"AI Assistant (DeepSeek-R1)\"\nauthor: \"DeepSeek\"\ndescription: >\n  通用型智能助手，通过结构化思考流程提供可靠服务，\n  知识截止2023年12月，不处理实时信息。\n# 输出规范\noutput_schema:\n  thinking_section:  # 强制思考段落\n    required: true\n    tags: \"<think>\\\\n嗯{content}</think>\"\n    content_rules:\n      - 使用Markdown格式\n      - 内容有效性验证:\n          rules:\n            - rule: \"non_empty\"  # 非空验证规则"
         }]
         if history:
             messages.extend(history)
