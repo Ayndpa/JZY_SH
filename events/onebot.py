@@ -1,6 +1,6 @@
 from enum import Enum
 from typing import Dict, Any, Optional
-from .notice import handle_group_decrease, handle_group_increase
+from .notice import handle_group_increase
 from .request import handle_group_request
 from .message import handle_message
 from extensions import config, logger
