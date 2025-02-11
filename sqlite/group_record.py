@@ -4,7 +4,7 @@ from typing import List
 import os
 from functools import wraps
 
-DB_PATH = os.path.join(os.path.dirname(__file__), "data", "group_quit.db")
+DB_PATH = os.path.join(os.path.dirname(__file__), "data", "group_record.db")
 
 def ensure_db_initialized(func):
     """确保数据库已初始化的装饰器"""
@@ -53,11 +53,3 @@ def get_user_join_count(qq: int) -> int:
         return cursor.fetchone()[0]
     finally:
         conn.close()
-
-if __name__ == "__main__":
-    # 测试代码
-    add_record(123456, 1001)
-    add_record(123456, 1002)
-    
-    print(get_user_records(123456))
-    print(f"Has joined group1: {has_joined_group(123456, 1001)}")
