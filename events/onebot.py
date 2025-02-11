@@ -52,9 +52,7 @@ def handle_event(data: Dict[str, Any]) -> None:
 def handle_notice_event(data: Dict[str, Any]) -> None:
     """处理通知类型事件"""
     notice_type = data.get('notice_type')
-    if notice_type == NoticeType.GROUP_DECREASE.value:
-        handle_group_decrease(data)
-    elif notice_type == NoticeType.GROUP_INCREASE.value:
+    if notice_type == NoticeType.GROUP_INCREASE.value:
         handle_group_increase(data)
 
 def handle_request_event(data: Dict[str, Any]) -> None:

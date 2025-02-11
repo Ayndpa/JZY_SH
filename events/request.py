@@ -4,10 +4,10 @@ from extensions import logger, config
 from http_requests.send_group_msg import send_group_msg
 from http_requests.set_group_add_request import set_group_add_request
 from http_requests.get_stranger_info import get_stranger_info
-from sqlite.group_quit_record import get_quit_records
 from enum import Enum
 from http_requests.get_group_member_info import get_group_member_info
 from audits.join_audit import JoinRequestAuditor
+from sqlite import group_record
 
 class RequestData(TypedDict):
     sub_type: str
@@ -87,28 +87,14 @@ def check_other_groups(user_id: int) -> bool:
         return False
     
 class RejectReason(Enum):
-    KICK_LIMIT = "被踢次数过多"
-    LEAVE_LIMIT = "主动退群次数过多"
+    JOIN_LIMIT = "加群次数过多"  # 新增加群次数限制的原因
 
-@handle_error
-def check_quit_history(user_id: int) -> tuple[bool, Optional[str]]: 
-    """Check if user has previously quit the group"""
+def check_quit_history(user_id: int) -> Tuple[bool, Optional[str]]:
+    join_count = group_record.get_user_join_count(user_id)
     
-    quit_records = get_quit_records(user_id)
-    if not quit_records:
-        return True, None
+    if join_count >= config.get('max_joins', 2):
+        return False, RejectReason.JOIN_LIMIT.value
         
-    # Check for kicks vs voluntary leaves
-    for record in quit_records:
-        quit_type = record[3]  # quit_type is the 4th column
-        if quit_type == 'kick':
-            kick_count = sum(1 for r in quit_records if r[3] == 'kick')
-            if kick_count >= config.get('max_kick_count', 2):
-                return False, RejectReason.KICK_LIMIT.value
-        else:  # voluntary leave
-            leave_count = sum(1 for r in quit_records if r[3] == 'leave')
-            if leave_count >= config.get('max_leave_count', 1):
-                return False, RejectReason.LEAVE_LIMIT.value
     return True, None
 
 def _log_request(data: RequestData) -> None:
