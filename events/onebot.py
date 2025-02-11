@@ -11,7 +11,6 @@ class PostType(Enum):
     MESSAGE = "message"
 
 class NoticeType(Enum):
-    GROUP_DECREASE = "group_decrease"
     GROUP_INCREASE = "group_increase"
 
 def validate_group(group_id: Optional[int]) -> bool:
