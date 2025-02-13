@@ -5,6 +5,7 @@ import requests
 from extensions import config, logger
 from http_requests.send_group_msg import send_group_msg
 from llm.gemini import GeminiAPI, GeminiConfig
+import re
 
 # filepath: /d:/AuroraProjects/Python/JZY_SH/commands/语音聊天.py
 
@@ -33,8 +34,11 @@ def execute(args: Optional[list], group_id: int, user_id: int):
 
         # 转换为语音
         tts_url = "https://tts.mzzsfy.eu.org/api/tts"
+        # Remove special characters and newlines from response
+        cleaned_response = response.replace('\n', ' ').strip()
+        cleaned_response = re.sub(r'[^\w\s,.?!，。？！]', '', cleaned_response)
         tts_params = {
-            "text": requests.utils.quote(response),
+            "text": cleaned_response,
             "download": "true",
             "voiceName": "zh-TW-YunJheNeural",
             "rate": 20
