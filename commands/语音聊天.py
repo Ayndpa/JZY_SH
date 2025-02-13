@@ -1,3 +1,5 @@
+import os
+import uuid
 from typing import Optional
 import requests
 from extensions import config, logger
@@ -21,6 +23,7 @@ def execute(args: Optional[list], group_id: int, user_id: int):
 
     # Join args to form the chat message
     chat_text = " ".join(args)
+    temp_file = None
 
     try:
         # 使用Gemini API生成回复
@@ -38,15 +41,22 @@ def execute(args: Optional[list], group_id: int, user_id: int):
 
         tts_response = requests.get(tts_url, params=tts_params)
         if tts_response.status_code == 200:
+            # 创建临时文件
+            temp_dir = "temp"
+            if not os.path.exists(temp_dir):
+                os.makedirs(temp_dir)
+                
+            temp_file = os.path.join(temp_dir, f"{uuid.uuid4()}.mp3")
+            
+            # 保存语音文件
+            with open(temp_file, "wb") as f:
+                f.write(tts_response.content)
+
             # 发送语音消息
             send_group_msg(group_id, [
                 {"type": "record", "data": {
-                    "file": tts_response.url,
-                    "cache": 1,
-                    "proxy": 1
-                }},
-                # 同时发送文字版本
-                {"type": "text", "data": {"text": f"\n文字版本：{response}"}}
+                    "file": f"file:///{temp_file}",
+                }}
             ])
         else:
             # 如果语音转换失败，只发送文字
@@ -60,3 +70,10 @@ def execute(args: Optional[list], group_id: int, user_id: int):
             {"type": "at", "data": {"qq": str(user_id)}},
             {"type": "text", "data": {"text": f" 处理过程中发生错误：{str(e)}"}}
         ])
+    finally:
+        # 清理临时文件
+        if temp_file and os.path.exists(temp_file):
+            try:
+                os.remove(temp_file)
+            except Exception as e:
+                logger.error(f"Error deleting temp file: {e}")
