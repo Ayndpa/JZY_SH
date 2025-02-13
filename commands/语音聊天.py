@@ -55,7 +55,7 @@ def execute(args: Optional[list], group_id: int, user_id: int):
             # 发送语音消息
             send_group_msg(group_id, [
                 {"type": "record", "data": {
-                    "file": f"file:///{temp_file}",
+                    "file": f"file:///{os.path.abspath(temp_file)}",
                 }}
             ])
         else:
