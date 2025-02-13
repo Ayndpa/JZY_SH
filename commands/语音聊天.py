@@ -36,7 +36,8 @@ def execute(args: Optional[list], group_id: int, user_id: int):
         tts_params = {
             "text": response,
             "download": "true",
-            "voiceName": "zh-TW-YunJheNeural"
+            "voiceName": "zh-TW-YunJheNeural",
+            "pitch": 20
         }
 
         tts_response = requests.get(tts_url, params=tts_params)
