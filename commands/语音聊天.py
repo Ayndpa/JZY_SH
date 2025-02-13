@@ -45,6 +45,9 @@ def execute(args: Optional[list], group_id: int, user_id: int):
         }
 
         tts_response = requests.get(tts_url, params=tts_params)
+
+
+
         if tts_response.status_code == 200:
             # 创建临时文件
             temp_dir = "temp"
@@ -64,9 +67,9 @@ def execute(args: Optional[list], group_id: int, user_id: int):
                 }}
             ])
         else:
-            # 如果语音转换失败，只发送文字
+            logger.error(f"TTS API error: status_code={tts_response.status_code}, response={tts_response.text}")
             send_group_msg(group_id, [
-                {"type": "text", "data": {"text": response}}
+                {"type": "text", "data": {"text": f"语音合成失败 (错误码: {tts_response.status_code})"}}
             ])
 
     except Exception as e:
