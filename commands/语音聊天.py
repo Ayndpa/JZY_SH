@@ -50,7 +50,7 @@ def execute(args: Optional[list], group_id: int, user_id: int):
         json_data = {
             "text": cleaned_response,
             "voice": "zh-TW-YunJheNeural",
-            "rate": 0,
+            "rate": 40,
             "pitch": 0,
             "preview": False
         }
