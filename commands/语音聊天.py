@@ -33,20 +33,29 @@ def execute(args: Optional[list], group_id: int, user_id: int):
         response = api.chat(chat_text)
 
         # 转换为语音
-        tts_url = "https://tts.mzzsfy.eu.org/api/tts"
+        tts_url = "https://deno-tts.api.zwei.de.eu.org/tts"
         # Remove special characters and newlines from response
         cleaned_response = response.replace('\n', ' ').strip()
         cleaned_response = re.sub(r'[^\w\s,.?!，。？！]', '', cleaned_response)
-        tts_params = {
+        
+        headers = {
+            "accept": "audio/mpeg",
+            "accept-language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
+            "content-type": "application/json",
+            "origin": "https://tts.ciallo.de",
+            "referer": "https://tts.ciallo.de/",
+            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36 Edg/133.0.0.0"
+        }
+        
+        json_data = {
             "text": cleaned_response,
-            "download": "true",
-            "voiceName": "zh-TW-YunJheNeural",
-            "rate": 20
+            "voice": "zh-TW-YunJheNeural",
+            "rate": 0,
+            "pitch": 0,
+            "preview": False
         }
 
-        tts_response = requests.get(tts_url, params=tts_params)
-
-
+        tts_response = requests.post(tts_url, headers=headers, json=json_data)
 
         if tts_response.status_code == 200:
             # 创建临时文件
