@@ -34,7 +34,7 @@ def execute(args: Optional[list], group_id: int, user_id: int):
         # 转换为语音
         tts_url = "https://tts.mzzsfy.eu.org/api/tts"
         tts_params = {
-            "text": response,
+            "text": requests.utils.quote(response),
             "download": "true",
             "voiceName": "zh-TW-YunJheNeural",
             "rate": 20
