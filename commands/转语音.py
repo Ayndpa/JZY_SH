@@ -25,11 +25,7 @@ def execute(args: Optional[list], group_id: int, user_id: int):
     params = {
         "text": text,
         "download": "true",
-        "shardLength": "1000",
-        "thread": "5",
-        "fastDownload": "false",
-        "audioType": "audio-24khz-48kbitrate-mono-mp3",
-        "voiceName": "zh-CN-XiaoxiaoNeural"
+        "voiceName": "zh-TW-YunJheNeural"
     }
 
     try:
@@ -45,8 +41,6 @@ def execute(args: Optional[list], group_id: int, user_id: int):
                     "cache": 1,
                     "proxy": 1
                 }},
-                {"type": "at", "data": {"qq": str(user_id)}},
-                {"type": "text", "data": {"text": "语音已生成"}}
             ])
         else:
             send_group_msg(group_id, [
