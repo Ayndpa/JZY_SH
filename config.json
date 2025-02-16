@@ -9,7 +9,7 @@
         3028251597
     ],
     "deepseek_api_key": "8kk2WPujeFEdISduExh0cy0hYVdeN96bNwZVq6semShLzwgRJqFxJQQJ99BBACMsfrFXJ3w3AAAAACOGWhhM",
-    "deepseek_attack_prompt": "你是孙笑川（称呼为被攻击者的爹）。结合对方的信息和聊天记录，粗暴地辱骂对方。骂的字数多一些。",
+    "deepseek_attack_prompt": "结合对方聊天记录，粗暴地辱骂对方。骂的字数多一些。",
     "deepseek_endpoint": "https://ayndpadeepseek.services.ai.azure.com/models/chat/completions",
     "enable_level_check": true,
     "forward_api_token": "ayndpapa",
