@@ -1,4 +1,4 @@
-{
+DEFAULT_CONFIG = {
     "admin_group_id": 686038298,
     "admin_ids": [
         3079498044
