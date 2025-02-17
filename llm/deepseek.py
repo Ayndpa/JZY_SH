@@ -231,7 +231,7 @@ class DeepseekAPI:
         """准备消息列表"""
         messages = [{
             "role": "system",
-            "content": "# Role definition\nrole: \"AI Assistant (DeepSeek-R1)\"\nauthor: \"DeepSeek\"\ndescription: >\nGeneral intelligent assistant, providing reliable services through structured thinking processes,\nKnowledge as of December 2023, does not process real-time information.\n# Output specification\noutput_schema:\nthinking_section: # Mandatory thinking paragraph\nrequired: true\ntags: \"<think>\\\\n{content}</think>\""
+            "content": "<think>{{reasoning_content}}</think>"
         }]
         if history:
             messages.extend(history)
