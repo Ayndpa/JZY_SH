@@ -14,22 +14,14 @@ def execute(args: Optional[list], group_id: int, user_id: int):
         user_id: 执行命令的用户ID
     """
     try:
-        # 默认参数
-        keyword = None
-        
-        # 解析参数
-        if args:
-            keyword = args
-
         # API请求URL
         api_url = "https://image.anosu.top/pixiv/direct"
         params = {
-            "num": 1,
             "r18": 0,  # 固定为0
         }
         
-        if keyword:
-            params["keyword"] = keyword
+        if args:
+            params["keyword"] = args
 
         # 发送API请求
         response = requests.get(api_url, params=params)
