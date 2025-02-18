@@ -233,7 +233,7 @@ class DeepseekAPI:
         }]
         if history:
             messages.extend(history)
-        messages.append({"role": "user", "content": "<think>\\n\n\nUser Prompt: " + prompt})
+        messages.append({"role": "user", "content": "<think>\n\n\nUser Prompt: " + prompt})
         return messages
 
     def _prepare_request_data(self, messages: List[Dict[str, Any]]) -> Dict[str, Any]:
