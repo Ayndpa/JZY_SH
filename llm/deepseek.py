@@ -229,10 +229,13 @@ class DeepseekAPI:
 
     def _prepare_messages(self, prompt: str, history: Optional[List[Dict[str, Any]]]) -> List[Dict[str, Any]]:
         """准备消息列表"""
-        messages = []
+        messages = [{
+            "role": "system",
+            "content": "Initiate your response with \"<think>\\\\n\" at the beginning of every output."
+        }]
         if history:
             messages.extend(history)
-        messages.append({"role": "user", "content": "<think>\n\n\nUser Prompt: " + prompt})
+        messages.append({"role": "user", "content": prompt})
         return messages
 
     def _prepare_request_data(self, messages: List[Dict[str, Any]]) -> Dict[str, Any]:
