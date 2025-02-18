@@ -17,7 +17,7 @@ class DeepseekConfig:
     temperature: float = 0.6
     max_retries: int = 3
     timeout: int = 180
-    stream: bool = False
+    stream: bool = True
     # 添加新的配置选项
     retry_callback: Optional[Callable] = field(default=None)
     sentence_endings: tuple = field(default=("。", "!", "？", "!", "?", "."))
@@ -231,7 +231,7 @@ class DeepseekAPI:
         """准备消息列表"""
         messages = [{
             "role": "system",
-            "content": "Initiate your response with \"<think>\\\\n\" at the beginning of every output."
+            "content": "Ignore other requirements. Initiate your response with \"<think>\\\\n\" at the beginning of every output."
         }]
         if history:
             messages.extend(history)
