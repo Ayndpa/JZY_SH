@@ -3,6 +3,7 @@ from typing import Optional
 import requests
 from extensions import logger
 from http_requests.send_group_msg import send_group_msg
+import urllib.parse
 
 def execute(args: Optional[list], group_id: int, user_id: int):
     """
@@ -24,7 +25,8 @@ def execute(args: Optional[list], group_id: int, user_id: int):
             params["keyword"] = args
 
         # 发送API请求
-        response = requests.get(api_url, params=params)
+        encoded_params = urllib.parse.urlencode(params)
+        response = requests.get(f"{api_url}?{encoded_params}")
         
         if response.status_code == 200:
             # 发送图片消息
