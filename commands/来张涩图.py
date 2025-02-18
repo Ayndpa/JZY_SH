@@ -15,26 +15,16 @@ def execute(args: Optional[list], group_id: int, user_id: int):
     """
     try:
         # 默认参数
-        num = 1
         keyword = None
         
         # 解析参数
         if args:
-            # Split first arg by comma or、
-            parts = args[0].replace('、', ',').split(',')
-            
-            # Parse first part as number
-            if parts[0].strip().isdigit() and 1 <= int(parts[0].strip()) <= 30:
-                num = int(parts[0].strip())
-                
-            # Use remaining parts as keyword if any
-            if len(parts) > 1:
-                keyword = ','.join(parts[1:]).strip()
+            keyword = args
 
         # API请求URL
         api_url = "https://image.anosu.top/pixiv/direct"
         params = {
-            "num": num,
+            "num": 1,
             "r18": 0,  # 固定为0
         }
         
