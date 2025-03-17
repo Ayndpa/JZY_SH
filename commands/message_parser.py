@@ -1,5 +1,6 @@
 import importlib
 import os
+import sys
 from typing import Dict, Any, Tuple, Optional
 import re
 from extensions import logger, config
@@ -49,9 +50,27 @@ def process_command(command: str, args: Optional[str], group_id: int, user_id: i
         user_id: 用户ID
     """
     try:
-        # 尝试导入对应的命令模块
-        module_path = f"commands.{command}"
-        command_module = importlib.import_module(module_path)
+        # 获取当前文件所在目录的父目录路径（即项目根目录）
+        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        
+        # 获取commands目录的绝对路径
+        commands_dir = os.path.join(base_dir, 'commands')
+        
+        # 确保该命令文件确实存在
+        command_file = os.path.join(commands_dir, f"{command}.py")
+        if not os.path.exists(command_file):
+            logger.error(f'命令文件不存在: {command_file}')
+            return
+            
+        # 添加项目根目录到sys.path（而不是commands目录）
+        if base_dir not in sys.path:
+            sys.path.insert(0, base_dir)
+        
+        # 打印调试信息
+        logger.info(f'尝试导入模块: commands.{command}, 路径: {command_file}')
+        
+        # 使用完整的模块路径导入
+        command_module = importlib.import_module(f'commands.{command}')
         
         # 调用模块的execute函数
         if hasattr(command_module, 'execute'):
@@ -60,8 +79,7 @@ def process_command(command: str, args: Optional[str], group_id: int, user_id: i
         else:
             logger.error(f'命令 {command} 模块缺少execute函数')
             
-    except ImportError:
-        logger.error(f'未找到命令 {command} 对应的模块')
+    except ImportError as e:
+        logger.error(f'未找到命令模块 {command}: {str(e)}')
     except Exception as e:
-        logger.error(f'执行命令 {command} 时发生错误: {str(e)}')
-
+        logger.error(f'执行命令 {command} 时发生错误: {str(e)}', exc_info=True)
