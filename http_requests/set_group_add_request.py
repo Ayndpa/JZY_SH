@@ -55,7 +55,7 @@ def set_group_add_request(
                 api = GeminiAPI(config=gemini_config)
 
                 # Generate welcome message
-                prompt = "生成一段欢迎加群语，内容包含：\n群公告获取整合，仔细看完所有公告，注意群规，违反立刻踢掉"
+                prompt = "生成一段对一位新人的欢迎加群语，内容包含：\n群公告获取整合，仔细看完所有公告，注意群规，违反立刻踢掉"
                 welcome_msg = api.chat(prompt)
 
                 # Send welcome message
