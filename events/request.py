@@ -136,7 +136,7 @@ def _notify_admin(data: RequestData, reason_type: NotifyReason, custom_msg: str 
     logger.info(f"Admin notification sent: {base_info}")
 
 def _reject_request(data: RequestData, reason: str) -> None:
-    set_group_add_request(data['flag'], data['sub_type'], approve=False, reason=reason)
+    set_group_add_request(data['flag'], data['sub_type'], group_id=data['group_id'], user_id=data['user_id'], approve=False, reason=reason)
     logger.info(
         f"Rejected join request | Group: {data['group_id']} | "
         f"User: {data['user_id']} | Reason: {reason}"
@@ -164,7 +164,7 @@ def process_request(data: RequestData) -> None:
     result = auditor.audit(data['comment'])
     
     if result.agreed:
-        set_group_add_request(data['flag'], data['sub_type'], approve=True)
+        set_group_add_request(data['flag'], data['sub_type'], group_id=data['group_id'], user_id=data['user_id'], approve=True)
         logger.info(
             f"Approved join request | Group: {data['group_id']} | "
             f"User: {data['user_id']}"

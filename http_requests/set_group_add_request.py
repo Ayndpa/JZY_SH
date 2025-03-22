@@ -1,10 +1,14 @@
 import requests
 from typing import Optional
 from extensions import config, logger
+from http_requests.send_group_msg import send_group_msg
+from llm.gemini import GeminiAPI, GeminiConfig
 
 def set_group_add_request(
     flag: str,
     sub_type: str,
+    group_id: int,
+    user_id: int,
     approve: bool = True,
     reason: Optional[str] = None
 ) -> dict:
@@ -14,6 +18,7 @@ def set_group_add_request(
     Args:
         flag (str): 加群请求的flag（需从上报的数据中获得）
         sub_type (str): 请求类型（add或invite，需要和上报消息中的sub_type字段相符）
+        group_id (int): 群号
         approve (bool, optional): 是否同意请求/邀请. Defaults to True.
         reason (Optional[str], optional): 拒绝理由（仅在拒绝时有效）. Defaults to None.
         
@@ -41,6 +46,27 @@ def set_group_add_request(
         
         # 检查响应状态
         response.raise_for_status()
+
+        # @该加群群员并发送通知（使用大模型）
+        if approve:
+            try:
+                # Initialize Gemini API
+                gemini_config = GeminiConfig(api_key=config['gemini_api_key'])
+                api = GeminiAPI(config=gemini_config)
+
+                # Generate welcome message
+                prompt = "生成一段欢迎加群语，内容包含：\n群公告获取整合，仔细看完所有公告，注意群规，违反立刻踢掉"
+                welcome_msg = api.chat(prompt)
+
+                # Send welcome message
+                message = [
+                    {"type": "at", "data": {"qq": str(user_id)}},
+                    {"type": "text", "data": {"text": welcome_msg}}
+                ]
+                send_group_msg(group_id, message)
+            except Exception as e:
+                logger.error(f"Failed to send welcome message: {e}")
+
         return response.json()
         
     except requests.RequestException as e:
