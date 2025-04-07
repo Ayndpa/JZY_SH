@@ -2,7 +2,6 @@ import requests
 from typing import Optional
 from extensions import config, logger
 from http_requests.send_group_msg import send_group_msg
-from llm.gemini import GeminiAPI, GeminiConfig
 
 def set_group_add_request(
     flag: str,
