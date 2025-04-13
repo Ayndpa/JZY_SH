@@ -11,7 +11,7 @@ def execute(args: Optional[list], group_id: int, user_id: int):
     永久踢出命令执行入口
     
     Args:
-        args: 命令参数 (需要被踢出用户的QQ号)
+        args: 命令参数 (需要被踢出用户的QQ号或@用户)
         group_id: 群组ID
         user_id: 执行命令的用户ID
     """
@@ -38,12 +38,17 @@ def execute(args: Optional[list], group_id: int, user_id: int):
 
     # 检查参数
     if not args or len(args) != 1:
-        send_group_msg(group_id, "用法: 永久踢出 @用户")
+        send_group_msg(group_id, "用法: 永久踢出 @用户 或 永久踢出 QQ号")
         return
 
     try:
-        # 解析目标用户ID
-        target_id = int(args[0]['data']['qq']) if isinstance(args[0], dict) else int(args[0].strip())
+        # 解析目标用户ID - 支持@用户格式或直接QQ号
+        target_id = None
+        if isinstance(args[0], dict) and 'data' in args[0] and 'qq' in args[0]['data']:
+            target_id = int(args[0]['data']['qq'])  # @用户格式
+        else:
+            # 尝试将参数直接解析为QQ号
+            target_id = int(args[0].strip())
         
         # 获取最大允许加群次数
         max_joins = config.get('max_joins', 2)
@@ -63,7 +68,7 @@ def execute(args: Optional[list], group_id: int, user_id: int):
         logger.info(f"User {target_id} has been permanently banned from joining by admin {user_id}")
 
     except ValueError:
-        send_group_msg(group_id, "无效的用户ID")
+        send_group_msg(group_id, "无效的用户ID，请输入正确的QQ号")
     except Exception as e:
         logger.error(f"Error in permanent ban command: {str(e)}")
         send_group_msg(group_id, "执行命令时发生错误")

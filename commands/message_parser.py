@@ -9,7 +9,7 @@ def parse_command(message: str, group_id: int, user_id: int):
     """
     解析消息中的命令和参数，并处理
     支持两种格式：
-    1. @机器人QQ号 命令 @目标QQ号
+    1. @机器人QQ号 命令名称 参数1 参数2 参数3 ...
     2. 字典列表格式的消息
 
     Args:
@@ -22,24 +22,39 @@ def parse_command(message: str, group_id: int, user_id: int):
 
     # 处理字典列表格式消息
     if isinstance(message, list):
-        if (len(message) >= 2 and 
-            message[0].get('type') == 'at' and 
-            message[0].get('data', {}).get('qq') in BOT_QQS):
+        # 检查第一段是否@机器人
+        if len(message) >= 2 and message[0].get('type') == 'at' and message[0].get('data', {}).get('qq') in BOT_QQS:
             
-            command = message[1].get('data', {}).get('text', '').strip().lower()
-            args = message[2:] if len(message) > 2 else None
-            # Check if there's a colon in the command
-            if '：' in command:
-                command, args = command.split('：', 1)
-                command = command.strip().lower()
-                args = args.strip()
-            else:
-                command = command.strip().lower()
+            # 第二段获取指令和文字参数
+            command_text = message[1].get('data', {}).get('text', '').strip()
+            
+            # 解析命令和基本参数
+            parts = command_text.split()
+            if not parts:
+                return
+                
+            command = parts[0].lower()  # 第一部分作为命令名称
+            text_args = parts[1:] if len(parts) > 1 else []
+            
+            # 获取第三段到最后的特殊传入参数
+            special_args = []
+            if len(message) > 2:
+                special_args = message[2:]
+            
+            # 组合所有参数
+            args = text_args + special_args
+            
+            # 处理命令
             if command:
                 process_command(command, args, group_id, user_id)
+    
+    # 处理文本格式的消息，以后可以添加
+    else:
+        # 文本格式的消息处理逻辑
+        pass
         return
 
-def process_command(command: str, args: Optional[str], group_id: int, user_id: int):
+def process_command(command: str, args: Optional[list], group_id: int, user_id: int):
     """
     动态加载并处理命令
     

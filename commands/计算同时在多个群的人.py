@@ -58,7 +58,7 @@ def execute(args: Optional[list], group_id: int, user_id: int):
     min_groups = None
     if args and len(args) > 0:
         try:
-            min_groups = int(args)
+            min_groups = int(args[0])
             if min_groups < 2:
                 message = [
                     {"type": "at", "data": {"qq": str(user_id)}},

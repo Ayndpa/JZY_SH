@@ -81,7 +81,7 @@ def execute(args: Optional[list], group_id: int, user_id: int):
         return
 
     # 处理确认清理的情况
-    if args and args == "确认清理":
+    if args and args[0] == "确认清理":
         to_kick = pending_kicks.get(group_id, user_id)
         if not to_kick:
             message = [
@@ -129,7 +129,7 @@ def execute(args: Optional[list], group_id: int, user_id: int):
     target_count = 10
     if args and len(args) > 0:
         try:
-            target_count = int(args)
+            target_count = int(args[0])
         except ValueError:
             message = [
                 {"type": "at", "data": {"qq": str(user_id)}},

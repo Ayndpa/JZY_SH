@@ -1,7 +1,7 @@
 from typing import Dict, Any, Optional
 from dataclasses import dataclass
 from enum import Enum
-from extensions import logger
+from extensions import logger, config
 from sqlite import group_record
 from llm.gemini import GeminiAPI, GeminiConfig
 from http_requests.send_group_msg import send_group_msg

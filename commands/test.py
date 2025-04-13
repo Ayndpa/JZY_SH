@@ -21,13 +21,13 @@ def execute(args: Optional[list], group_id: int, user_id: int):
         {
             "type": "at",
             "data": {
-                "qq": str(user_id)
+            "qq": str(user_id)
             }
         },
         {
             "type": "text", 
             "data": {
-                "text": random_num
+            "text": f" {random_num}"
             }
         }
     ]
