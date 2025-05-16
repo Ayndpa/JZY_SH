@@ -55,7 +55,7 @@ def execute(args: Optional[list], group_id: int, user_id: int):
         current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
         # 写入多次加群记录以超过限制
-        for _ in range(max_joins + 1):
+        for _ in range(max_joins):
             group_record.add_record(target_id, group_id, current_time)
 
         # 踢出用户

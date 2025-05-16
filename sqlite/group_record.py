@@ -13,14 +13,19 @@ def ensure_db_initialized(func):
         os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
         conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
-        cursor.execute('''
-            CREATE TABLE IF NOT EXISTS group_records (
+        # Check if table exists first
+        cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='group_records'")
+        if not cursor.fetchone():
+            cursor.execute('''
+            CREATE TABLE group_records (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
                 qq INTEGER NOT NULL,
                 group_id INTEGER NOT NULL,
-                join_time TIMESTAMP NOT NULL,
-                PRIMARY KEY (qq, group_id)
+                join_time TIMESTAMP NOT NULL
             )
-        ''')
+            ''')
+            # Create an index for faster queries
+            cursor.execute("CREATE INDEX idx_qq_group ON group_records(qq, group_id)")
         conn.commit()
         conn.close()
         return func(*args, **kwargs)
@@ -51,5 +56,18 @@ def get_user_join_count(qq: int) -> int:
     try:
         cursor.execute("SELECT COUNT(*) FROM group_records WHERE qq = ?", (qq,))
         return cursor.fetchone()[0]
+    finally:
+        conn.close()
+
+@ensure_db_initialized
+def clear_user_records(qq: int) -> int:
+    """清空用户的所有加群记录，返回被删除的记录数"""
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    try:
+        cursor.execute("DELETE FROM group_records WHERE qq = ?", (qq,))
+        deleted_count = cursor.rowcount
+        conn.commit()
+        return deleted_count
     finally:
         conn.close()

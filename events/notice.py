@@ -5,6 +5,7 @@ from extensions import logger, config
 from sqlite import group_record
 from llm.gemini import GeminiAPI, GeminiConfig
 from http_requests.send_group_msg import send_group_msg
+import time
 
 class GroupEventType(Enum):
     INCREASE = 'group_increase'
@@ -59,12 +60,14 @@ def handle_group_increase(data: Dict[str, Any]) -> bool:
                 prompt = "生成一段对一位新人的欢迎加群语，内容包含：\n群公告获取整合，仔细看完所有公告，注意群规，违反立刻踢掉"
                 welcome_msg = api.chat(prompt)
 
-                # Send welcome message
+                # Send welcome message - Add delay to ensure user is registered
+                time.sleep(2)  # Wait 2 seconds before sending the welcome message
+                
                 message = [
-                    {"type": "at", "data": {"qq": str(user_id)}},
-                    {"type": "text", "data": {"text": welcome_msg}}
+                    {"type": "at", "data": {"qq": str(event_data.user_id)}},
+                    {"type": "text", "data": {"text": " " + welcome_msg}}
                 ]
-                send_group_msg(group_id, message)
+                send_group_msg(event_data.group_id, message)
             except Exception as e:
                 logger.error(f"Failed to send welcome message: {e}")
 

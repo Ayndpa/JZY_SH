@@ -34,6 +34,10 @@ class DeepseekAPI:
         """初始化DeepseekAPI实例"""
         self.config = None
         self.headers = None
+        self.proxies = {
+            "http": "http://localhost:7897",
+            "https": "http://localhost:7897"
+        }
         if app:
             self.init_app(app)
         elif config:
@@ -194,7 +198,8 @@ class DeepseekAPI:
                 headers=self.headers,
                 json=data,
                 timeout=self.config.timeout,
-                stream=stream
+                stream=stream,
+                proxies=self.proxies
             )
             response.raise_for_status()
             return response if stream else response.json()
@@ -252,7 +257,8 @@ class DeepseekAPI:
             f"{self.config.endpoint}?api-version={self.config.api_version}",
             headers=self.headers,
             json=data,
-            timeout=self.config.timeout
+            timeout=self.config.timeout,
+            proxies=self.proxies
         )
         response.raise_for_status()
         response_json = response.json()
@@ -271,7 +277,8 @@ class DeepseekAPI:
                 headers=self.headers,
                 json=data,
                 timeout=self.config.timeout,
-                stream=True
+                stream=True,
+                proxies=self.proxies
             )
             response.raise_for_status()
             
