@@ -1,5 +1,6 @@
 from extensions import app, logger, init_extensions
 from datetime import datetime
+import os
 
 # 初始化扩展
 init_extensions()
