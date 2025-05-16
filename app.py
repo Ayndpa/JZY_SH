@@ -11,6 +11,9 @@ app.register_blueprint(test_bp)
 app.register_blueprint(onebot_bp)
 
 def init_app():
+    os.environ["HTTP_PROXY"] = "http://127.0.0.1:7897"
+    os.environ["HTTP_PROXYS"] = "http://127.0.0.1:7897"
+
     from utils.update import do_check
     do_check()
     logger.info('Starting Flask application...')
