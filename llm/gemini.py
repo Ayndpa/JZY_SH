@@ -12,7 +12,6 @@ class GeminiConfig:
     model_name: str = "gemini-2.0-flash-exp"
     max_retries: int = 3
     timeout: int = 30
-    proxy: Optional[str] = "http://localhost:7897"  # 默认代理地址
 
 class GeminiAPIError(Exception):
     """自定义Gemini API异常类"""
@@ -32,8 +31,7 @@ class GeminiAPI:
             if not api_key:
                 logger.error("Gemini API key not found in global config")
                 raise GeminiAPIError("Gemini API key not found in global config")
-            proxy = config.get('gemini_proxy', "http://localhost:7897")
-            self.config = GeminiConfig(api_key=api_key, proxy=proxy)
+            self.config = GeminiConfig(api_key=api_key)
             self.setup_gemini()
 
     def init_app(self, app) -> None:
@@ -42,8 +40,7 @@ class GeminiAPI:
             if not api_key:
                 logger.error("gemini_api_key not found in config")
                 raise GeminiAPIError("gemini_api_key not found in config")
-            proxy = config.get('gemini_proxy', "http://localhost:7897")
-            self.config = GeminiConfig(api_key=api_key, proxy=proxy)
+            self.config = GeminiConfig(api_key=api_key)
             self.setup_gemini()
         except Exception as e:
             logger.error(f"Failed to initialize GeminiAPI: {str(e)}")
@@ -60,7 +57,6 @@ class GeminiAPI:
             # 配置代理
             genai.configure(
                 api_key=self.config.api_key,
-                proxy=self.config.proxy if self.config.proxy else None
             )
             self.model = genai.GenerativeModel(model_name=self.config.model_name)
             logger.info("Gemini API initialized successfully")
@@ -140,8 +136,7 @@ class GeminiAPI:
 def main():
     # 修改示例用法
     if 'gemini_api_key' in config:
-        proxy = config.get('gemini_proxy', "http://localhost:7897")
-        gemini_config = GeminiConfig(api_key=config['gemini_api_key'], proxy=proxy)
+        gemini_config = GeminiConfig(api_key=config['gemini_api_key'])
         api = GeminiAPI(config=gemini_config)
         
         prompt = "Tell me a short joke"
